@@ -1,0 +1,34 @@
+{
+  "name": "renovo",
+  "version": "1.0.0",
+  "description": "ReNovoは、考えすぎや感情の揺れで行動が止まってしまったときに、 次の一歩を決めるためのシンプルな整理ツールです。<br> <br> いくつかの質問に答えるだけで、状況を整理し「今やること」を選べます。",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint app/javascript",
+    "lint:fix": "eslint app/javascript --fix",
+    "format": "prettier app/javascript --write",
+    "format:check": "prettier app/javascript --check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koguchi-e/ReNovo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koguchi-e/ReNovo/issues"
+  },
+  "homepage": "https://github.com/koguchi-e/ReNovo#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3"
+  }
+}
