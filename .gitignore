@@ -1,2 +1,10 @@
 node_modules/
-log/*.log
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+/config/master.key
+/config/credentials/*.key
+
+/.env
