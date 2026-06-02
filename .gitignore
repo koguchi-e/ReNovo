@@ -9,3 +9,4 @@ node_modules/
 config/credentials/development.yml.enc
 
 /.env
+

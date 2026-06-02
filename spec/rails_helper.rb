@@ -69,4 +69,16 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.mock_auth[:google_oauth2] = 
+    OmniAuth::AuthHash.new(
+      provider: "google_oauth2",
+      uid: "123456789",
+      info: {
+        email: "test@example.com",
+        name: "テスト太郎"
+      }
+    )
 end
