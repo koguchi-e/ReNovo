@@ -5,8 +5,12 @@ node_modules/
 !/tmp/.keep
 
 /config/master.key
-/config/credentials/*.key
 config/credentials/development.yml.enc
 
 /.envgi
 
+
+# Ignore key files for decrypting credentials and more.
+/config/credentials/*.key
+
+app/assets/builds/*
