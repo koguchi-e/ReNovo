@@ -4,7 +4,7 @@ class User < ApplicationRecord
       provider: auth.provider,
       uid: auth.uid
     ) do |user|
-      user.email_address = auth.info.email
+      user.email_address = auth.info.email_address
       user.name = auth.info.name
     end
   end
