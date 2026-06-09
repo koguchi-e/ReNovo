@@ -13,9 +13,11 @@ class ReflectionsController < ApplicationController
   def create
     @reflection = Reflection.new(reflection_params)
     @reflection.user_id = current_user.id
-    @reflection.save
-    # エラーハンドリングする
-    redirect_to reflection_path(@reflection.id)
+    if @reflection.save
+      redirect_to reflection_path(@reflection.id)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

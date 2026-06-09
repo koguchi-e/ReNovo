@@ -5,3 +5,6 @@ ja:
         situation: 現在の状況
         problem: 悩み
         goal: 目標
+  errors:
+    messages:
+      blank: を入力してください

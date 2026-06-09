@@ -1,0 +1,10 @@
+<% if object.errors.any? %>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
+    <strong class="font-bold text-2xl">入力内容にエラーがありました</strong><br>
+    <% object.errors.full_messages.each do |msg| %>
+      <ul class="list-disc mt-2 px-8">
+        <li><%= msg %></li>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
