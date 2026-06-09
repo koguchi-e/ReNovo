@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    attributes:
+      reflection:
+        situation: 現在の状況
+        problem: 悩み
+        goal: 目標

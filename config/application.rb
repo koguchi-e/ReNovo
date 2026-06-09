@@ -28,6 +28,9 @@ module ReNovo
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.time_zone = "Tokyo"
+    config.i18n.default_locale = :ja
+
     config.generators do |g|
       g.test_framework :rspec,
                         fixtures: false,
