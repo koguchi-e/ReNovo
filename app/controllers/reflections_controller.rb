@@ -1,4 +1,6 @@
 class ReflectionsController < ApplicationController
+  before_action :set_user, only: %i[index show new create]
+
   def index
   end
 
@@ -14,9 +16,9 @@ class ReflectionsController < ApplicationController
     @reflection = Reflection.new(reflection_params)
     @reflection.user_id = current_user.id
     if @reflection.save
-      redirect_to reflection_path(@reflection.id)
+      redirect_to reflection_path(@reflection.id), notice: t('.created')
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity, notice: t('.alert')
     end
   end
 

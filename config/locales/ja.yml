@@ -8,3 +8,7 @@ ja:
   errors:
     messages:
       blank: を入力してください
+  reflections:
+    create:
+      created: "質問に解答しました。"
+      alet: "質問の解答に失敗しました。"
