@@ -1,0 +1,30 @@
+<div data-controller="reflection-form">
+  <h1 class="font-bold text-4xl">Reflections#new</h1>
+  <p>Find me in app/views/reflections/new.html.erb</p>
+
+  <%= render "application/errors", object: @reflection %>
+
+  <div>
+    <%= form_with model: @reflection do |f| %>
+      <div data-reflection-form-target="step" class="block">
+        <%= f.label :situation, class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" %>
+        <%= f.text_area :situation, class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400" %>
+        <button type="button" data-action="click->reflection-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+      </div>
+
+      <div data-reflection-form-target="step" class="block">
+        <%= f.label :problem, class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" %>
+        <%= f.text_area :problem, class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400" %>
+        <button type="button" data-action="click->reflection-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
+        <button type="button" data-action="click->reflection-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+      </div>
+
+      <div data-reflection-form-target="step" class="block">
+        <%= f.label :goal, class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" %>
+        <%= f.text_area :goal, class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400" %>
+        <button type="button" data-action="click->reflection-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
+        <%= f.submit "送信", class:"bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded" %>
+      </div>
+    <% end %>
+  </div>
+</div>
