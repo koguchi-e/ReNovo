@@ -21,6 +21,8 @@ RSpec.configure do |config|
 
   config.filter_rails_from_backtrace!
 
+  config.include FactoryBot::Syntax::Methods
+
   OmniAuth.config.test_mode = true
 
   OmniAuth.config.mock_auth[:google_oauth2] =
