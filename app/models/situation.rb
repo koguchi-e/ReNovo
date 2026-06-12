@@ -1,7 +1,7 @@
-class Reflection < ApplicationRecord
+class Situation < ApplicationRecord
   belongs_to :user
 
-  validates :situation, presence: true
+  validates :fact, presence: true
   validates :problem, presence: true
   validates :goal, presence: true
 
