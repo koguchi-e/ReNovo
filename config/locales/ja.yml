@@ -1,14 +1,14 @@
 ja:
   activerecord:
     attributes:
-      reflection:
-        situation: 現在の状況
+      situation:
+        fact: 現在の状況
         problem: 悩み
         goal: 目標
   errors:
     messages:
       blank: を入力してください
-  reflections:
+  situations:
     create:
       created: "質問に解答しました。"
       alet: "質問の解答に失敗しました。"

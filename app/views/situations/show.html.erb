@@ -1,0 +1,27 @@
+<div>
+  <h1 class="font-bold text-4xl">Situations#show</h1>
+  <p>Find me in app/views/situations/show.html.erb</p>
+
+  <div>
+    <div class="mt-3 mb-2">
+      <p class="text-xl font-bold text-gray-500">
+        <%= Situation.human_attribute_name(:fact) %>
+      </p>
+      <p><%= @situation.fact %></p>
+    </div>
+
+    <div class="mt-3 mb-2">
+      <p class="text-xl font-bold text-gray-500">
+        <%= Situation.human_attribute_name(:problem) %>
+      </p>
+      <p><%= @situation.problem %></p>
+    </div>
+
+    <div class="mt-3 mb-2">
+      <p class="text-xl font-bold text-gray-500">
+        <%= Situation.human_attribute_name(:goal) %>
+      </p>
+      <p><%= @situation.goal %></p>
+    </div>
+  </div>
+</div>

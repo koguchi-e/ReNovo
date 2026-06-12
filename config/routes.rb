@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :reflections, only: %i[index show new create]
+  resources :situations, only: %i[index show new create]
   root "home#index"
 
   get "/home", to: "home#show"
