@@ -1,9 +1,9 @@
 class Situation < ApplicationRecord
   belongs_to :user
 
-  validates :fact, presence: true
-  validates :problem, presence: true
-  validates :goal, presence: true
+  validates :fact, presence: true, length: { maximum: 300 }
+  validates :problem, presence: true, length: { maximum: 300 }
+  validates :goal, presence: true, length: { maximum: 300 }
 
   enum :status, {
     pending: 0,
