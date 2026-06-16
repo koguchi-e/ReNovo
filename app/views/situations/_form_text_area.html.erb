@@ -1,11 +1,13 @@
-<%= f.label attribute, 
-  class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" 
+<%= f.label attribute,
+  class: "mt-3 block text-xl font-bold text-gray-500 md:text-left" 
 %>
 
-<%= f.text_area attribute, 
-  class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400", 
-  data: { situation_form_target: "input", 
-  action: "input->situation-form#clearError input->situation-form#count" }
+<%= f.text_area attribute,
+  class: "h-50 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-orange-400 focus:bg-white focus:outline-none",
+  data: {
+    situation_form_target: "input",
+    action: "input->situation-form#clearError input->situation-form#count"
+  } 
 %>
 
 <p>

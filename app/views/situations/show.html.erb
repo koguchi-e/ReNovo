@@ -1,10 +1,7 @@
-<div>
-  <h1 class="font-bold text-4xl">Situations#show</h1>
-  <p>Find me in app/views/situations/show.html.erb</p>
+<div class="mt-3 mb-2">
+  <p class="text-xl font-bold text-gray-500">
+    <%= Situation.human_attribute_name(attribute) %>
+  </p>
 
-  <div>
-    <%= render "situation", situation: @situation, attribute: :fact %>
-    <%= render "situation", situation: @situation, attribute: :problem %>
-    <%= render "situation", situation: @situation, attribute: :goal %>
-  </div>
+  <p><%= situation.public_send(attribute) %></p>
 </div>
