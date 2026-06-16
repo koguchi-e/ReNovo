@@ -2,6 +2,7 @@ class SituationsController < ApplicationController
   before_action :set_user, only: %i[index show new create]
 
   def index
+    @situations = current_user.situations
   end
 
   def show
