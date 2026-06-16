@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["step", "input", "error"];
+  static targets = ["step", "input", "error", "output"];
 
   connect() {
     this.currentStep = 0;
@@ -29,6 +29,19 @@ export default class extends Controller {
     this.stepTargets.forEach((step, index) => {
       step.classList.toggle("hidden", index !== this.currentStep);
     });
+  }
+
+  count(event) {
+    this.updateCount(event.currentTarget);
+  }
+
+  updateCount(input) {
+    const index = this.inputTargets.indexOf(input);
+    const output = this.outputTargets[index];
+    const length = input.value.length;
+    output.textContent = length;
+    output.classList.toggle("text-red-600", length > 300);
+    output.classList.toggle("font-bold", length > 300);
   }
 
   clearError() {
