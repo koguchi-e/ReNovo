@@ -5,41 +5,20 @@
   <div>
     <%= form_with model: @situation, data: { action: "submit->situation-form#submit" } do |f| %>
       <div data-situation-form-target="step" class="block">
-        <%= f.label :fact, class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" %>
-        <%= f.text_area :fact, class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400", data: { situation_form_target: "input", action: "input->situation-form#clearError input->situation-form#count" } %>
-
-        <p>
-          文字数： <span data-situation-form-target="output">0</span> / 300文字
-        </p>
-
-        <p class="hidden text-red-600 font-bold" data-situation-form-target="error"></p>
+        <%= render "form_text_area", f: f, attribute: :fact %>
 
         <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
       </div>
 
       <div data-situation-form-target="step" class="block">
-        <%= f.label :problem, class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" %>
-        <%= f.text_area :problem, class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400", data: { situation_form_target: "input", action: "input->situation-form#clearError input->situation-form#count" } %>
-
-        <p>
-          文字数： <span data-situation-form-target="output">0</span> / 300文字
-        </p>
-
-        <p class="hidden text-red-600 font-bold" data-situation-form-target="error"></p>
+        <%= render "form_text_area", f: f, attribute: :problem %>
 
         <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
         <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
       </div>
 
       <div data-situation-form-target="step" class="block">
-        <%= f.label :goal, class:"block text-gray-500 font-bold md:text-left mt-3 text-xl" %>
-        <%= f.text_area :goal, class: "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-50 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-400", data: { situation_form_target: "input", action: "input->situation-form#clearError input->situation-form#count" } %>
-
-        <p>
-          文字数： <span data-situation-form-target="output">0</span> / 300文字
-        </p>
-
-        <p class="hidden text-red-600 font-bold" data-situation-form-target="error"></p>
+        <%= render "form_text_area", f: f, attribute: :goal %>
 
         <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
         <%= f.submit "送信", class:"bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded" %>
