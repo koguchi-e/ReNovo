@@ -2,8 +2,8 @@ ja:
   activerecord:
     attributes:
       situation:
-        fact: 現在の状況
-        problem: 悩み
+        fact: 現状
+        problem: 問題
         goal: 目標
   errors:
     messages:

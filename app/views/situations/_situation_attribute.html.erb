@@ -1,6 +1,6 @@
-<div class="mt-3 mb-2">
-  <p class="text-xl font-bold text-gray-500">
+<div class="mt-5 mb-2">
+  <p class="pb-2 text-xl font-bold text-gray-500">
     <%= Situation.human_attribute_name(attribute) %>
   </p>
-  <p><%= situation.public_send(attribute) %></p>
+  <div class="p-2 border-2 border-gray-200"><%= situation.public_send(attribute) %></div>
 </div>

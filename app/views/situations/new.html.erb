@@ -1,28 +1,62 @@
 <div data-controller="situation-form">
-  <h1 class="font-bold text-4xl">Situations#new</h1>
-  <p>Find me in app/views/situations/new.html.erb</p>
-
-  <div>
-    <%= form_with model: @situation, data: { action: "submit->situation-form#submit" } do |f| %>
-      <div data-situation-form-target="step" class="block">
-        <%= render "form_text_area", f: f, attribute: :fact %>
-
-        <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+  <%= form_with model: @situation, data: { action: "submit->situation-form#submit" } do |f| %>
+    <div data-situation-form-target="step" class="block">
+      <p class="text-3xl font-bold text-gray-600">
+        今どんなことが起きていますか？
+      </p>
+      <div class="mt-3 text-gray-500">
+        <p>
+          現在の状況や起きた出来事を具体的に書き出してみましょう。
+        </p>
+        <p class="mt-3 font-bold">例</p>
+        <ul class="list-disc mb-3 pl-8">
+          <li>「ビジネスメールが書けていない」と上司に指摘された</li>
+          <li>勉強したのにずっとSNSを見てしまう</li>
+          <li>やりたいことがあるのに疲れて何も始められない</li>
+        </ul>
       </div>
+      <%= render "form_text_area", f: f, attribute: :fact %>
+      <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+    </div>
 
-      <div data-situation-form-target="step" class="block">
-        <%= render "form_text_area", f: f, attribute: :problem %>
-
-        <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
-        <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+    <div data-situation-form-target="step" class="block">
+      <p class="text-3xl font-bold text-gray-600">
+        今一番困っていることは何ですか？
+      </p>
+      <div class="mt-3 text-gray-500">
+        <p>
+          一番モヤモヤしたことや気になっていることを書き出してみましょう。
+        </p>
+        <p class="mt-3 font-bold">例</p>
+        <ul class="list-disc mb-3 pl-8">
+          <li>メールのどこが悪いのか分からず修正できない</li>
+          <li>周りが気になって自分の作業に集中できない</li>
+          <li>情報を集めすぎて動けなくなっている</li>
+        </ul>
       </div>
+      <%= render "form_text_area", f: f, attribute: :problem %>
+      <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
+      <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+    </div>
 
-      <div data-situation-form-target="step" class="block">
-        <%= render "form_text_area", f: f, attribute: :goal %>
-
-        <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
-        <%= f.submit "送信", class:"bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded" %>
+    <div data-situation-form-target="step" class="block">
+      <p class="text-3xl font-bold text-gray-600">
+        どんな状態になれたら良さそうですか？
+      </p>
+      <div class="mt-3 text-gray-500">
+        <p>
+          自分自身が将来的にどのような状態になりたか、理想の状態を書き出してみましょう。
+        </p>
+        <p class="mt-3 font-bold">例</p>
+        <ul class="list-disc mb-3 pl-8">
+          <li>メールを修正して、次回は自分で書けるようになりたい</li>
+          <li>SNSを見る時間を減らして、少しでも作業を進めたい</li>
+          <li>自分の作業に集中できるようになりたい</li>
+        </ul>
       </div>
-    <% end %>
-  </div>
+      <%= render "form_text_area", f: f, attribute: :goal %>
+      <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
+      <%= f.submit "送信", class:"bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded" %>
+    </div>
+  <% end %>
 </div>
