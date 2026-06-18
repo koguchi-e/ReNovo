@@ -2,14 +2,16 @@
   <h1 class="font-bold text-4xl">Situations#index</h1>
   <p>Find me in app/views/situations/index.html.erb</p>
 
-  <ol style="list-style-type: decimal;">
-    <% @situations.each do |situation| %>
-      <li class="pt-3">
-        <%= 
-          link_to situation.fact, situation_path(situation.id), 
-          class: "text-orange-400 hover:text-orange-200"
-        %>
-      </li>
+  <% @situations.each do |situation| %>
+    <%= link_to situation_path(situation.id) do %>
+      <div class="m-5 p-4 border-2 border-gray-200 hover:-translate-y-1 hover:scale-105 hover:opacity-60">
+        <p class="text-gray-500">
+          <%= situation.created_at.strftime('%Y年%m月%d日 %H時%M分') %>
+        </p>
+        <p class="text-xl text-orange-400">
+          <%= situation.fact %>
+        </p>
+      </div>
     <% end %>
-  </ol>
+  <% end %>
 </div>
