@@ -2,7 +2,7 @@ class SituationsController < ApplicationController
   before_action :set_user, only: %i[index show new create]
 
   def index
-    @situations = current_user.situations
+    @situations = current_user.situations.order(created_at: :desc).page(params[:page])
   end
 
   def show
