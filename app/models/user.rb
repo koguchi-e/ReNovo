@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :situations, dependent: :destroy
+
   def self.find_or_create_from_auth_hash(auth)
     find_or_create_by!(
       provider: auth.provider,

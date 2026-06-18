@@ -12,3 +12,10 @@ ja:
     create:
       created: "質問に解答しました。"
       alet: "質問の解答に失敗しました。"
+  views:
+    pagination:
+      first: <i class="fas fa-angle-double-left"></i>
+      last: <i class="fas fa-angle-double-right"></i>
+      previous: <i class="fas fa-angle-left"></i>
+      next: <i class="fas fa-angle-right"></i>
+      truncate: "..."
