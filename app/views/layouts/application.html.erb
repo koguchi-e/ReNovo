@@ -25,6 +25,8 @@
   </head>
 
   <body>
+    <%= render "shared/header" unless current_page?(root_path) %>
+
     <main class="container mx-auto mt-28 px-5">
       <% if notice.present? %>
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="notice">
