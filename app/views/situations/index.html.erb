@@ -4,11 +4,11 @@
 
   <% @situations.each do |situation| %>
     <%= link_to situation_path(situation.id) do %>
-      <div class="m-5 p-4 relative border-2 border-gray-200 hover:-translate-y-1 hover:scale-105 hover:opacity-60">
-        <p class="text-gray-500">
+      <div class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 hover:text-mikan-orange">
+        <p class="text-sm">
           <%= situation.created_at.strftime('%Y年%m月%d日 %H時%M分') %>
         </p>
-        <p class="text-xl text-orange-400">
+        <p class="mt-2 block text-lg font-bold">
           <%= situation.fact %>
         </p>
       </div>

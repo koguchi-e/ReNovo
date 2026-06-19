@@ -1,10 +1,10 @@
 <div data-controller="situation-form">
   <%= form_with model: @situation, data: { action: "submit->situation-form#submit" } do |f| %>
     <div data-situation-form-target="step" class="block">
-      <p class="text-3xl font-bold text-gray-600">
+      <p class="text-3xl font-bold text-dusk-blue">
         今どんなことが起きていますか？
       </p>
-      <div class="mt-3 text-gray-500">
+      <div class="mt-3 text-dusty-denim">
         <p>
           現在の状況や起きた出来事を具体的に書き出してみましょう。
         </p>
@@ -16,14 +16,14 @@
         </ul>
       </div>
       <%= render "form_text_area", f: f, attribute: :fact %>
-      <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+      <button type="button" data-action="click->situation-form#next" class="bg-dusty-denim hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
     </div>
 
     <div data-situation-form-target="step" class="block">
-      <p class="text-3xl font-bold text-gray-600">
+      <p class="text-3xl font-bold text-dusk-blue">
         今一番困っていることは何ですか？
       </p>
-      <div class="mt-3 text-gray-500">
+      <div class="mt-3 text-dusty-denim">
         <p>
           一番モヤモヤしたことや気になっていることを書き出してみましょう。
         </p>
@@ -35,15 +35,15 @@
         </ul>
       </div>
       <%= render "form_text_area", f: f, attribute: :problem %>
-      <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
-      <button type="button" data-action="click->situation-form#next" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+      <button type="button" data-action="click->situation-form#prev" class="bg-dusty-denim hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
+      <button type="button" data-action="click->situation-form#next" class="bg-dusty-denim hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
     </div>
 
     <div data-situation-form-target="step" class="block">
-      <p class="text-3xl font-bold text-gray-600">
+      <p class="text-3xl font-bold text-dusk-blue">
         どんな状態になれたら良さそうですか？
       </p>
-      <div class="mt-3 text-gray-500">
+      <div class="mt-3 text-dusty-denim">
         <p>
           自分自身が将来的にどのような状態になりたか、理想の状態を書き出してみましょう。
         </p>
@@ -55,8 +55,8 @@
         </ul>
       </div>
       <%= render "form_text_area", f: f, attribute: :goal %>
-      <button type="button" data-action="click->situation-form#prev" class="bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
-      <%= f.submit "送信", class:"bg-sky-700 hover:bg-sky-900 text-white font-bold mt-3 py-2 px-4 rounded" %>
+      <button type="button" data-action="click->situation-form#prev" class="bg-dusty-denim hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">戻る</button>
+      <%= f.submit "送信", class:"bg-dusty-denim hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded" %>
     </div>
   <% end %>
 </div>
