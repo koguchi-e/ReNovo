@@ -27,13 +27,13 @@
   <body>
     <%= render "shared/header" unless current_page?(root_path) %>
     <% if notice.present? %>
-      <div class="absolute top-20 right-20 w-[300px] rounded border border-green-700 bg-green-200 px-4 py-3 text-green-700" role="notice">
+      <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-green-700 bg-green-200 px-4 py-3 text-green-700" role="notice">
         <%= notice %>
       </div>
     <% end %>
 
     <% if alert.present? %>
-      <div class="absolute top-20 right-20 w-[300px] rounded border border-red-700 bg-red-200 px-4 py-3 text-red-700" role="alert">
+      <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-red-700 bg-red-200 px-4 py-3 text-red-700" role="alert">
         <%= alert %>
       </div>
     <% end %>
