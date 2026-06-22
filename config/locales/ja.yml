@@ -11,7 +11,7 @@ ja:
   situations:
     create:
       created: "質問に回答しました。"
-      alet: "質問の回答に失敗しました。"
+      alert: "質問の回答に失敗しました。"
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>
