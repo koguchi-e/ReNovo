@@ -34,7 +34,7 @@ RSpec.describe "Situations", type: :request do
         post situations_path, params: params
       end.to change(Situation, :count).by(1)
       expect(response).to redirect_to situation_path(Situation.last)
-      expect(flash[:notice]).to eq('質問に解答しました。')
+      expect(flash[:notice]).to eq('質問に回答しました。')
     end
   end
 end

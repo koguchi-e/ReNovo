@@ -10,8 +10,8 @@ ja:
       blank: を入力してください
   situations:
     create:
-      created: "質問に解答しました。"
-      alet: "質問の解答に失敗しました。"
+      created: "質問に回答しました。"
+      alert: "質問の回答に失敗しました。"
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>
