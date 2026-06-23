@@ -12,6 +12,8 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
+
 RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
@@ -24,14 +26,4 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   OmniAuth.config.test_mode = true
-
-  OmniAuth.config.mock_auth[:google_oauth2] =
-    OmniAuth::AuthHash.new(
-      provider: "google_oauth2",
-      uid: "123456789",
-      info: {
-        email_address: "test@example.com",
-        name: "テスト太郎"
-      }
-    )
 end
