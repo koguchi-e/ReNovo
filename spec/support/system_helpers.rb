@@ -5,7 +5,7 @@ module SystemHelpers
         provider: user.provider,
         uid: user.uid,
         info: {
-          email: user.email_address,
+          email_address: user.email_address,
           name: user.name
         }
       )

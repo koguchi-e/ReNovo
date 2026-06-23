@@ -23,7 +23,15 @@ RSpec.describe "Googleログイン", type: :request do
   end
 
   context "既存ユーザーがいる場合" do
-    let!(:user) { FactoryBot.create(:user) }
+    let!(:user) do
+      FactoryBot.create(
+        :user,
+        provider: "google_oauth2",
+        uid: "123456789",
+        email_address: "test@example.com",
+        name: "テスト太郎"
+      )
+    end
 
     it "新しく追加しない" do
       expect do
