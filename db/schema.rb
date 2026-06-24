@@ -26,9 +26,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_021540) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "content"
+    t.string "content", null: false
     t.datetime "created_at", null: false
-    t.integer "position"
+    t.integer "position", null: false
     t.bigint "situation_id", null: false
     t.datetime "updated_at", null: false
     t.index ["situation_id"], name: "index_tasks_on_situation_id"
