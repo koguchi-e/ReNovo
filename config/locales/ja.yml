@@ -12,6 +12,13 @@ ja:
     create:
       created: "質問に回答しました。"
       alert: "質問の回答に失敗しました。"
+  tasks:
+    create:
+      created: "タスクを作成しました。"
+    update:
+      updated: "タスクを修正しました。"
+    destroy:
+      destroyed: "タスクを削除しました。"
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>

@@ -1,0 +1,29 @@
+<h2 class="text-3xl font-bold text-dusk-blue">
+  <i class="fa-solid fa-robot"></i>
+  AIがやることを整理しました！
+</h2>
+<p class="mt-3 text-dusty-denim">
+  内容は自由に編集できます。<br>
+  ドラッグで並び替えが可能です。
+</p>
+
+<div>
+  <% @tasks.each do |task| %>
+    <div class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 ">
+      <p class="hover:text-mikan-orange">
+        <%= task.position %>. 
+        <%= task.content %>
+      </p>
+      <div>
+        <button><i class="fa-solid fa-pencil"></i></button>
+        <button><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div>
+  <button><i class="fa-solid fa-plus"></i> タスクを追加</button><br>
+  <button>入力内容を見直す</button><br>
+  <button>保存して完了</button>
+</div>
