@@ -8,7 +8,11 @@ class TasksController < ApplicationController
   end
 
   def update
-    redirect_to situation_tasks_path(@situation), notice: t(".updated")
+    if @task.update(task_params)
+      redirect_to situation_tasks_path(@situation), notice: t(".updated")
+    else
+      render situation_tasks_path(@situation), alert: t(".alert")
+    end
   end
 
   def destroy
@@ -22,6 +26,10 @@ class TasksController < ApplicationController
   end
 
   def set_task
-    @task = @situation.task.find(params[:id])
+    @task = @situation.tasks.find(params[:id])
+  end
+
+  def task_params
+    params.require(:task).permit(:content)
   end
 end

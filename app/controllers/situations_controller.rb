@@ -20,7 +20,7 @@ class SituationsController < ApplicationController
       created_fixed_tasks(@situation)
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
-      render :new, status: :unprocessable_entity, notice: t(".alert")
+      render :new, status: :unprocessable_entity, alert: t(".alert")
     end
   end
 
