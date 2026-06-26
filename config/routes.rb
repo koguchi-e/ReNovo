@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  resources :situations, only: %i[index show new create]
-  root "home#index"
+  resources :situations, only: %i[index show new create] do
+    resources :tasks, only: %i[index create update destroy]
+  end
 
+  root "home#index"
   get "/home", to: "home#show"
 
   get "up" => "rails/health#show", as: :rails_health_check
