@@ -44,7 +44,7 @@ class SituationsController < ApplicationController
     ]
 
     task_contents.each_with_index do |content, index|
-      @situation.tasks.create!(
+      situation.tasks.create!(
         content: content,
         position: index + 1
       )

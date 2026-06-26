@@ -5,13 +5,25 @@ class TasksController < ApplicationController
 
   def index
     @tasks = @situation.tasks.order(:position)
+    @new_task = @situation.tasks.build
+  end
+
+  def create
+    @new_task = @situation.tasks.build(task_params)
+    @new_task.position = @situation.tasks.maximum(:position).to_i + 1
+    if @new_task.save
+      redirect_to situation_tasks_path(@situation), notice: t(".created")
+    else
+      @tasks = @situation.tasks.order(:position)
+      redirect_to situation_tasks_path(@situation), alert: t(".alert")
+    end
   end
 
   def update
     if @task.update(task_params)
       redirect_to situation_tasks_path(@situation), notice: t(".updated")
     else
-      render situation_tasks_path(@situation), alert: t(".alert")
+      redirect_to situation_tasks_path(@situation), alert: t(".alert")
     end
   end
 
