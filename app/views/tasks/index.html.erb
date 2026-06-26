@@ -6,24 +6,25 @@
   内容は自由に編集できます。<br>
   ドラッグで並び替えが可能です。
 </p>
-
-<% @tasks.each do |task| %>
+<% @tasks.each_with_index do |task, index| %>
   <div data-controller="task-edit">
     <div data-task-edit-target="display" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 ">
       <p class="hover:text-mikan-orange">
-        <%= task.position %>. 
+        <%= index + 1 %>. 
         <%= task.content %>
       </p>
       <div>
         <button type="button" data-action="task-edit#edit" class="hover:opacity-60">
           <i class="fa-solid fa-pencil"></i>
         </button>
-        <button><i class="fa-solid fa-trash"></i></button>
+        <%= button_to situation_task_path(@situation, task), method: :delete, class: "hover:opacity-60", data: { turbo_confirm: '本当に削除しますか？' } do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
       </div>
     </div>
     <div data-task-edit-target="form" class="hidden m-5 p-4">
       <%= form_with model: [@situation, task], method: :patch do |f| %>
-        <%= task.position %>. 
+        <%= index + 1 %>. 
         <%= f.text_field :content,
           class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-mikan-orange focus:bg-white focus:outline-none",
           data: {
@@ -41,7 +42,6 @@
     </div>
   </div>
 <% end %>
-
 <div>
   <button><i class="fa-solid fa-plus"></i> タスクを追加</button><br>
   <button>入力内容を見直す</button><br>
