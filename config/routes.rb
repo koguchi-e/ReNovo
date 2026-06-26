@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :situations, only: %i[index show new create] do
-    resources :tasks, only: %i[index update destroy]
+    resources :tasks, only: %i[index create update destroy]
   end
 
   root "home#index"
