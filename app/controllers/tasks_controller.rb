@@ -16,7 +16,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    redirect_to situation_tasks_path(@situation), notice: t(".destroyed")
+    if @task.destroy!
+      redirect_to situation_tasks_path(@situation), notice: t(".destroyed")
+    else
+      redirect_to situation_tasks_path(@situation), alert: t(".alert")
+    end
   end
 
   private
