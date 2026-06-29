@@ -14,8 +14,8 @@ ja:
       alert: "質問の回答に失敗しました。"
   tasks:
     create:
-      created: "タスクを作成しました。"
-      alert: "タスクの作成に失敗しました。"
+      created: "タスクを追加しました。"
+      alert: "タスクの追加に失敗しました。"
     update:
       updated: "タスクを修正しました。"
       alert: "タスクの修正に失敗しました。"
