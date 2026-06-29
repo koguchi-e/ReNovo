@@ -19,7 +19,7 @@
         class="hover:opacity-60">
           <i class="fa-solid fa-pencil"></i>
         </button>
-        <%= button_to situation_task_path(@situation, task), method: :delete, class: "hover:opacity-60", data: { turbo_confirm: '本当に削除しますか？', testid:"delete-task-button" } do %>
+        <%= button_to situation_task_path(@situation, task), method: :delete, class: "hover:opacity-60", data: { turbo_confirm: '本当に削除しますか？', testid:"delete-task-button-#{task.id}" } do %>
           <i class="fa-solid fa-trash"></i>
         <% end %>
       </div>
