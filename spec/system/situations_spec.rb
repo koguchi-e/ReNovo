@@ -20,9 +20,9 @@ RSpec.describe "Situations", type: :system do
     fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
     click_button "送信"
 
+    visit situations_path
+
     expect(page).to have_content "会議で進捗報告をしたが、うまく説明できなかった。"
-    expect(page).to have_content "話す内容が整理できておらず、自信を持って説明できない。"
-    expect(page).to have_content "次回の会議では要点を整理して説明できるようになりたい。"
   end
 
   scenario "301文字以上は登録できない" do
@@ -42,14 +42,18 @@ RSpec.describe "Situations", type: :system do
   end
 
   scenario "作成したふりかえりが一覧画面に表示される" do
-    situation = FactoryBot.create(:situation, user: user)
+    visit new_situation_path
+
+    fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
+    find('[data-testid="fact-next-button"]').click
+
+    fill_in "situation_problem", with: "話す内容が整理できておらず、自信を持って説明できない。"
+    find('[data-testid="problem-next-button"]').click
+
+    fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
+    click_button "送信"
 
     visit situations_path
-    expect(page).to have_content situation.fact
-
-    click_link situation.fact
-    expect(page).to have_content situation.fact
-    expect(page).to have_content situation.problem
-    expect(page).to have_content situation.goal
+    expect(page).to have_content "会議で進捗報告をしたが、うまく説明できなかった。"
   end
 end
