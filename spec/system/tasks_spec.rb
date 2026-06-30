@@ -41,13 +41,13 @@ RSpec.describe "Tasks", type: :system do
   end
 
   scenario "タスクを削除し、一覧から消える" do
-    task = create(:task, situation:, content: "削除するタスク")
+    delete_task = create(:task, situation:, content: "削除するタスク")
 
     visit situation_tasks_path(situation)
     expect(page).to have_content "削除するタスク"
 
     accept_confirm "本当に削除しますか？" do
-      find("[data-testid='delete-task-button-#{task.id}']").click
+      find("[data-testid='delete-task-button-#{delete_task.id}']").click
     end
 
     expect(page).not_to have_content "削除するタスク"
