@@ -1,16 +1,16 @@
 node_modules/
+
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
 
+.env
+/.env
+
 /config/master.key
-config/credentials/development.yml.enc
-
-/.envgi
-
-
-# Ignore key files for decrypting credentials and more.
 /config/credentials/*.key
+/config/*.key
+*.backup
 
 app/assets/builds/*
