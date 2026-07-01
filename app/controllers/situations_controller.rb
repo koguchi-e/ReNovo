@@ -16,8 +16,7 @@ class SituationsController < ApplicationController
   def create
     @situation = Situation.new(situation_params)
     @situation.user_id = current_user.id
-    if @situation.save
-      @situation.generate_tasks!
+    if @situation.generate_tasks!
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
       render :new, status: :unprocessable_entity, alert: t(".alert")

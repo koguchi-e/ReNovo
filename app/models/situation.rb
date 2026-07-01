@@ -13,11 +13,17 @@ class Situation < ApplicationRecord
     failed: 3
   }
 
-  def generate_tasks!
-    task_contents = generete_task_contents
-    transaction do
-      tasks.destroy_all
+  class InvalidGeneratedTaskCountError < StandardError; end
 
+  def generate_tasks!
+    return false unless self.valid?
+    task_contents = generate_task_contents
+
+    raise InvalidGeneratedTaskCountError, "生成されたタスクが5件ではありません" if task_contents.size != 5
+
+    Situation.transaction do
+      self.save!
+      tasks.destroy_all
       task_contents.each_with_index do |content, index|
         tasks.create!(
           content: content,
@@ -35,7 +41,7 @@ class Situation < ApplicationRecord
     )
   end
 
-  def generete_task_contents
+  def generate_task_contents
     response = openai_client.responses.create(
       model: "gpt-4o-mini",
       input: ai_prompt
