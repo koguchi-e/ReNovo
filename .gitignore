@@ -14,3 +14,7 @@ config/credentials/development.yml.enc
 /config/credentials/*.key
 
 app/assets/builds/*
+
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+
