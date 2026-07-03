@@ -1,8 +1,6 @@
 class SituationsController < ApplicationController
-  before_action :set_user, only: %i[index show new create]
-
   def index
-    @situations = current_user.situations.order(created_at: :desc).page(params[:page])
+    @situations = Situation.all.order(created_at: :desc)
   end
 
   def show
@@ -17,11 +15,17 @@ class SituationsController < ApplicationController
     @situation = Situation.new(situation_params)
     @situation.user_id = current_user.id
     if @situation.save
-      created_fixed_tasks(@situation)
+      GenerateTasksJob.perform_now(situation_id: @situation.id)
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
       render :new, status: :unprocessable_entity, alert: t(".alert")
     end
+  rescue RubyLLM::UnauthorizedError => e
+    Rails.logger.error("[SituaitonsController#create] GenerateTasksJob failed: #{e.class}: #{e.message}")
+    redirect_to situation_tasks_path(@situation) || situaitons_path, alert: "AIのAPIキー設定が無効です。管理者に確認してください。"
+  rescue StandardError => e
+    Rails.logger.error("[SituaitonsController#create] GenerateTasksJob failed: #{e.class}: #{e.message}")
+    redirect_to situation_tasks_path(@situation) || situaitons_path, alert: "AIのコメントに失敗しました。時間をおいて再度お試しください。"
   end
 
   private
@@ -30,24 +34,6 @@ class SituationsController < ApplicationController
     params.require(:situation).permit(:fact, :problem, :goal)
   end
 
-  def set_user
-    @user = User.find_by(id: params[:user_id])
-  end
-
-  def created_fixed_tasks(situation)
-    task_contents = [
-      "会議で話した内容を3行で書き出す",
-      "説明できなかった箇所を1つだけ選ぶ",
-      "次回伝えたい結論を1文で書く",
-      "補足が必要な情報を3つ出す",
-      "次回の進捗報告で話す順番を決める"
-    ]
-
-    task_contents.each_with_index do |content, index|
-      situation.tasks.create!(
-        content: content,
-        position: index + 1
-      )
-    end
+  def create_tasks_by_ai
   end
 end

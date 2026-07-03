@@ -1,7 +1,5 @@
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch("OPENAI_API_KEY", Rails.application.credentials.dig(:openai_api_key))
-  # config.default_model = "gpt-5-nano"
-
-  # Use the association-based acts_as API (recommended)
+  config.openai_api_key = Rails.application.credentials.openai[:api_key]
+  config.default_model = "gpt-4o-mini"
   config.use_new_acts_as = true
 end
