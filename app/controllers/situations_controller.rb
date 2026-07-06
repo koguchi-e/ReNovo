@@ -17,7 +17,7 @@ class SituationsController < ApplicationController
 
     if @situation.save
       begin
-        GenerateTasksJob.perform_now(situation_id: @situation.id)
+        GenerateTasksJob.perform_later(situation_id: @situation.id)
         redirect_to situation_tasks_path(@situation), notice: t(".created")
       rescue RubyLLM::UnauthorizedError => e
         Rails.logger.error("[SituationsController#create] GenerateTasksJob failed: #{e.class}: #{e.message}")
