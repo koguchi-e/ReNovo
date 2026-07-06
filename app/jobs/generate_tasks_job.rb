@@ -9,11 +9,13 @@ class GenerateTasksJob < ApplicationJob
     task_contents = generate_task_contents(situation)
     return if task_contents.nil?
 
-    task_contents.each_with_index do |content, index|
-      situation.tasks.create!(
-        content: content,
-        position: index + 1
-      )
+    ActiveRecord::Base.transaction do
+      task_contents.each_with_index do |content, index|
+        situation.tasks.create!(
+          content: content,
+          position: index + 1
+        )
+      end
     end
   end
 
