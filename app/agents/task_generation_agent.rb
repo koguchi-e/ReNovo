@@ -28,4 +28,25 @@ class TaskGenerationAgent < RubyLLM::Agent
 
   schema TaskGenerationResponse
   instructions SYSTEM_PROMPT
+
+  def self.generate(situation)
+    response = new.ask(prompt_for(situation))
+    content = response.content.to_h
+
+    content.fetch("tasks") { content.fetch(:tasks) }
+  end
+
+  def self.prompt_for(situation)
+    <<~PROMPT
+      入力形式：
+      状況:
+      #{situation.fact}
+
+      問題:
+      #{situation.problem}
+
+      目標:
+      #{situation.goal}
+    PROMPT
+  end
 end
