@@ -6,7 +6,7 @@ class GenerateTasksJob < ApplicationJob
     situation = Situation.find_by(id: situation_id)
     return if situation.nil?
 
-    task_contents = generate_task_contents(situation)
+    task_contents = TaskGenerationAgent.generate(situation)
     return if task_contents.nil?
 
     ActiveRecord::Base.transaction do
@@ -17,31 +17,8 @@ class GenerateTasksJob < ApplicationJob
         )
       end
     end
-  end
-
-  private
-
-  def generate_task_contents(situation)
-    response = TaskGenerationAgent.new.ask(promopt_for(situation))
-    content = response.content.to_h
-
-    content["tasks"] || content[:tasks]
   rescue StandardError => e
     Rails.logger.error("[GenerateTasksJob] respond failed: #{e.class}: #{e.message}")
     raise
-  end
-
-  def promopt_for(situation)
-    <<~PROMPT
-      入力形式：
-      状況:
-      #{situation.fact}
-
-      問題:
-      #{situation.problem}
-
-      目標:
-      #{situation.goal}
-    PROMPT
   end
 end
