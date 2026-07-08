@@ -35,7 +35,7 @@ RSpec.describe TaskGenerationAgent do
       agent = instance_double(TaskGenerationAgent, ask: response)
       allow(TaskGenerationAgent).to receive(:new).and_return(agent)
 
-      expect(TaskGenerationAgent.generate(situation)).to eq(tasks)
+      expect(described_class.generate(situation)).to eq(tasks)
     end
   end
 

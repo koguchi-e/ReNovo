@@ -37,7 +37,4 @@ class SituationsController < ApplicationController
   def situation_params
     params.require(:situation).permit(:fact, :problem, :goal)
   end
-
-  def create_tasks_by_ai
-  end
 end

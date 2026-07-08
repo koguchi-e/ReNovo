@@ -12,6 +12,7 @@ RSpec.describe "Situations", type: :request do
     let(:user) { create(:user) }
     before do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      allow(GenerateTasksJob).to receive(:perform_later)
     end
 
     it "質問入力画面にアクセスできる" do
@@ -33,7 +34,12 @@ RSpec.describe "Situations", type: :request do
       expect do
         post situations_path, params: params
       end.to change(Situation, :count).by(1)
-      expect(response).to redirect_to situation_tasks_path(Situation.last)
+
+      situation = Situation.last
+
+      expect(GenerateTasksJob).to have_received(:perform_later).with(situation_id: situation.id)
+
+      expect(response).to redirect_to situation_tasks_path(situation)
       expect(flash[:notice]).to eq('質問に回答しました。')
     end
   end
