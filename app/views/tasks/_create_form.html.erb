@@ -1,0 +1,19 @@
+<div data-controller="task-edit">
+  <button type="button" data-task-edit-target="button" data-action="task-edit#create" class="bg-dusty-denim hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded hover:opacity-60" data-testid="open-task-form-button">
+    <i class="fa-solid fa-plus"></i> タスクを追加
+  </button>
+  <div data-task-edit-target="createForm" class="hidden m-5 p-4">
+    <%= form_with model: [situation, new_task] do |f| %>
+      <%= f.text_field :content,
+        class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-mikan-orange focus:bg-white focus:outline-none",
+        data: {
+          task_edit_target: "input",
+          testid: "new-task-content-input"
+        }
+      %>
+      <%= f.button type:"submit", class:"bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded", data:{ testid:"create-task-button" } do %>
+        <i class="fa-solid fa-check"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>

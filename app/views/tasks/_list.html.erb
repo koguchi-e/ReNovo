@@ -1,0 +1,48 @@
+<h2 class="text-3xl font-bold text-dusk-blue">
+  <i class="fa-solid fa-robot"></i>
+  AIがやることを整理しました！
+</h2>
+<p class="mt-3 text-dusty-denim">
+  内容は自由に編集できます。<br>
+  ドラッグで並び替えが可能です。
+</p>
+<% tasks.each_with_index do |task, index| %>
+  <div data-controller="task-edit">
+    <div data-task-edit-target="display" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 ">
+      <p class="hover:text-mikan-orange">
+        <%= index + 1 %>. 
+        <%= task.content %>
+      </p>
+      <div>
+        <button type="button" data-action="task-edit#edit" 
+        data-testid="edit-task-button"
+        class="hover:opacity-60">
+          <i class="fa-solid fa-pencil"></i>
+        </button>
+        <%= button_to situation_task_path(situation, task), method: :delete, class: "hover:opacity-60", data: { turbo_confirm: '本当に削除しますか？', testid:"delete-task-button-#{task.id}" } do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+    </div>
+    <div data-task-edit-target="form" class="hidden m-5 p-4">
+      <%= form_with model: [situation, task], method: :patch do |f| %>
+        <%= index + 1 %>. 
+        <%= f.text_field :content,
+          class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-mikan-orange focus:bg-white focus:outline-none",
+          data: {
+            task_edit_target: "input",
+            testid: "edit-task-content-input"
+          } 
+        %>
+        <%= f.button type:"submit", class:"bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded", data:{ testid:"update-task-button" } do %>
+          <i class="fa-solid fa-check"></i>
+        <% end %>
+        <button type="button" data-action="task-edit#cancel" class="bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded">
+          <i class="fa-solid fa-x"></i>
+        </button>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<%= render "tasks/create_form", situation: situation, new_task: new_task %>
+<button>入力内容を見直す</button>

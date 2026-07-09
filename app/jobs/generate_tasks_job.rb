@@ -7,6 +7,12 @@ class GenerateTasksJob < ApplicationJob
     return if situation.nil?
 
     situation.generating!
+    Turbo::StreamsChannel.broadcast_replace_to(
+      situation,
+      target: "status_screen",
+      partial: "tasks/generating",
+      locals: { situation: situation }
+    )
 
     task_contents = TaskGenerationAgent.generate(situation)
 
@@ -24,10 +30,22 @@ class GenerateTasksJob < ApplicationJob
         )
       end
       situation.completed!
+      Turbo::StreamsChannel.broadcast_replace_to(
+        situation,
+        target: "status_screen",
+        partial: "tasks/list",
+        locals: { situation: situation, tasks: situation.tasks, new_task: Task.new }
+      )
     end
   rescue StandardError => e
     situation&.failed!
     Rails.logger.error("[GenerateTasksJob] failed: #{e.class}: #{e.message}")
+    Turbo::StreamsChannel.broadcast_replace_to(
+      situation,
+      target: "status_screen",
+      partial: "tasks/failed",
+      locals: { situation: situation }
+    )
     raise
   end
 end
