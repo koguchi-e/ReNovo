@@ -17,7 +17,7 @@ class SituationsController < ApplicationController
 
     if @situation.save
       GenerateTasksJob.perform_later(situation_id: @situation.id)
-      redirect_to situation_tasks_path(@situation), notice: t(".created")
+      redirect_to situation_tasks_path(@situation)
     else
       flash.now[:alert] = t(".alert")
       render :new, status: :unprocessable_entity

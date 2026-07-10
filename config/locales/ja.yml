@@ -10,7 +10,6 @@ ja:
       blank: を入力してください
   situations:
     create:
-      created: "質問に回答しました。"
       alert: "質問の回答に失敗しました。"
   tasks:
     create:
