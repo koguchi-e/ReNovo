@@ -7,14 +7,14 @@
   ドラッグで並び替えが可能です。
 </p>
 <% tasks.each_with_index do |task, index| %>
-  <div data-controller="task-edit">
-    <div data-task-edit-target="display" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 ">
+  <div data-controller="task-form">
+    <div data-task-form-target="display" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 ">
       <p class="hover:text-mikan-orange">
         <%= index + 1 %>. 
         <%= task.content %>
       </p>
       <div>
-        <button type="button" data-action="task-edit#edit" 
+        <button type="button" data-action="task-form#edit" 
         data-testid="edit-task-button"
         class="hover:opacity-60">
           <i class="fa-solid fa-pencil"></i>
@@ -24,7 +24,7 @@
         <% end %>
       </div>
     </div>
-    <div data-task-edit-target="form" class="hidden m-5 p-4">
+    <div data-task-form-target="form" class="hidden m-5 p-4">
       <%= form_with model: [situation, task], method: :patch do |f| %>
         <%= index + 1 %>. 
         <%= f.text_field :content,
@@ -37,7 +37,7 @@
         <%= f.button type:"submit", class:"bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded", data:{ testid:"update-task-button" } do %>
           <i class="fa-solid fa-check"></i>
         <% end %>
-        <button type="button" data-action="task-edit#cancel" class="bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded">
+        <button type="button" data-action="task-form#editCancel" class="bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded">
           <i class="fa-solid fa-x"></i>
         </button>
       <% end %>

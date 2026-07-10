@@ -5,7 +5,7 @@
   <% elsif @situation.failed? %>
     <%= render "failed", situation: @situation %>
   <% elsif @tasks.exists? %>
-    <%= render "list", situation: @situation, tasks: @tasks, new_task: new_task %>
+    <%= render "list", situation: @situation, tasks: @tasks, new_task: @new_task %>
   <% else %>
     <p>タスクはまだありません。</p>
     <p>必要であれば、タスクを追加してください。</p>

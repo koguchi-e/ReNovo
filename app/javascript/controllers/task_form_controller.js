@@ -8,7 +8,7 @@ export default class extends Controller {
     this.formTarget.classList.remove("hidden");
   }
 
-  cancel() {
+  editCancel() {
     this.formTarget.classList.add("hidden");
     this.displayTarget.classList.remove("hidden");
   }
@@ -16,5 +16,10 @@ export default class extends Controller {
   create() {
     this.buttonTarget.classList.add("hidden");
     this.createFormTarget.classList.remove("hidden");
+  }
+
+  createCancel() {
+    this.createFormTarget.classList.add("hidden");
+    this.buttonTarget.classList.remove("hidden");
   }
 }
