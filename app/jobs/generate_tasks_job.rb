@@ -6,8 +6,28 @@ class GenerateTasksJob < ApplicationJob
     situation = Situation.find_by(id: situation_id)
     return if situation.nil?
 
+    situation.generating!
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      situation,
+      target: "status_screen",
+      partial: "tasks/generating",
+      locals: { situation: situation }
+    )
+
     task_contents = TaskGenerationAgent.generate(situation)
-    return if task_contents.nil?
+
+    unless task_contents.is_a?(Array) && task_contents.size == 5 && task_contents.all?(&:present?)
+      situation.failed!
+      Rails.logger.error("[GenerateTasksJob] invalid task content: #{task_contents.inspect}")
+      Turbo::StreamsChannel.broadcast_replace_to(
+        situation,
+        target: "status_screen",
+        partial: "tasks/failed",
+        locals: { situation: situation }
+      )
+      return
+    end
 
     ActiveRecord::Base.transaction do
       task_contents.each_with_index do |content, index|
@@ -16,9 +36,23 @@ class GenerateTasksJob < ApplicationJob
           position: index + 1
         )
       end
+      situation.completed!
+      Turbo::StreamsChannel.broadcast_replace_to(
+        situation,
+        target: "status_screen",
+        partial: "tasks/list",
+        locals: { situation: situation, tasks: situation.tasks, new_task: Task.new }
+      )
     end
   rescue StandardError => e
-    Rails.logger.error("[GenerateTasksJob] respond failed: #{e.class}: #{e.message}")
+    situation&.failed!
+    Rails.logger.error("[GenerateTasksJob] failed: #{e.class}: #{e.message}")
+    Turbo::StreamsChannel.broadcast_replace_to(
+      situation,
+      target: "status_screen",
+      partial: "tasks/failed",
+      locals: { situation: situation }
+    )
     raise
   end
 end
