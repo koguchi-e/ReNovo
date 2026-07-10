@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Tasks", type: :system do
   let(:user) { FactoryBot.create(:user) }
-  let!(:situation) { FactoryBot.create(:situation, user: user) }
+  let!(:situation) { FactoryBot.create(:situation, user: user, status: :completed) }
   let!(:task) { FactoryBot.create(:task, situation: situation) }
 
   before do
