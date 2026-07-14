@@ -2,13 +2,19 @@ Rails.application.routes.draw do
   resources :chats do
     resources :messages, only: [ :create ]
   end
+
   resources :models, only: [ :index, :show ] do
     collection do
       post :refresh
     end
   end
+
   resources :situations, only: %i[index show new create] do
     resources :tasks, only: %i[index create update destroy]
+
+    resource :task_positions, only: :update
+
+    resource :completion, only: :show, module: :situations
   end
 
   root "home#index"
