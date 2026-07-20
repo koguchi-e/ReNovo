@@ -6,7 +6,7 @@
 </p>
 <div data-controller="task-order" class="mt-5">
   <% @tasks.each do |task| %>
-    <div   data-task-id="<%= task.id %>" data-task-position-url="<%= situation_position_path(@situation) %>" 
+    <div data-task-id="<%= task.id %>" data-task-position-url="<%= situation_position_path(@situation) %>" 
     class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105">
       <span class="js-grab cursor-grab">
         <i class="fa-solid fa-grip"></i>

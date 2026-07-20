@@ -1,8 +1,8 @@
-<div data-controller="task-form" >
+<div data-controller="task-form" class="w-full">
   <button type="button" data-task-form-target="button" data-action="task-form#create" class="bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded hover:opacity-60" data-testid="open-task-form-button">
     <i class="fa-solid fa-plus"></i> タスクを追加
   </button>
-  <div data-task-form-target="createForm" class="hidden p-10 relative border-2 border-gray-200 text-dusk-blue">
+  <div data-task-form-target="createForm" class="hidden p-10 relative border-2 border-gray-200 hover:-translate-y-1 hover:scale-105">
     <%= form_with model: [situation, new_task] do |f| %>
       <%= f.text_field :content,
         class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-mikan-orange focus:bg-white focus:outline-none",
