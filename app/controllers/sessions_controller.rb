@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     user = User.find_or_create_from_auth_hash(auth)
     session[:user_id] = user.id
-     redirect_to new_situation_path
+    redirect_to new_situation_path
   end
 
   def destroy
