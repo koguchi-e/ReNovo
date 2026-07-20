@@ -1,24 +1,23 @@
 import { Controller } from "@hotwired/stimulus";
 import Sortable from "sortablejs";
+import { patch } from "@rails/request.js";
 
 export default class extends Controller {
-  static targets = ["list", "item", "hiddenFields"];
-
   connect() {
-    this.sortable = Sortable.create(this.listTarget, {
-      animation: 150,
-    });
-    this.element.addEventListener("submit", this.buildHiddenFields.bind(this));
-  }
+    Sortable.create(this.element, {
+      handle: ".js-grab",
 
-  buildHiddenFields() {
-    this.hiddenFieldsTarget.innerHTML = "";
-    this.itemTargets.forEach((item) => {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "task_ids[]";
-      input.value = item.dataset.id;
-      this.hiddenFieldsTarget.appendChild(input);
+      onEnd(event) {
+        const url = event.item.dataset.taskPositionUrl;
+        const params = {
+          task_id: event.item.dataset.taskId,
+          insert_at: event.newIndex + 1,
+        };
+
+        patch(url, { body: params }).catch((error) => {
+          console.warn(error);
+        });
+      },
     });
   }
 }

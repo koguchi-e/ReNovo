@@ -11,9 +11,7 @@ Rails.application.routes.draw do
 
   resources :situations, only: %i[index show new create] do
     resources :tasks, only: %i[index create update destroy]
-
-    resource :task_positions, only: :update
-
+    resource :position, only: %i[edit update]
     resource :completion, only: :show, module: :situations
   end
 
