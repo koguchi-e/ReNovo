@@ -11,6 +11,11 @@ module SystemHelpers
       )
     visit root_path
     click_button "Googleでログイン"
+
+    expect(page).to have_current_path(
+      new_situation_path,
+      ignore_query: true
+    )
   end
 end
 
