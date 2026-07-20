@@ -7,11 +7,13 @@
   <% elsif @tasks.exists? %>
     <%= render "list", situation: @situation, tasks: @tasks, new_task: @new_task %>
   <% else %>
-    <p class="mt-3 text-dusty-denim text-2xl">
-      タスクはまだありません。<br>
-      必要であれば、タスクを追加してください。
-    </p>
-    <%= render "create_form", situation: @situation, new_task: @new_task %>
-    <button>入力内容を見直す</button>
+    <div class="m-5 flex flex-col items-start gap-3">
+      <p class="text-dusty-denim text-base">
+        タスクはまだありません。<br>
+        必要であれば、タスクを追加してください。
+      </p>
+      <%= render "create_form", situation: @situation, new_task: @new_task %>
+      <button>入力内容を見直す</button>
+    </div>
   <% end %>
 </div>
