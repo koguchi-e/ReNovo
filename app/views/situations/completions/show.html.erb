@@ -1,0 +1,14 @@
+<h2 class="text-3xl font-bold text-dusk-blue">
+  タスクの整理が完了しました！
+</h2>
+<div class="m-5 flex flex-col items-start gap-3 text-dusty-denim text-base">
+  <% if @first_task %>
+    最初にやること<br>
+    <span class="font-bold text-2xl"><%= @first_task.content %></span>
+    <button>Markdownでコピー</button>
+  <% else %>
+    タスクはまだありません。<br>
+    必要であれば、タスクを追加してください。
+    <%= link_to "タスク編集に戻る", situation_tasks_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" %>
+  <% end %>
+</div>

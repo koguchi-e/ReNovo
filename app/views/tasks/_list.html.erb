@@ -3,38 +3,35 @@
   AIがタスクを整理しました！
 </h2>
 <p class="mt-3 text-dusty-denim">
-  内容は自由に編集できます。<br>
-  ドラッグで並び替えが可能です。
+  内容は自由に編集できます。
 </p>
 <% tasks.each_with_index do |task, index| %>
-  <div data-controller="task-form">
-    <div data-task-form-target="display" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105 ">
-      <p class="hover:text-mikan-orange">
-        <%= index + 1 %>. 
+  <div data-controller="task-form" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105">
+    <div data-task-form-target="display">
+      <p class="hover:opacity-60">
         <%= task.content %>
       </p>
-      <div>
-        <button type="button" data-action="task-form#edit" 
-        data-testid="edit-task-button"
-        class="hover:opacity-60">
+      <div class="flex mt-2">
+        <button type="button" data-action="task-form#edit"
+          data-testid="edit-task-button"
+          class="pr-2 hover:opacity-60">
           <i class="fa-solid fa-pencil"></i>
         </button>
-        <%= button_to situation_task_path(situation, task), method: :delete, class: "hover:opacity-60", data: { turbo_confirm: '本当に削除しますか？', testid:"delete-task-button-#{task.id}" } do %>
+        <%= button_to situation_task_path(situation, task), method: :delete, class: "hover:opacity-60", data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
           <i class="fa-solid fa-trash"></i>
         <% end %>
       </div>
     </div>
-    <div data-task-form-target="form" class="hidden m-5 p-4">
+    <div data-task-form-target="form" class="hidden p-9">
       <%= form_with model: [situation, task], method: :patch do |f| %>
-        <%= index + 1 %>. 
         <%= f.text_field :content,
-          class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-mikan-orange focus:bg-white focus:outline-none",
+          class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:bg-white focus:outline-none",
           data: {
             task_edit_target: "input",
             testid: "edit-task-content-input"
-          } 
+          }
         %>
-        <%= f.button type:"submit", class:"bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded", data:{ testid:"update-task-button" } do %>
+        <%= f.button type: "submit", class: "bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded", data: { testid: "update-task-button" } do %>
           <i class="fa-solid fa-check"></i>
         <% end %>
         <button type="button" data-action="task-form#editCancel" class="bg-dusty-denim hover:opacity-60 text-xs text-white font-bold mt-3 py-2 px-4 rounded">
@@ -44,5 +41,11 @@
     </div>
   </div>
 <% end %>
-<%= render "tasks/create_form", situation: situation, new_task: new_task %>
-<button>入力内容を見直す</button>
+<div class="m-5 flex flex-col items-start gap-3">
+  <%= render "tasks/create_form", situation: situation, new_task: new_task %>
+  <button class="mt-3">入力内容を見直す</button>
+  <%= link_to edit_situation_position_path(situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+    <i class="fa-solid fa-sort"></i>
+    タスクを並べ替える
+  <% end %>
+</div>
