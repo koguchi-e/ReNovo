@@ -3,6 +3,7 @@ class Situations::CompletionsController < ApplicationController
 
   def show
     @first_task = @situation.tasks.order(:position).first
+    @tasks = @situation.tasks.order(:position)
   end
 
   private
