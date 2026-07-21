@@ -5,7 +5,7 @@
   <% if @first_task %>
     最初にやること<br>
     <span class="font-bold text-2xl"><%= @first_task.content %></span>
-    <button>Markdownでコピー</button>
+    <%= render "tasks/code_block", task: @tasks %>
   <% else %>
     タスクはまだありません。<br>
     必要であれば、タスクを追加してください。
