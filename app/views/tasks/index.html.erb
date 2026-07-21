@@ -13,7 +13,7 @@
         必要であれば、タスクを追加してください。
       </p>
       <%= render "create_form", situation: @situation, new_task: @new_task %>
-      <button>入力内容を見直す</button>
+      <%= render "/situations/review_modal", situation: @situation %>
     </div>
   <% end %>
 </div>

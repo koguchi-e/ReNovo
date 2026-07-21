@@ -1,0 +1,19 @@
+<div data-controller="modal">
+  <button type="button" class="bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded hover:opacity-60" data-action="modal#open">
+    入力内容を見直す
+  </button>
+
+  <dialog data-modal-target="dialog" class="m-auto w-full max-w-2xl rounded-lg bg-white p-8 shadow-xl backdrop:bg-slate-900/50">
+    <div class="container mx-auto px-5 pb-5 bg-white">
+      <h2 id="review-modal-title" class="text-3xl font-bold text-dusk-blue">入力内容の確認</h2>
+      <hr class="mt-3 border-1 border-gray-200">
+      <%= render "/situations/situation_attribute", situation: situation, attribute: :fact %>
+      <%= render "/situations/situation_attribute", situation: situation, attribute: :problem %>
+      <%= render "/situations/situation_attribute", situation: situation, attribute: :goal %>
+
+      <button type="button" class="mt-5 bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded hover:opacity-60" data-action="modal#close">
+        閉じる
+      </button>
+    </div>
+  </dialog>
+</div>
