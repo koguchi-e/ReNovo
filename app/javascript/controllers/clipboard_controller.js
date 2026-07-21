@@ -1,12 +1,21 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["source"];
+  static targets = ["source", "icon", "message"];
 
-  copy() {
+  async copy() {
     const text = this.sourceTarget.innerText;
 
-    navigator.clipboard.writeText(text);
-    alert("コピーしました");
+    try {
+      await navigator.clipboard.writeText(text);
+      this.iconTarget.hidden = true;
+      this.messageTarget.hidden = false;
+      setTimeout(() => {
+        this.iconTarget.hidden = false;
+        this.messageTarget.hidden = true;
+      }, 2000);
+    } catch (error) {
+      console.error("コピーに失敗しました", error);
+    }
   }
 }

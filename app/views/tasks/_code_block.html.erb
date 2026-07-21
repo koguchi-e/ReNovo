@@ -4,9 +4,14 @@
 
 <div class="w-full" data-controller="clipboard">
   <div class="relative block rounded-md bg-gray-800 text-white">
-    <button class="absolute top-0 right-0 mb-1 w-10 h-10 flex items-center justify-center bg-slate-400 hover:bg-slate-300" data-action="clipboard#copy">
-      <i class="fa-solid fa-copy"></i>
-    </button>
+    <div class="absolute top-0 right-0 ">
+      <button class="mb-1 min-h-10 min-w-10 px-2 flex items-center justify-center bg-slate-400 hover:bg-slate-300" data-action="clipboard#copy" aria-label="Markdownをコピー">
+        <span data-clipboard-target="icon">
+          <i class="fa-solid fa-copy" aria-hidden="true"></i>
+        </span>
+        <p data-clipboard-target="message" class="font-bold" hidden>コピーしました</p>
+      </button>
+    </div>
     <pre class="overflow-x-auto pt-15 pl-10 pb-1"><code data-clipboard-target="source"><% @tasks.each do |task| %> - [ ] <%= task.content %><br><% end %></code>
     </pre>
   </div>
