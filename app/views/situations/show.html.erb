@@ -1,14 +1,28 @@
 <div>
-  <div>
-    <p class="text-3xl font-bold text-dusk-blue">
-      入力内容の確認
-    </p>
-    <p class="mt-3 text-dusty-denim">
-      以下の内容から、AIによってTodoリストを作成します。<br>
-      問題なければ「次へ」を押してください。
-    </p>
+  <div class="mb-5 flex flex-col items-start">
+    <%= link_to situations_path, class: "text-dusk-blue hover:opacity-60" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+      履歴に戻る
+    <% end %>
   </div>
   <div>
+    <h2 class="text-3xl font-bold text-dusk-blue">
+      <%= @situation.fact %>
+    </h2>
+    <hr class="mt-3 border-1 border-gray-200">
+    <p class="mt-3 text-dusty-denim">
+      <%= @situation.created_at.strftime('%Y年%m月%d日 %H時%M分') %>
+    </p>
+  </div>
+  
+  <%= render "tasks/code_block", task: @tasks %>
+  
+  <div class="mt-5 p-10 container bg-white border-2 border-gray-200 rounded">
+    <h2 class="text-2xl font-bold text-dusk-blue">
+      <i class="fa-solid fa-comment-dots"></i>
+      入力内容の確認
+    </h2>
+    <hr class="mt-3 border-1 border-gray-200">
     <%= render "situation_attribute", situation: @situation, attribute: :fact %>
     <%= render "situation_attribute", situation: @situation, attribute: :problem %>
     <%= render "situation_attribute", situation: @situation, attribute: :goal %>

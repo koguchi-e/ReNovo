@@ -1,18 +1,37 @@
-<h2 class="text-3xl font-bold text-dusk-blue">
-  Markdownでコピー
-</h2>
+<div class="mt-5 p-10 container bg-white border-2 border-gray-200 rounded">
+  <h2 class="text-2xl font-bold text-dusk-blue">
+    <i class="fa-solid fa-circle-check"></i>
+    作成したやることリスト
+  </h2>
+  <hr class="mt-3 border-1 border-gray-200">
 
-<div class="w-full" data-controller="clipboard">
-  <div class="relative block rounded-md bg-gray-800 text-white">
-    <div class="absolute top-0 right-0 ">
-      <button class="mb-1 min-h-10 min-w-10 px-2 flex items-center justify-center bg-slate-400 hover:bg-slate-300" data-action="clipboard#copy" aria-label="Markdownをコピー">
-        <span data-clipboard-target="icon">
-          <i class="fa-solid fa-copy" aria-hidden="true"></i>
-        </span>
-        <p data-clipboard-target="message" class="font-bold" hidden>コピーしました</p>
-      </button>
+  <p class="text-lg mt-5 text-dusty-denim">
+    Markdown形式のチェックリストでコピーできます。
+  </p>
+
+  <div class="w-full mt-5" data-controller="clipboard">
+    <div class="relative block rounded bg-gray-800 text-white">
+      <div class="absolute top-0 right-0 ">
+        <button class="mb-1 min-h-10 min-w-10 px-2 flex items-center rounded justify-center bg-slate-400 hover:bg-slate-300" data-action="clipboard#copy" aria-label="Markdownをコピー">
+          <span data-clipboard-target="icon">
+            <i class="fa-solid fa-copy" aria-hidden="true"></i>
+          </span>
+          <p data-clipboard-target="message" class="font-bold" hidden>コピーしました</p>
+        </button>
+      </div>
+      <pre class="overflow-x-auto pt-15 pl-10 pb-1"><code data-clipboard-target="source"><% @tasks.each do |task| %> - [ ] <%= task.content %><br><% end %></code>
+      </pre>
     </div>
-    <pre class="overflow-x-auto pt-15 pl-10 pb-1"><code data-clipboard-target="source"><% @tasks.each do |task| %> - [ ] <%= task.content %><br><% end %></code>
-    </pre>
+  </div>
+
+  <div class="mt-8 ml-3 flex gap-3">
+    <%= link_to situation_tasks_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+      <i class="fa-solid fa-pen-to-square"></i>
+      タスクを編集する
+    <% end %>
+    <%= link_to edit_situation_position_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+      <i class="fa-solid fa-sort"></i>
+      タスクを並べ替える
+    <% end %>
   </div>
 </div>

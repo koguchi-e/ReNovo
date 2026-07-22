@@ -2,9 +2,9 @@ ja:
   activerecord:
     attributes:
       situation:
-        fact: 現状
-        problem: 問題
-        goal: 目標
+        fact: 今どんなことが起きていますか？
+        problem: 今一番困っていることは何ですか？
+        goal: どんな状態になれたら良さそうですか？
   errors:
     messages:
       blank: を入力してください

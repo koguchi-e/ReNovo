@@ -1,13 +1,14 @@
 <h2 class="text-3xl font-bold text-dusk-blue">
+  <i class="fa-solid fa-sort"></i>
   タスクを並べ替える
 </h2>
-<p class="mt-3 text-dusty-denim">
+<p class="mt-5 pl-8 text-dusty-denim text-lg">
   ドラッグすると、並び順が自動で保存されます。
 </p>
 <div data-controller="task-order" class="mt-5">
   <% @tasks.each do |task| %>
     <div data-task-id="<%= task.id %>" data-task-position-url="<%= situation_position_path(@situation) %>" 
-    class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105">
+    class="m-5 p-4 relative border-2 rounded border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105">
       <span class="js-grab cursor-grab">
         <i class="fa-solid fa-grip"></i>
       </span>
@@ -16,6 +17,13 @@
   <% end %>
 </div>
 <div class="m-5 flex flex-col items-start gap-3">
-  <%= link_to "完了", situation_completion_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" %>
-  <%= link_to "タスク編集に戻る", situation_tasks_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" %>
+  <%= link_to situation_tasks_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+    <i class="fa-solid fa-pen-to-square"></i>
+    タスクを編集する
+  <% end %>
+  <%= render "/situations/review_modal", situation: @situation %>
+  <%= link_to situation_completion_path(@situation), class: "bg-rose-400 hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+    <i class="fa-solid fa-check"></i>
+    完了
+  <% end %>
 </div>

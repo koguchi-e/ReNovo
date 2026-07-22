@@ -4,7 +4,8 @@ class SituationsController < ApplicationController
   end
 
   def show
-    @situation = Situation.find(params[:id])
+    @situation = current_user.situations.find(params[:id])
+    @tasks = @situation.tasks.order(:position)
   end
 
   def new
