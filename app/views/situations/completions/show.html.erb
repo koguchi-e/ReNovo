@@ -1,14 +1,33 @@
 <h2 class="text-3xl font-bold text-dusk-blue">
+  <i class="fa-solid fa-file-circle-check"></i>
   タスクの整理が完了しました！
 </h2>
-<div class="m-5 flex flex-col items-start gap-3 text-dusty-denim text-base">
+<div class="mt-3 pl-8 flex flex-col items-start gap-3">
   <% if @first_task %>
-    最初にやること<br>
-    <span class="font-bold text-2xl"><%= @first_task.content %></span>
+    <div class="mt-5 p-10 container bg-white border-2 border-gray-200 rounded">
+      <h2 class="text-2xl font-bold text-dusk-blue">
+        <i class="fa-solid fa-play"></i>
+        最初にやること
+      </h2>
+      <hr class="mt-3 mb-5 border-1 border-gray-200">
+      <span class="text-dusty-denim pl-9 font-bold text-2xl"><%= @first_task.content %></span>
+    </div>
     <%= render "tasks/code_block", task: @tasks %>
   <% else %>
-    タスクはまだありません。<br>
-    必要であれば、タスクを追加してください。
+    <p class="mt-3 mb-3 text-lg text-dusty-denim">
+      タスクはまだありません。<br>
+      必要であれば、タスクを追加してください。
+    </p>
     <%= link_to "タスク編集に戻る", situation_tasks_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" %>
+  <% end %>
+</div>
+<div class="m-8 flex flex-col items-start gap-3">
+  <%= link_to situation_path(@situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+    <i class="fa-solid fa-magnifying-glass"></i>
+    入力内容を確認する
+  <% end %>
+  <%= link_to new_situation_path, class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+    <i class="fa-solid fa-plus"></i>
+    新しくふりかえる
   <% end %>
 </div>

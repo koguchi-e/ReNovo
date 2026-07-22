@@ -5,6 +5,7 @@ class SituationsController < ApplicationController
 
   def show
     @situation = Situation.find(params[:id])
+    @tasks = @situation.tasks.order(:position)
   end
 
   def new

@@ -2,11 +2,11 @@
   <i class="fa-solid fa-robot"></i>
   AIがタスクを整理しました！
 </h2>
-<p class="mt-3 text-dusty-denim">
+<p class="mt-5 pl-10 text-dusty-denim text-lg">
   内容は自由に編集できます。
 </p>
 <% tasks.each_with_index do |task, index| %>
-  <div data-controller="task-form" class="m-5 p-4 relative border-2 border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105">
+  <div data-controller="task-form" class="m-5 p-4 relative border-2 rounded border-gray-200 text-dusk-blue hover:-translate-y-1 hover:scale-105">
     <div data-task-form-target="display">
       <p class="hover:opacity-60">
         <%= task.content %>
