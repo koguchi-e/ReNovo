@@ -1,4 +1,43 @@
 <div data-controller="situation-form">
+  <ul class="mx-auto mb-5 flex flex-row gap-x-2">
+    <li class="basis-0 flex-1">
+      <div class="inline-flex min-h-7 w-full items-center text-xs">
+        <span
+          class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium"
+          data-situation-form-target="progressStep"
+        >
+          1
+        </span>
+
+        <div class="ms-2 h-px flex-1 bg-gray-200"></div>
+      </div>
+    </li>
+
+    <li class="basis-0 flex-1">
+      <div class="inline-flex min-h-7 w-full items-center text-xs">
+        <span
+          class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium"
+          data-situation-form-target="progressStep"
+        >
+          2
+        </span>
+
+        <div class="ms-2 h-px flex-1 bg-gray-200"></div>
+      </div>
+    </li>
+
+    <li class="basis-0 flex-1">
+      <div class="inline-flex min-h-7 w-full items-center text-xs">
+        <span
+          class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium"
+          data-situation-form-target="progressStep"
+        >
+          3
+        </span>
+      </div>
+    </li>
+  </ul>
+
   <%= form_with model: @situation, data: { action: "submit->situation-form#submit" } do |f| %>
     <div data-situation-form-target="step" class="block">
       <p class="text-3xl font-bold text-dusk-blue">

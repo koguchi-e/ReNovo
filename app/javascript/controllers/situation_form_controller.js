@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["step", "input", "error", "output"];
+  static targets = ["step", "input", "error", "output", "progressStep"];
 
   connect() {
     this.currentStep = 0;
@@ -28,6 +28,25 @@ export default class extends Controller {
   showCurrentStep() {
     this.stepTargets.forEach((step, index) => {
       step.classList.toggle("hidden", index !== this.currentStep);
+    });
+    this.updateProgress();
+  }
+
+  updateProgress() {
+    this.progressStepTargets.forEach((progressStep, index) => {
+      const isCurrent = index === this.currentStep;
+
+      progressStep.classList.toggle("bg-dusty-denim", isCurrent);
+      progressStep.classList.toggle("text-white", isCurrent);
+
+      progressStep.classList.toggle("bg-gray-200", !isCurrent);
+      progressStep.classList.toggle("text-gray-500", !isCurrent);
+
+      if (isCurrent) {
+        progressStep.setAttribute("aria-current", "step");
+      } else {
+        progressStep.removeAttribute("aria-current");
+      }
     });
   }
 
