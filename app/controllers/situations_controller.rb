@@ -1,4 +1,6 @@
 class SituationsController < ApplicationController
+  MONTHLY_USAGE_LIMIT = 50
+
   def index
     @situations = current_user.situations.order(created_at: :desc).page(params[:page])
   end
@@ -14,10 +16,23 @@ class SituationsController < ApplicationController
   end
 
   def create
-    @situation = Situation.new(situation_params)
-    @situation.user_id = current_user.id
+    @situation = current_user.situations.build(situation_params)
 
-    if @situation.save
+    limit_reached = false
+    saved = false
+
+    current_user.with_lock do
+      if monthly_usage_limit_reached?
+        limit_reached = true
+      else
+        saved = @situation.save
+      end
+    end
+
+    if limit_reached
+      flash.now[:alert] = "今月の利用上限に達しました。翌月に再び利用できます。"
+      render :new, status: :too_many_requests
+    elsif saved
       GenerateTasksJob.perform_later(situation_id: @situation.id)
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
@@ -30,5 +45,9 @@ class SituationsController < ApplicationController
 
   def situation_params
     params.require(:situation).permit(:fact, :problem, :goal)
+  end
+
+  def monthly_usage_limit_reached?
+    current_user.situations.where(created_at: Time.current.all_month).count >= MONTHLY_USAGE_LIMIT
   end
 end
