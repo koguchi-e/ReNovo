@@ -1,6 +1,7 @@
 class PositionsController < ApplicationController
   before_action :require_login
   before_action :set_situation
+  before_action :redirect_if_no_tasks, only: :edit
 
   def edit
     @tasks = @situation.tasks.order(:position)
@@ -20,5 +21,11 @@ class PositionsController < ApplicationController
 
   def set_situation
     @situation = current_user.situations.find(params[:situation_id])
+  end
+
+  def redirect_if_no_tasks
+    return if @situation.tasks.exists?
+
+    redirect_to situation_tasks_path(@situation), alert: "タスクがありません"
   end
 end
