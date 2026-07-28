@@ -7,4 +7,35 @@
   --color-alice-blue: #e2e8f0;
   --color-mikan-orange: #ffbc49;
   --color-apricot-cream: #f7cc83;
+  
+  --animate-draw-circle: draw-line 600ms ease-out forwards;
+  --animate-draw-check: draw-line 400ms ease-out 500ms forwards;
+
+  @keyframes draw-line {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+.completion-circle {
+  stroke-dasharray: 264;
+  stroke-dashoffset: 264;
+  animation: var(--animate-draw-circle);
+}
+
+.completion-check {
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  animation: var(--animate-draw-check);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .completion-circle,
+  .completion-check {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: none;
+  }
 }
