@@ -18,13 +18,21 @@ class SituationsController < ApplicationController
   def create
     @situation = current_user.situations.build(situation_params)
 
-    if monthly_usage_limit_reached?
-      flash.now[:alert] = "今月の利用上限に達しました。翌月に再び利用できます。"
-      render :new, status: :too_many_requests
-      return
+    limit_reached = false
+    saved = false
+
+    current_user.with_lock do
+      if monthly_usage_limit_reached?
+        limit_reached = true
+      else
+        saved = @situation.save
+      end
     end
 
-    if @situation.save
+    if limit_reached
+      flash.now[:alert] = "今月の利用上限に達しました。翌月に再び利用できます。"
+      render :new, status: :too_many_requests
+    elsif saved
       GenerateTasksJob.perform_later(situation_id: @situation.id)
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
