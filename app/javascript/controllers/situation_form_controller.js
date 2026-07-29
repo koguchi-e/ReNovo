@@ -36,7 +36,7 @@ export default class extends Controller {
     this.progressStepTargets.forEach((progressStep, index) => {
       const isCurrent = index === this.currentStep;
 
-      progressStep.classList.toggle("bg-dusty-denim", isCurrent);
+      progressStep.classList.toggle("bg-calm-blue", isCurrent);
       progressStep.classList.toggle("text-white", isCurrent);
 
       progressStep.classList.toggle("bg-gray-200", !isCurrent);
