@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Re Novo" %></title>
+    <title><%= content_for(:title) || "ReNovo" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Re Novo">
@@ -11,12 +11,10 @@
 
     <%= yield :head %>
 
+    <%= favicon_link_tag('favicon.ico') %>
+
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
@@ -37,8 +35,14 @@
         <%= alert %>
       </div>
     <% end %>
-    <main class="container relative mx-auto mt-10">
-      <%= yield %>
-    </main>
+    <% if controller_name == "home" && action_name == "index" %>
+      <main>
+        <%= yield %>
+      </main>
+    <% else %>
+      <main class="container relative mx-auto mt-10">
+        <%= yield %>
+      </main>
+    <% end %>
   </body>
 </html>
