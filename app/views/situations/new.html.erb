@@ -55,7 +55,7 @@
         </ul>
       </div>
       <%= render "form_text_area", f: f, attribute: :fact %>
-      <button type="button" data-testid="fact-next-button" data-action="click->situation-form#next" class="border-1 border-calm-blue bg-calm-blue hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+      <button type="button" data-testid="fact-next-button" data-action="click->situation-form#next" class="border border-calm-blue bg-calm-blue hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
     </div>
 
     <div data-situation-form-target="step" class="block">
@@ -74,8 +74,8 @@
         </ul>
       </div>
       <%= render "form_text_area", f: f, attribute: :problem %>
-      <button type="button" data-action="click->situation-form#prev" class="border-1 border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold mt-3 py-2 px-4 rounded">戻る</button>
-      <button type="button" data-testid="problem-next-button" data-action="click->situation-form#next" class="border-1 border-calm-blue bg-calm-blue hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
+      <button type="button" data-action="click->situation-form#prev" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold mt-3 py-2 px-4 rounded">戻る</button>
+      <button type="button" data-testid="problem-next-button" data-action="click->situation-form#next" class="border border-calm-blue bg-calm-blue hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded">次へ</button>
     </div>
 
     <div data-situation-form-target="step" class="block">
@@ -94,8 +94,8 @@
         </ul>
       </div>
       <%= render "form_text_area", f: f, attribute: :goal %>
-      <button type="button" data-action="click->situation-form#prev" class="border-1 border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold mt-3 py-2 px-4 rounded">戻る</button>
-      <%= f.submit "送信", class: "border-1 border-calm-blue bg-calm-blue hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded" %>
+      <button type="button" data-action="click->situation-form#prev" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold mt-3 py-2 px-4 rounded">戻る</button>
+      <%= f.submit "送信", class: "border border-calm-blue bg-calm-blue hover:opacity-60 text-white font-bold mt-3 py-2 px-4 rounded" %>
     </div>
   <% end %>
 </div>
