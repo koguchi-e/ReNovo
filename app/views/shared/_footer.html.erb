@@ -1,0 +1,25 @@
+  <footer class="bg-white px-4 py-6 text-dark-blue text-lg">
+    <div class="mx-auto flex flex-col items-center gap-4">
+      <nav aria-label="フッターナビゲーション">
+        <ul class="flex flex-row items-center gap-3 whitespace-nowrap">
+          <li>
+            <%= link_to "利用規約", terms_path, class: "hover:opacity-60" %>
+          </li>
+          <li>
+            <%= link_to "プライバシーポリシー", privacy_path, class: "hover:opacity-60" %>
+          </li>
+          <li>
+            <%= link_to "お問い合わせ", "https://forms.gle/EiqNdo63jMkgaWJeA", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60" %>
+          </li>
+        </ul>
+      </nav>
+
+      <p class="flex items-center gap-2">
+        <%= link_to "https://github.com/koguchi-e/ReNovo", target: "_blank", rel: "noopener noreferrer", class: "text-xl leading-none hover:opacity-60", aria: { label: "ReNovoのGitHubリポジトリ" } do %>
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+        <% end %>
+        &copy; 2026
+        <%= link_to "ReNovo", root_path, class: "hover:opacity-60" %>
+      </p>
+    </div>
+  </footer>
