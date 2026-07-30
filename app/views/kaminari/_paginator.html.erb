@@ -7,7 +7,7 @@
     paginator:     the paginator that renders the pagination tags inside
 -%>
 <%= paginator.render do -%>
-  <nav class="pagination mt-8 text-center text-2xl text-dark-blue [&_a:hover]:text-bright-orange" role="navigation" aria-label="pager">
+  <nav class="pagination mt-8 text-center text-2xl text-dark-blue [&_a:hover]:opacity-60" role="navigation" aria-label="pager">
     <%= first_page_tag unless current_page.first? %>
     <%= prev_page_tag unless current_page.first? %>
 
