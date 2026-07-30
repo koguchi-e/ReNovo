@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end
-  private
 
   def available_chat_models
     RubyLLM.models.chat_models.all

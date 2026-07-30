@@ -1,29 +1,23 @@
-<div class="min-h-screen bg-calm-blue p-4 sm:p-8">
-  <div class="rounded-lg bg-white p-4 sm:p-10">
-    <div class="flex flex-col items-center justify-center">
-      <%= image_tag "logo.png", alt: "サイトロゴ", class: "h-auto w-full max-w-[300px]" %>
+<%= image_tag "logo.png", alt: "サイトロゴ", class: "h-auto w-full max-w-[300px]" %>
+<h1 class="mt-15 text-center text-3xl font-bold text-dark-blue">
+  考えすぎて動けないを、小さな一歩に変える。
+</h1>
 
-      <h1 class="mt-15 text-center text-3xl font-bold text-dark-blue">
-        考えすぎて動けないを、小さな一歩に変える。
-      </h1>
+<p class="mt-10 text-calm-blue text-center text-xl">
+  ReNovoは、あなたが抱えている状況・問題・目標を整理し、<br>
+  今の自分が取り組める小さなタスクをAIが提案するサービスです。
+</p>
 
-      <p class="mt-10 text-calm-blue text-center text-xl">
-        ReNovoは、あなたが抱えている状況・問題・目標を整理し、<br>
-        今の自分が取り組める小さなタスクをAIが提案するサービスです。
-      </p>
+<p class="mt-10 text-calm-blue text-center text-xl">
+  何から始めればいいか分からない。<br>
+  やるべきことが多く、考えるだけで疲れてしまう。<br>
+  そんな状態から、行動を始めるきっかけを作ります。
+</p>
 
-      <p class="mt-10 text-calm-blue text-center text-xl">
-        何から始めればいいか分からない。<br>
-        やるべきことが多く、考えるだけで疲れてしまう。<br>
-        そんな状態から、行動を始めるきっかけを作ります。
-      </p>
+<%= button_to "Googleでログイン",
+  "/auth/google_oauth2",
+  method: :post,
+  class: "mt-10 bg-calm-blue hover:opacity-60 text-xl text-white font-bold text-white py-4 px-6 rounded",
+  form: { data: { turbo: false } } 
+%>
 
-      <%= button_to "Googleでログイン",
-        "/auth/google_oauth2",
-        method: :post,
-        class: "mt-10 bg-calm-blue hover:opacity-60 text-xl text-white font-bold text-white py-4 px-6 rounded",
-        form: { data: { turbo: false } } 
-      %>
-    </div>
-  </div>
-</div>
