@@ -35,7 +35,7 @@
         <%= alert %>
       </div>
     <% end %>
-    <% if controller_name == "home" && action_name == "index" %>
+    <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" %>
       <main>
         <%= yield %>
       </main>
