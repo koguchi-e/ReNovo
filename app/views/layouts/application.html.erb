@@ -23,23 +23,29 @@
   </head>
 
   <body>
-    <%= render "shared/header" unless current_page?(root_path) %>
-    <% if notice.present? %>
-      <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-green-700 bg-green-200 px-4 py-3 text-green-700 transition-opacity duration-[3000ms] ease-linear" role="status" aria-live="polite">
-        <%= notice %>
-      </div>
-    <% end %>
-
-    <% if alert.present? %>
-      <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-red-700 bg-red-200 px-4 py-3 text-red-700 transition-opacity duration-[3000ms] ease-linear" role="alert">
-        <%= alert %>
-      </div>
-    <% end %>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" %>
-      <main>
-        <%= yield %>
-      </main>
+      <div class="min-h-screen bg-calm-blue p-4 sm:p-8">
+        <div class="rounded-lg bg-white p-4 sm:p-10">
+          <div class="flex flex-col items-center justify-center">
+            <main>
+              <%= yield %>
+            </main>
+          </div>
+        </div>
+      </div>
     <% else %>
+      <%= render "shared/header" unless current_page?(root_path) %>
+      <% if notice.present? %>
+        <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-green-700 bg-green-200 px-4 py-3 text-green-700 transition-opacity duration-[3000ms] ease-linear" role="status" aria-live="polite">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert.present? %>
+        <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-red-700 bg-red-200 px-4 py-3 text-red-700 transition-opacity duration-[3000ms] ease-linear" role="alert">
+          <%= alert %>
+        </div>
+      <% end %>
       <main class="container relative mx-auto mt-10">
         <%= yield %>
       </main>
