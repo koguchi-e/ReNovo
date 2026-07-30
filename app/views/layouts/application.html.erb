@@ -23,14 +23,12 @@
   </head>
 
   <body>
-    <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" %>
+    <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
       <div class="min-h-screen bg-calm-blue p-4 sm:p-8">
         <div class="rounded-lg bg-white p-4 sm:p-10">
-          <div class="flex flex-col items-center justify-center">
-            <main>
-              <%= yield %>
-            </main>
-          </div>
+          <main class="flex flex-col items-center justify-center">
+            <%= yield %>
+          </main>
         </div>
       </div>
     <% else %>
