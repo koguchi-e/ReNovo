@@ -1,12 +1,12 @@
 <div class="mt-5 p-10 container bg-white border-2 border-gray-200 rounded">
-  <h2 class="text-2xl font-bold text-dusk-blue">
+  <h2 class="text-2xl font-bold text-dark-blue">
     <i class="fa-solid fa-circle-check"></i>
     作成したやることリスト
   </h2>
-  <hr class="mt-3 border-1 border-gray-200">
+  <hr class="mt-3 border border-gray-200">
 
   <% if situation.tasks.exists? %>
-    <p class="text-lg mt-5 text-dusty-denim">
+    <p class="text-lg mt-5 text-calm-blue">
       Markdown形式のチェックリストでコピーできます。
     </p>
 
@@ -26,18 +26,18 @@
     </div>
 
     <div class="mt-8 ml-3 flex gap-3">
-      <%= link_to situation_tasks_path(situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+      <%= link_to situation_tasks_path(situation), class: "border border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold py-2 px-4 rounded" do %>
         <i class="fa-solid fa-pen-to-square"></i>
         タスクを編集する
       <% end %>
-      <%= link_to edit_situation_position_path(situation), class: "bg-dusty-denim hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+      <%= link_to edit_situation_position_path(situation), class: "border border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold py-2 px-4 rounded" do %>
         <i class="fa-solid fa-sort"></i>
         タスクを並べ替える
       <% end %>
     </div>
   <% else %>
     <div class="m-5 flex flex-col items-start gap-3">
-      <p class="mb-3 text-dusty-denim text-lg">
+      <p class="mb-3 text-calm-blue text-lg">
         タスクはまだありません。<br>
         必要であれば、タスクを追加してください。
       </p>
