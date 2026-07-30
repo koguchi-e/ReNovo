@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   root "home#index"
   get "/home", to: "home#show"
   get "/terms", to: "terms#show"
+  get "/privacy", to: "privacy#show"
 
   get "up" => "rails/health#show", as: :rails_health_check
 
