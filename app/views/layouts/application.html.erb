@@ -22,9 +22,17 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="flex min-h-screen flex-col">
+    <header class="relative w-full" data-controller="hamburger-menu">
+      <div class="mx-auto flex items-center justify-between bg-dark-blue px-4 py-3">
+        <%= link_to "ReNovo", root_path, class: "text-xl font-bold text-bright-orange hover:opacity-60" %>
+        <% if current_user %>
+          <%= render "shared/header_menu" %>
+        <% end %>
+      </div>
+    </header>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
-      <div class="min-h-screen bg-calm-blue p-4 sm:p-8">
+      <div class="flex-1 bg-calm-blue p-4 sm:p-8">
         <div class="rounded-lg bg-white p-4 sm:p-10">
           <main class="flex flex-col items-center justify-center">
             <%= yield %>
@@ -32,7 +40,6 @@
         </div>
       </div>
     <% else %>
-      <%= render "shared/header" unless current_page?(root_path) %>
       <% if notice.present? %>
         <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-green-700 bg-green-200 px-4 py-3 text-green-700 transition-opacity duration-[3000ms] ease-linear" role="status" aria-live="polite">
           <%= notice %>
@@ -44,9 +51,10 @@
           <%= alert %>
         </div>
       <% end %>
-      <main class="container relative mx-auto mt-10">
+      <main class="container relative mx-auto mt-10 flex-1">
         <%= yield %>
       </main>
     <% end %>
+    <%= render "shared/footer" %>
   </body>
 </html>
