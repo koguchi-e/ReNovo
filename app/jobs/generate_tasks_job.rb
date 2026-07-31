@@ -43,6 +43,12 @@ class GenerateTasksJob < ApplicationJob
         partial: "tasks/list",
         locals: { situation: situation, tasks: situation.tasks, new_task: Task.new }
       )
+      Turbo::StreamsChannel.broadcast_append_to(
+        situation,
+        target: "flash_messages",
+        partial: "shared/flash",
+        locals: { type: :notice, message: "AIがタスクを整理しました！" }
+      )
     end
   rescue StandardError => e
     situation&.failed!

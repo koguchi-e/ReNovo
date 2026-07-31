@@ -17,6 +17,12 @@ RSpec.describe GenerateTasksJob, type: :job do
         "勉強時間をカレンダーに30分だけ登録する"
       ]
       allow(TaskGenerationAgent).to receive(:generate).and_return(tasks)
+      expect(Turbo::StreamsChannel).to receive(:broadcast_append_to).with(
+        situation,
+        target: "flash_messages",
+        partial: "shared/flash",
+        locals: { type: :notice, message: "AIがタスクを整理しました！" }
+      )
       expect {
         described_class.perform_now(situation_id: situation.id)
       }.to change(Task, :count).by(5)
