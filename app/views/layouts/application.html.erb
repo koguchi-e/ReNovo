@@ -22,17 +22,17 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="flex min-h-screen flex-col">
-    <header class="relative w-full bg-dark-blue" data-controller="hamburger-menu">
+  <body class="flex min-h-screen flex-col bg-dawn-mist">
+    <header class="relative w-full border-b border-gray-200 bg-dawn-mist" data-controller="hamburger-menu">
       <div class="relative mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <%= link_to "ReNovo", root_path, class: "text-xl font-bold text-bright-orange hover:opacity-60" %>
+        <%= link_to "ReNovo", root_path, class: "text-xl font-bold text-dark-blue hover:opacity-60" %>
         <% if current_user %>
           <%= render "shared/header_menu" %>
         <% end %>
       </div>
     </header>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
-      <div class="flex-1 bg-calm-blue p-4 sm:p-8">
+      <div class="flex-1 bg-dawn-mist p-4 sm:p-8">
         <div class="mx-auto w-full max-w-5xl rounded-2xl bg-white p-4 shadow-sm sm:p-10">
           <main class="mx-auto flex w-full max-w-4xl flex-col items-center justify-center">
             <%= yield %>

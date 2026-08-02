@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-blue: #2D497A;
-  --color-calm-blue: #5675A7;
-  --color-bright-orange: #FCCE90;
+  --color-dark-blue: #263A67;
+  --color-calm-blue: #586EA6;
+  --color-bright-orange: #F2B98F;
+  --color-dawn-mist: #F4F1F3;
+  --color-white: #FFFCFA;
+  --color-gray-200: #E8E1E5;
   
   --animate-draw-circle: draw-line 600ms ease-out forwards;
   --animate-draw-check: draw-line 400ms ease-out 500ms forwards;
