@@ -12,11 +12,11 @@
         }
       %>
       <div class="mt-3 flex w-full items-center justify-start gap-2">
-        <%= f.button type:"submit", class:"border border-calm-blue bg-calm-blue hover:opacity-60 text-white text-xs font-bold py-2 px-4 rounded", data:{ testid:"create-task-button" } do %>
-          <i class="fa-solid fa-check"></i>
+        <%= f.button type: "submit", aria: { label: "タスクを作成" }, class: "border border-calm-blue bg-calm-blue hover:opacity-60 text-white text-xs font-bold py-2 px-4 rounded", data: { testid: "create-task-button" } do %>
+          <i class="fa-solid fa-check" aria-hidden="true"></i>
         <% end %>
-        <button type="button" data-action="task-form#createCancel" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 text-xs font-bold py-2 px-4 rounded">
-          <i class="fa-solid fa-x"></i>
+        <button type="button" aria-label="作成をキャンセル" data-action="task-form#createCancel" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 text-xs font-bold py-2 px-4 rounded">
+          <i class="fa-solid fa-x" aria-hidden="true"></i>
         </button>
       </div>
     <% end %>

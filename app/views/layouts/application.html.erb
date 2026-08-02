@@ -40,7 +40,7 @@
         </div>
       </div>
     <% else %>
-      <div id="flash_messages">
+      <div id="flash_messages" class="pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6">
         <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
         <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
       </div>
