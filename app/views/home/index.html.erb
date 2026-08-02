@@ -11,12 +11,14 @@
   やるべきことが多く、考えるだけで疲れてしまう。<br>
   そんな状態から、行動を始めるきっかけを作ります。
 </p>
-<%= button_to(
-  "/auth/google_oauth2",
-  method: :post,
-  class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60",
-  form: { data: { turbo: false } }
-) do %>
-  <i class="fa-brands fa-google" aria-hidden="true"></i>
-  Googleでログイン
+<% if current_user %>
+  <%= link_to new_situation_path, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60" do %>
+    <i class="fa-solid fa-plus"></i>
+    新しくふりかえる
+  <% end %>
+<% else %>
+  <%= button_to( "/auth/google_oauth2", method: :post, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60", form: { data: { turbo: false } } ) do %>
+    <i class="fa-brands fa-google" aria-hidden="true"></i>
+    Googleでログイン
+  <% end %>
 <% end %>
