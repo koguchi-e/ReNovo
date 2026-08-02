@@ -8,24 +8,21 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <%= favicon_link_tag('favicon.ico') %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
     <script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body class="flex min-h-screen flex-col bg-dawn-mist">
     <header class="relative w-full border-b border-gray-200 bg-dawn-mist" data-controller="hamburger-menu">
       <div class="relative mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <%= link_to "ReNovo", root_path, class: "text-xl font-bold text-dark-blue hover:opacity-60" %>
+        <%= link_to root_path, class: "text-xl font-bold text-dark-blue hover:opacity-60" do %>
+          <%= image_tag "logo.png", alt: "メニューロゴ", class: "h-auto w-full max-w-[180px]" %>
+        <% end %>
         <% if current_user %>
           <%= render "shared/header_menu" %>
         <% end %>
