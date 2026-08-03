@@ -4,7 +4,7 @@
     履歴一覧
   </h2>
 
-  <% if @situations.exists? %>
+  <% if @situations.total_count.positive? %>
     <p class="mt-5 text-center text-xl text-calm-blue">過去に作成したやることリストを見直しましょう</p>
     <% @situations.each do |situation| %>
       <%= link_to situation_path(situation.id),
