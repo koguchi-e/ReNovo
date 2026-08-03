@@ -7,14 +7,24 @@ export default class extends Controller {
   };
 
   connect() {
+    this.scheduledVisit();
+  }
+
+  disconnect() {
+    this.cancelScheduledVisit();
+  }
+
+  scheduledVisit() {
     this.timer = window.setTimeout(() => {
+      this.scheduledVisit();
       Turbo.visit(window.location.href, { action: "replace" });
     }, this.intervalValue);
   }
 
-  disconnect() {
+  cancelScheduledVisit() {
     if (this.timer) {
       window.clearTimeout(this.timer);
+      this.timer = null;
     }
   }
 }
