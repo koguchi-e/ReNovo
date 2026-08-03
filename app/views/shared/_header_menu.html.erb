@@ -38,7 +38,7 @@
       <% end %>
     </div>
     <div>
-      <%= button_to user_path, method: :delete, data: { turbo_confirm: "本当に退会しますか？すべてのふりかえりとタスクが削除され、この操作は取り消せません。" }, class: "text-dark-blue hover:opacity-60" do %>
+      <%= button_to user_path, method: :delete, form: { data: { turbo_confirm: "本当に退会しますか？すべてのふりかえりとタスクが削除され、この操作は取り消せません。" } }, class: "text-dark-blue hover:opacity-60" do %>
         <i class="fa-solid fa-user-slash" aria-hidden="true"></i>
         退会する
       <% end %>
