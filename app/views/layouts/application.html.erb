@@ -28,6 +28,10 @@
         <% end %>
       </div>
     </header>
+    <div id="flash_messages" class="pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6">
+      <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
+      <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
+    </div>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
       <div class="flex-1 bg-dawn-mist p-4 sm:p-8">
         <div class="mx-auto w-full max-w-5xl rounded-2xl bg-white p-4 shadow-sm sm:p-10">
@@ -37,10 +41,6 @@
         </div>
       </div>
     <% else %>
-      <div id="flash_messages" class="pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6">
-        <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
-        <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
-      </div>
       <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
         <%= yield %>
       </main>
