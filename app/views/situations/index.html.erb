@@ -1,13 +1,14 @@
 <div>
-  <h2 class="text-3xl font-bold text-dark-blue">
-    <i class="fa-solid fa-list"></i>
+  <h2 class="text-center text-4xl font-bold text-dark-blue">
+    <i class="fa-solid fa-list" aria-hidden="true"></i>
     履歴一覧
   </h2>
-  <p class="mt-5 pl-5 text-calm-blue text-lg">過去に作成したやることリストを見直しましょう</p>
+  <p class="mt-5 text-center text-xl text-calm-blue">過去に作成したやることリストを見直しましょう</p>
 
   <% @situations.each do |situation| %>
-    <%= link_to situation_path(situation.id) do %>
-      <div class="m-5 p-4 relative border-2 rounded border-gray-200 text-dark-blue hover:-translate-y-1 hover:scale-105 hover:text-bright-orange">
+    <%= link_to situation_path(situation.id),
+      class: "m-3 block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-blue focus-visible:ring-offset-2 focus-visible:ring-offset-dawn-mist" do %>
+      <div class="relative rounded-2xl border border-gray-200 bg-white p-4 text-dark-blue shadow-sm hover:-translate-y-1 hover:scale-[1.02] hover:opacity-80 sm:p-5">
         <p class="text-sm">
           <%= situation.created_at.strftime('%Y年%m月%d日 %H時%M分') %>
         </p>

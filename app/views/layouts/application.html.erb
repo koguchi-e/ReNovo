@@ -8,50 +8,40 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <%= favicon_link_tag('favicon.ico') %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
     <script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
-  <body class="flex min-h-screen flex-col">
-    <header class="relative w-full" data-controller="hamburger-menu">
-      <div class="mx-auto flex items-center justify-between bg-dark-blue px-4 py-3">
-        <%= link_to "ReNovo", root_path, class: "text-xl font-bold text-bright-orange hover:opacity-60" %>
+  <body class="flex min-h-screen flex-col bg-dawn-mist">
+    <header class="relative w-full border-b border-gray-200 bg-dawn-mist" data-controller="hamburger-menu">
+      <div class="relative mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <%= link_to root_path, class: "text-xl font-bold text-dark-blue hover:opacity-60" do %>
+          <%= image_tag "logo.png", alt: "ReNovo ホーム", class: "h-auto w-full max-w-[180px]" %>
+        <% end %>
         <% if current_user %>
           <%= render "shared/header_menu" %>
         <% end %>
       </div>
     </header>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
-      <div class="flex-1 bg-calm-blue p-4 sm:p-8">
-        <div class="rounded-lg bg-white p-4 sm:p-10">
-          <main class="flex flex-col items-center justify-center">
+      <div class="flex-1 bg-dawn-mist p-4 sm:p-8">
+        <div class="mx-auto w-full max-w-5xl rounded-2xl bg-white p-4 shadow-sm sm:p-10">
+          <main class="mx-auto flex w-full max-w-4xl flex-col items-center justify-center">
             <%= yield %>
           </main>
         </div>
       </div>
     <% else %>
-      <% if notice.present? %>
-        <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-green-700 bg-green-200 px-4 py-3 text-green-700 transition-opacity duration-[3000ms] ease-linear" role="status" aria-live="polite">
-          <%= notice %>
-        </div>
-      <% end %>
-
-      <% if alert.present? %>
-        <div data-controller="flash" class="absolute top-20 right-20 w-[300px] rounded border border-red-700 bg-red-200 px-4 py-3 text-red-700 transition-opacity duration-[3000ms] ease-linear" role="alert">
-          <%= alert %>
-        </div>
-      <% end %>
-      <main class="container relative mx-auto mt-10 flex-1">
+      <div id="flash_messages" class="pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6">
+        <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
+        <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
+      </div>
+      <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
         <%= yield %>
       </main>
     <% end %>

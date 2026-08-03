@@ -1,23 +1,24 @@
-<%= image_tag "logo.png", alt: "サイトロゴ", class: "h-auto w-full max-w-[300px]" %>
-<h1 class="mt-15 text-center text-3xl font-bold text-dark-blue">
-  考えすぎて動けないを、小さな一歩に変える。
+<%= image_tag "top_logo.png", alt: "サイトロゴ", class: "h-auto w-full max-w-[400px]" %>
+<h1 class="mt-15 text-center text-4xl font-bold text-dark-blue">
+  「考えすぎて動けない」を、小さな一歩に変える。
 </h1>
-
-<p class="mt-10 text-calm-blue text-center text-xl">
+<p class="mt-10 text-calm-blue text-center text-2xl">
   ReNovoは、あなたが抱えている状況・問題・目標を整理し、<br>
   今の自分が取り組める小さなタスクをAIが提案するサービスです。
 </p>
-
-<p class="mt-10 text-calm-blue text-center text-xl">
+<p class="mt-10 text-calm-blue text-center text-2xl">
   何から始めればいいか分からない。<br>
   やるべきことが多く、考えるだけで疲れてしまう。<br>
   そんな状態から、行動を始めるきっかけを作ります。
 </p>
-
-<%= button_to "Googleでログイン",
-  "/auth/google_oauth2",
-  method: :post,
-  class: "mt-10 bg-calm-blue hover:opacity-60 text-xl text-white font-bold text-white py-4 px-6 rounded",
-  form: { data: { turbo: false } } 
-%>
-
+<% if current_user %>
+  <%= link_to new_situation_path, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60" do %>
+    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+    新しくふりかえる
+  <% end %>
+<% else %>
+  <%= button_to( "/auth/google_oauth2", method: :post, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60", form: { data: { turbo: false } } ) do %>
+    <i class="fa-brands fa-google" aria-hidden="true"></i>
+    Googleでログイン
+  <% end %>
+<% end %>

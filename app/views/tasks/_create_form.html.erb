@@ -1,21 +1,24 @@
-<div data-controller="task-form" class="w-full">
-  <button type="button" data-task-form-target="button" data-action="task-form#create" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold py-2 px-4 rounded hover:opacity-60" data-testid="open-task-form-button">
-    <i class="fa-solid fa-plus"></i> タスクを追加
+<div data-controller="task-form" class="<%= "flex w-full flex-col items-center" if local_assigns[:full_width] %>">
+  <button type="button" data-task-form-target="button" data-action="task-form#create" class="<%= local_assigns[:primary_button] ? "border border-calm-blue bg-calm-blue text-white" : "border border-calm-blue bg-white text-calm-blue" %> rounded px-4 py-2 font-bold hover:opacity-60" data-testid="open-task-form-button">
+    <i class="fa-solid fa-plus" aria-hidden="true"></i> タスクを追加
   </button>
-  <div data-task-form-target="createForm" class="hidden p-10 relative border-2 rounded border-gray-200 hover:-translate-y-1 hover:scale-105">
+  <div data-task-form-target="createForm" class="relative hidden <%= local_assigns[:full_width] ? "w-full" : "w-[min(32rem,calc(100vw-2rem))]" %> rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:-translate-y-1 hover:scale-[1.02] sm:p-8">
     <%= form_with model: [situation, new_task] do |f| %>
-      <%= f.text_field :content,
-        class: "h-10 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 leading-tight text-gray-700 focus:border-bright-orange focus:bg-white focus:outline-none",
+      <%= f.text_area :content,
+        rows: 3,
+        class: "min-h-10 w-full resize-y rounded border-2 border-gray-200 bg-gray-200 p-3 leading-relaxed text-gray-700 focus:border-bright-orange focus:bg-white focus:outline-none",
         data: {
           testid: "new-task-content-input"
         }
       %>
-      <%= f.button type:"submit", class:"border border-calm-blue bg-calm-blue hover:opacity-60 text-white text-xs font-bold mt-3 py-2 px-4 rounded", data:{ testid:"create-task-button" } do %>
-        <i class="fa-solid fa-check"></i>
-      <% end %>
-      <button type="button" data-action="task-form#createCancel" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 text-xs font-bold mt-3 py-2 px-4 rounded">
-        <i class="fa-solid fa-x"></i>
-      </button>
+      <div class="mt-3 flex w-full items-center justify-start gap-2">
+        <%= f.button type: "submit", aria: { label: "タスクを作成" }, class: "border border-calm-blue bg-calm-blue hover:opacity-60 text-white text-xs font-bold py-2 px-4 rounded", data: { testid: "create-task-button" } do %>
+          <i class="fa-solid fa-check" aria-hidden="true"></i>
+        <% end %>
+        <button type="button" aria-label="作成をキャンセル" data-action="task-form#createCancel" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 text-xs font-bold py-2 px-4 rounded">
+          <i class="fa-solid fa-x" aria-hidden="true"></i>
+        </button>
+      </div>
     <% end %>
   </div>
 </div>
