@@ -18,5 +18,20 @@ RSpec.describe "Users", type: :request do
       delete user_path
       expect(response).to redirect_to(root_path)
     end
+
+    it "退会後、再登録できる" do
+      delete user_path
+      expect do
+        get "/auth/google_oauth2/callback"
+      end.to change(User, :count).by(1)
+
+      expect(session[:user_id]).to be_present
+
+      expect(response).to redirect_to new_situation_path
+      expect(flash[:notice]).to eq('ログインしました。')
+
+      expect(Situation.count).to eq(0)
+      expect(Task.count).to eq(0)
+    end
   end
 end
