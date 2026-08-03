@@ -26,7 +26,7 @@
 <div class="mt-3 flex flex-col items-start gap-3">
   <div class="mt-5 w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
     <h2 class="text-2xl font-bold text-dark-blue">
-      <i class="fa-solid fa-play"></i>
+      <i class="fa-solid fa-play" aria-hidden="true"></i>
       最初にやること
     </h2>
     <hr class="mt-3 mb-5 border border-gray-200">
@@ -37,7 +37,7 @@
 <div class="mt-8 flex flex-col items-center gap-3">
   <%= render "/situations/review_modal", situation: @situation %>
   <%= link_to new_situation_path, class: "bg-calm-blue hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
-    <i class="fa-solid fa-plus"></i>
+    <i class="fa-solid fa-plus" aria-hidden="true"></i>
     新しくふりかえる
   <% end %>
 </div>
