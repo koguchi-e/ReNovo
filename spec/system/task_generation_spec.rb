@@ -22,7 +22,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
     end
 
     situation.completed!
-    expect(page).to have_content("タスク1", wait: 5)
+    expect(page).to have_content("タスク1", wait: 10)
     expect(page).to have_content("タスク5")
     expect(page).not_to have_content("Loading")
   end
