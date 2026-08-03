@@ -4,7 +4,7 @@ RSpec.describe "Googleログイン", type: :system do
   let(:user) { FactoryBot.create(:user) }
 
   before do
-    driven_by(:rack_test)
+    driven_by(:selenium_chrome_headless)
   end
 
   scenario "ログインすると、ふりかえりの入力画面に遷移する" do
