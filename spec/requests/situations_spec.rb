@@ -1,23 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe "Situations", type: :request do
-  describe "質問入力画面へアクセスするとトップ画面にリダイレクトする" do
-    it "質問入力画面にアクセスする" do
-      get new_situation_path
-      expect(response).to redirect_to(root_path)
+  describe "GET /situations/new" do
+    context "ログインしていない場合" do
+      it "トップ画面にリダイレクトする" do
+        get new_situation_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "ログインしている場合" do
+      let(:user) { create(:user) }
+
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      end
+
+      it "質問入力画面を表示する" do
+        get new_situation_path
+        expect(response).to have_http_status(:success)
+      end
     end
   end
 
-  describe "ログインしている場合" do
+  describe "POST /situations" do
     let(:user) { create(:user) }
+
     before do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       allow(GenerateTasksJob).to receive(:perform_later)
-    end
-
-    it "質問入力画面にアクセスできる" do
-      get new_situation_path
-      expect(response).to have_http_status(:success)
     end
 
     let(:params) do
@@ -30,17 +41,19 @@ RSpec.describe "Situations", type: :request do
       }
     end
 
-    it "ふりかえりを作成し、タスク生成ジョブを登録する" do
-      expect do
-        post situations_path, params: params
-      end.to change(Situation, :count).by(1)
+    context "ログインしている場合" do
+      it "ふりかえりを作成し、タスク生成ジョブを登録する" do
+        expect do
+          post situations_path, params: params
+        end.to change(Situation, :count).by(1)
 
-      situation = Situation.last
+        situation = Situation.last
 
-      expect(GenerateTasksJob).to have_received(:perform_later).with(situation_id: situation.id)
+        expect(GenerateTasksJob).to have_received(:perform_later).with(situation_id: situation.id)
 
-      expect(response).to redirect_to situation_tasks_path(situation)
-      expect(flash[:notice]).to eq('質問に回答しました。')
+        expect(response).to redirect_to situation_tasks_path(situation)
+        expect(flash[:notice]).to eq('質問に回答しました。')
+      end
     end
   end
 end

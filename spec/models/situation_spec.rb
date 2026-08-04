@@ -22,7 +22,7 @@ RSpec.describe Situation, type: :model do
       expect(situation).to be_valid
     end
 
-    it "状況、問題、目標が301文字以上だと登録できない" do
+    it "状況、問題、目標が301文字だと登録できない" do
       situation = build(
         :situation,
         fact: "あ" * 301,

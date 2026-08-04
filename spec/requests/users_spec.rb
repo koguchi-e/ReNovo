@@ -9,7 +9,7 @@ RSpec.describe "Users", type: :request do
     sign_in_as(user)
   end
 
-  describe "退会処理" do
+  describe "DELETE /user" do
     it "ユーザーと関連するふりかえり・タスクが削除される" do
       expect { delete user_path }.to change(User, :count).by(-1).and change(Situation, :count).by(-1).and change(Task, :count).by(-1)
     end
