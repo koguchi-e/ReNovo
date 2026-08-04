@@ -1,4 +1,4 @@
-module SystemHelpers
+module RequestHelpers
   def sign_in_as(user)
     OmniAuth.config.mock_auth[:google_oauth2] =
       OmniAuth::AuthHash.new(
@@ -9,20 +9,14 @@ module SystemHelpers
           name: user.name
         }
       )
-    visit root_path
-    click_button "Googleでログイン"
-
-    expect(page).to have_current_path(
-      new_situation_path,
-      ignore_query: true
-    )
+    get "/auth/google_oauth2/callback"
   end
 end
 
 RSpec.configure do |config|
-  config.include SystemHelpers, type: :system
+  config.include RequestHelpers, type: :request
 
-  config.after(type: :system) do
+  config.after(type: :request) do
     OmniAuth.config.mock_auth[:google_oauth2] = nil
   end
 end

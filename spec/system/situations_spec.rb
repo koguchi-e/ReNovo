@@ -56,4 +56,10 @@ RSpec.describe "Situations", type: :system do
     visit situations_path
     expect(page).to have_content "会議で進捗報告をしたが、うまく説明できなかった。"
   end
+
+  scenario "ふりかえり履歴がない時その旨とリンクが表示される" do
+    visit situations_path
+    expect(page).to have_content "ふりかえりはまだありません。"
+    expect(page).to have_link("新しくふりかえる", href: new_situation_path)
+  end
 end

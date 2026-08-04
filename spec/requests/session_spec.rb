@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Googleログイン", type: :request do
+RSpec.describe "セッション管理", type: :request do
   before do
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:google_oauth2] =
@@ -20,6 +20,9 @@ RSpec.describe "Googleログイン", type: :request do
     end.to change(User, :count).by(1)
 
     expect(session[:user_id]).to be_present
+
+    expect(response).to redirect_to new_situation_path
+    expect(flash[:notice]).to eq('ログインしました。')
   end
 
   context "既存ユーザーがいる場合" do
@@ -33,10 +36,28 @@ RSpec.describe "Googleログイン", type: :request do
       )
     end
 
-    it "新しく追加しない" do
+    it "新しいユーザーを作成しない" do
       expect do
         get "/auth/google_oauth2/callback"
       end.not_to change(User, :count)
+    end
+  end
+
+  context "ログインしている場合" do
+    before do
+      get "/auth/google_oauth2/callback"
+    end
+
+    it "ログアウトしてトップページへリダイレクトする" do
+      delete logout_path
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eq("ログアウトしました。")
+    end
+
+    it "ログアウトするとふりかえり画面には入れない" do
+      delete logout_path
+      get new_situation_path
+      expect(response).to redirect_to(root_path)
     end
   end
 end
