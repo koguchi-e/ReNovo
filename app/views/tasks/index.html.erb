@@ -18,11 +18,7 @@
         やることを追加して、次の行動を整理しましょう。
       </p>
       <div class="mt-7 flex w-full flex-col gap-3">
-        <%= render "create_form",
-          situation: @situation,
-          new_task: @new_task,
-          full_width: true,
-          primary_button: true %>
+        <%= render "create_form", situation: @situation, new_task: @new_task, full_width: true, primary_button: true %>
         <%= render "/situations/review_modal", situation: @situation %>
       </div>
     </div>
