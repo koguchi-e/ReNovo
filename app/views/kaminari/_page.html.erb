@@ -7,6 +7,20 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<span class="page<%= ' current' if page.current? %>">
-  <%= link_to_unless page.current?, page, url, {remote: remote, rel: page.rel} %>
+<span class="page<%= ' current' if page.current? %> inline-flex">
+  <% if page.current? %>
+    <span
+      class="inline-flex size-11 items-center justify-center rounded-full bg-dark-blue font-bold text-white shadow-sm"
+      aria-current="page"
+      aria-label="<%= page %>ページ目、現在のページ"
+    >
+      <%= page %>
+    </span>
+  <% else %>
+    <%= link_to page, url,
+      remote: remote,
+      rel: page.rel,
+      aria: { label: "#{page}ページ目へ移動" },
+      class: "inline-flex size-11 items-center justify-center rounded-full border border-gray-200 bg-white font-medium text-dark-blue shadow-sm hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-blue focus-visible:ring-offset-2 focus-visible:ring-offset-dawn-mist" %>
+  <% end %>
 </span>

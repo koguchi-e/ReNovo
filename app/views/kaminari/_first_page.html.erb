@@ -6,6 +6,6 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<span class="first">
+<span class="first inline-flex h-11 items-center justify-center gap-2 rounded-full border border-dark-blue bg-white px-5 font-medium  text-dark-blue hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-blue focus-visible:ring-offset-2">
   <%= link_to_unless current_page.first?, t('views.pagination.first').html_safe, url, aria: { label: "最初のページ" }, remote: remote %>
 </span>
