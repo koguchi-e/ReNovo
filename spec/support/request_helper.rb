@@ -15,4 +15,8 @@ end
 
 RSpec.configure do |config|
   config.include RequestHelpers, type: :request
+
+  config.after(type: :request) do
+    OmniAuth.config.mock_auth[:google_oauth2] = nil
+  end
 end
