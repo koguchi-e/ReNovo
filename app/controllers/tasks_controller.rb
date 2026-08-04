@@ -12,6 +12,7 @@ class TasksController < ApplicationController
     @new_task = @situation.tasks.build(task_params)
     @new_task.position = @situation.tasks.maximum(:position).to_i + 1
     if @new_task.save
+      @situation.completed! if @situation.failed?
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
       @tasks = @situation.tasks.order(:position)

@@ -7,8 +7,6 @@ class GenerateTasksJob < ApplicationJob
     return if situation.nil?
 
     begin
-      situation.generating!
-
       Turbo::StreamsChannel.broadcast_replace_to(
         situation,
         target: "status_screen",

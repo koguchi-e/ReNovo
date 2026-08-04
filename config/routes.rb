@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :tasks, only: %i[index create update destroy]
     resource :position, only: %i[edit update]
     resource :completion, only: :show, module: :situations
+    resource :task_generation, only: :create
   end
 
   root "home#index"
