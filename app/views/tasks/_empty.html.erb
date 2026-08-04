@@ -1,0 +1,15 @@
+<div class="mx-auto mt-12 flex w-full max-w-xl flex-col items-center rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center shadow-sm">
+  <div class="flex size-16 items-center justify-center rounded-full bg-blue-50 text-2xl text-calm-blue">
+    <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+  </div>
+  <h2 class="mt-5 text-2xl font-bold text-dark-blue">
+    タスクはまだありません
+  </h2>
+  <p class="mt-3 max-w-sm text-base leading-relaxed text-calm-blue sm:text-lg">
+    やることを追加して、次の行動を整理しましょう。
+  </p>
+  <div class="mt-7 flex w-full flex-col gap-3">
+    <%= render "create_form", situation: situation, new_task: new_task, full_width: true, primary_button: true %>
+    <%= render "/situations/review_modal", situation: situation %>
+  </div>
+</div>
