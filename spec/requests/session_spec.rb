@@ -36,7 +36,7 @@ RSpec.describe "セッション管理", type: :request do
       )
     end
 
-    it "新しく追加しない" do
+    it "新しいユーザーを作成しない" do
       expect do
         get "/auth/google_oauth2/callback"
       end.not_to change(User, :count)
@@ -48,7 +48,7 @@ RSpec.describe "セッション管理", type: :request do
       get "/auth/google_oauth2/callback"
     end
 
-    it "ログアウトする" do
+    it "ログアウトしてトップページへリダイレクトする" do
       delete logout_path
       expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eq("ログアウトしました。")

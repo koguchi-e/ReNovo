@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Googleログイン", type: :system do
+RSpec.describe "セッション管理", type: :system do
   let(:user) { FactoryBot.create(:user) }
 
   before do

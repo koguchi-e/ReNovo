@@ -6,7 +6,7 @@ RSpec.describe Task, type: :model do
       task = build(:task)
       expect(task).to be_valid
     end
-    it "タスクが空欄だと登録できない" do
+    it "contentとpositionが空欄だと登録できない" do
       task = build(:task, content: nil, position: nil)
       expect(task).not_to be_valid
     end

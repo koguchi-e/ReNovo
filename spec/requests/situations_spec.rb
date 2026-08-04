@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Situations", type: :request do
-  describe "未ログイン時はトップ画面にリダイレクトする" do
+  describe "質問入力画面へアクセスするとトップ画面にリダイレクトする" do
     it "質問入力画面にアクセスする" do
       get new_situation_path
       expect(response).to redirect_to(root_path)
     end
   end
 
-  describe "ログイン時はアクセスできる" do
+  describe "ログインしている場合" do
     let(:user) { create(:user) }
     before do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -30,7 +30,7 @@ RSpec.describe "Situations", type: :request do
       }
     end
 
-    it "質問の作成に成功する" do
+    it "ふりかえりを作成し、タスク生成ジョブを登録する" do
       expect do
         post situations_path, params: params
       end.to change(Situation, :count).by(1)

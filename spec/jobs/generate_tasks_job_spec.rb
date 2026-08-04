@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GenerateTasksJob, type: :job do
   describe "#perform" do
-    it "タスクを5つ作成して、positionを割り振る" do
+    it "タスクを5つ作成し、positionを割り振って、生成完了状態にする" do
       situation = create(
         :situation,
         fact: "仕事が忙しい",
@@ -52,7 +52,7 @@ RSpec.describe GenerateTasksJob, type: :job do
       expect(situation.reload).to be_failed
     end
 
-    it "生成結果が空文字が含まれる場合、statusをfailedにする" do
+    it "生成結果に空文字が含まれる場合、statusをfailedにする" do
       situation = create(:situation, status: :pending)
       tasks = [
         "",
