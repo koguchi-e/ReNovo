@@ -1,0 +1,18 @@
+<div class="mx-auto mt-12 flex w-full max-w-xl flex-col items-center rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center shadow-sm">
+  <span class="mt-8 text-calm-blue text-7xl">
+    <i aria-hidden="true" class="fa-solid fa-circle-exclamation"></i>
+  </span>
+  <h1 class="mt-5 text-2xl font-bold text-dark-blue">
+    今月の利用上限に達しました
+  </h1>
+  <p class="mt-3 max-w-sm text-base leading-relaxed text-calm-blue sm:text-lg">
+    今月はこれ以上、新しいタスクを生成できません。<br>
+    翌月になると再び利用できます。
+  </p>
+  <div class="mt-7 flex gap-8">
+    <%= link_to situations_path, class: "border border-calm-blue bg-calm-blue text-white rounded px-4 py-2 font-bold hover:opacity-60" do %>
+      <i class="fa-solid fa-list" aria-hidden="true"></i>
+      作成済のタスクを見る
+    <% end %>
+  </div>
+</div>
