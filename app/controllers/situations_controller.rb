@@ -13,6 +13,7 @@ class SituationsController < ApplicationController
 
   def new
     @situation = Situation.new
+    @usage_limit_reached = monthly_usage_limit_reached?
   end
 
   def create
