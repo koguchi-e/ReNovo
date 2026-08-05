@@ -32,12 +32,14 @@ class SituationsController < ApplicationController
 
     if limit_reached
       flash.now[:alert] = "今月の利用上限に達しました。翌月に再び利用できます。"
+      @usage_limit_reached = true
       render :new, status: :too_many_requests
     elsif saved
       GenerateTasksJob.perform_later(situation_id: @situation.id)
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
       flash.now[:alert] = t(".alert")
+      @usage_limit_reached = false
       render :new, status: :unprocessable_entity
     end
   end
