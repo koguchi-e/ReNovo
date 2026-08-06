@@ -5,17 +5,17 @@
 <p class="mt-5 text-center text-xl text-calm-blue">
   ドラッグすると、並び順が自動で保存されます。
 </p>
-<div data-controller="task-order" class="mt-5">
+<ul data-controller="task-order" class="mt-5">
   <% @tasks.each do |task| %>
-    <div data-task-id="<%= task.id %>" data-task-position-url="<%= situation_position_path(@situation) %>" 
+    <li data-task-id="<%= task.id %>" data-task-position-url="<%= situation_position_path(@situation) %>"
     class="relative m-5 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm hover:-translate-y-1 hover:scale-[1.02] sm:p-8">
       <span class="js-grab cursor-grab">
         <i class="fa-solid fa-grip" aria-hidden="true"></i>
       </span>
       <%= task.content %>
-    </div>
+    </li>
   <% end %>
-</div>
+</ul>
 <div class="m-5 flex justify-center">
   <%= render "/situations/review_modal", situation: @situation %>
 </div>
