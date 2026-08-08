@@ -64,9 +64,11 @@ export default class extends Controller {
   }
 
   clearError() {
+    const input = this.inputTargets[this.currentStep];
     const error = this.errorTargets[this.currentStep];
     error.textContent = "";
     error.classList.add("hidden");
+    input.removeAttribute("aria-invalid");
   }
 
   validateCurrentStep() {
@@ -76,6 +78,7 @@ export default class extends Controller {
     if (input.value.trim() === "") {
       error.textContent = "入力してください。";
       error.classList.remove("hidden");
+      input.setAttribute("aria-invalid", "true");
       input.focus();
       return false;
     }
@@ -83,6 +86,7 @@ export default class extends Controller {
     if (input.value.length > 300) {
       error.textContent = "300文字以内にしてください。";
       error.classList.remove("hidden");
+      input.setAttribute("aria-invalid", "true");
       input.focus();
       return false;
     }

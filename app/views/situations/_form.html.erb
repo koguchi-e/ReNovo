@@ -21,6 +21,7 @@
     </div>
   </aside>
   <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
+    <h1 class="sr-only">状況を整理してタスクリストを作成する</h1>
     <ul class="mx-auto mb-10 flex w-3/4 flex-row">
       <li class="basis-0 flex-1">
         <div class="inline-flex min-h-7 w-full items-center text-xs">
@@ -57,9 +58,9 @@
     </ul>
     <%= form_with model: situation, data: { action: "submit->situation-form#submit" } do |f| %>
       <div data-situation-form-target="step" class="block">
-        <h1 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
+        <h2 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
           今どんなことが起きていますか？
-        </h1>
+        </h2>
         <p class="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-calm-blue">
           現在の状況や起きた出来事を具体的に書き出してみましょう。
         </p>
@@ -71,7 +72,11 @@
             <li>やりたいことがあるのに疲れて何も始められない</li>
           </ul>
         </div>
-        <%= render "form_text_area", f: f, attribute: :fact %>
+        <%= render "form_text_area",
+          f: f,
+          attribute: :fact,
+          label_text: "現在の状況や起きた出来事"
+        %>
         <div class="mt-6 flex justify-end">
           <button type="button" data-testid="fact-next-button" data-action="click->situation-form#next" class="rounded border border-calm-blue bg-calm-blue px-4 py-2 font-bold text-white hover:opacity-60">
             次へ
@@ -80,9 +85,9 @@
         </div>
       </div>
       <div data-situation-form-target="step" class="block">
-        <h1 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
+        <h2 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
           今一番困っていることは何ですか？
-        </h1>
+        </h2>
         <p class="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-calm-blue">
           一番モヤモヤしたことや気になっていることを書き出してみましょう。
         </p>
@@ -94,7 +99,11 @@
             <li>情報を集めすぎて動けなくなっている</li>
           </ul>
         </div>
-        <%= render "form_text_area", f: f, attribute: :problem %>
+        <%= render "form_text_area",
+          f: f,
+          attribute: :problem,
+          label_text: "今一番困っていること"
+        %>
         <div class="mt-6 flex items-center justify-between gap-3">
           <button type="button" data-action="click->situation-form#prev" class="rounded border border-calm-blue bg-white px-4 py-2 font-bold text-calm-blue hover:opacity-60">
             <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
@@ -107,9 +116,9 @@
         </div>
       </div>
       <div data-situation-form-target="step" class="block">
-        <h1 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
+        <h2 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
           どんな状態になれたら良さそうですか？
-        </h1>
+        </h2>
         <p class="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-calm-blue">
           自分自身が将来的にどのような状態になりたいか、理想の状態を書き出してみましょう。
         </p>
@@ -121,7 +130,11 @@
             <li>自分の作業に集中できるようになりたい</li>
           </ul>
         </div>
-        <%= render "form_text_area", f: f, attribute: :goal %>
+        <%= render "form_text_area",
+          f: f,
+          attribute: :goal,
+          label_text: "目指したい状態"
+        %>
         <div class="mt-6 flex items-center justify-between gap-3">
           <button type="button" data-action="click->situation-form#prev" class="rounded border border-calm-blue bg-white px-4 py-2 font-bold text-calm-blue hover:opacity-60">
             <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
