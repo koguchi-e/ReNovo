@@ -2,6 +2,7 @@
 <html lang="ja">
   <head>
     <title><%= content_for(:title) || "ReNovo" %></title>
+    <meta name="description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Re Novo">
@@ -17,12 +18,12 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <meta property="og:title" content="ReNovo">
-    <meta property="og:description" content="考えすぎて動けない人のためのタスク作成サービス">
+    <meta property="og:title" content="<%= content_for(:title) || "ReNovo" %>">
+    <meta property="og:description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
     <meta property="og:type" content="website">
     <meta property="og:image" content="<%= image_url("ogp.png") %>">
     <meta property="og:site_name" content="ReNovo">
-    <meta property="og:url" content="https://example.com">
+    <meta property="og:url" content="<%= request.base_url + request.path %>">
     <meta name="twitter:card" content="summary_large_image">
   </head>
   <body class="flex min-h-screen flex-col bg-dawn-mist">
