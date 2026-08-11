@@ -1,7 +1,7 @@
 <% content_for :title, "ReNovo | 考えすぎて動けない人のためのタスク作成サービス" %>
 <% content_for :description, "ReNovoは、状況や悩み、目標を整理し、今取り組める小さなタスクをAIが提案するサービスです。" %>
-
 <%= image_tag "top_logo.png", alt: "サイトロゴ", class: "h-auto w-full max-w-[400px]" %>
+<%= render "call_to_action" %>
 <h1 class="mt-15 text-center text-4xl font-bold text-dark-blue">
   「考えすぎて動けない」を、小さな一歩に変える。
 </h1>
@@ -14,14 +14,41 @@
   やるべきことが多く、考えるだけで疲れてしまう。<br>
   そんな状態から、行動を始めるきっかけを作ります。
 </p>
-<% if current_user %>
-  <%= link_to new_situation_path, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60" do %>
-    <i class="fa-solid fa-plus" aria-hidden="true"></i>
-    新しくふりかえる
-  <% end %>
-<% else %>
-  <%= button_to( "/auth/google_oauth2", method: :post, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60", form: { data: { turbo: false } } ) do %>
-    <i class="fa-brands fa-google" aria-hidden="true"></i>
-    Googleでログイン
-  <% end %>
-<% end %>
+<section class="mt-10 w-full" aria-labelledby="usage-guide-heading">
+  <hr class="mb-10 border-dashed border-gray-300">
+  <div class="text-center">
+    <h2 id="usage-guide-heading" class="mt-2 text-3xl font-bold text-dark-blue sm:text-4xl">
+      3ステップで、次の一歩へ
+    </h2>
+  </div>
+  <ol class="mt-10 grid gap-6 md:grid-cols-3">
+    <li class="rounded-2xl border border-gray-200 bg-dawn-mist p-5 text-left">
+      <div class="flex items-center justify-between">
+        <span class="rounded-full bg-calm-blue px-3 py-1 text-sm font-bold text-white">STEP 1</span>
+      </div>
+      <h3 class="mt-5 text-xl font-bold text-dark-blue">状況・悩み・目標を書く</h3>
+      <div class="mt-5 aspect-[601/588] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <%= image_tag "step1.png", alt: "状況・悩み・目標を入力する画面", class: "size-full object-cover" %>
+      </div>
+    </li>
+    <li class="rounded-2xl border border-gray-200 bg-dawn-mist p-5 text-left">
+      <div class="flex items-center justify-between">
+        <span class="rounded-full bg-calm-blue px-3 py-1 text-sm font-bold text-white">STEP 2</span>
+      </div>
+      <h3 class="mt-5 text-xl font-bold text-dark-blue">AIを使ってタスクを生成</h3>
+      <div class="mt-5 aspect-[601/588] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <%= image_tag "step2.png", alt: "AIがタスクを生成している画面", class: "size-full object-cover" %>
+      </div>
+    </li>
+    <li class="rounded-2xl border border-gray-200 bg-dawn-mist p-5 text-left">
+      <div class="flex items-center justify-between">
+        <span class="rounded-full bg-calm-blue px-3 py-1 text-sm font-bold text-white">STEP 3</span>
+      </div>
+      <h3 class="mt-5 text-xl font-bold text-dark-blue">作成したタスクに取り掛かる！</h3>
+      <div class="mt-5 flex aspect-[601/588] items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <%= image_tag "step3.png", alt: "作成されたタスク一覧画面", class: "size-4/5 object-contain" %>
+      </div>
+    </li>
+  </ol>
+</section>
+<%= render "call_to_action" %>
