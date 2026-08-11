@@ -1,14 +1,4 @@
 Rails.application.routes.draw do
-  resources :chats do
-    resources :messages, only: [ :create ]
-  end
-
-  resources :models, only: [ :index, :show ] do
-    collection do
-      post :refresh
-    end
-  end
-
   resources :situations, only: %i[index show new create] do
     resources :tasks, only: %i[index create update destroy]
     resource :position, only: %i[edit update]
@@ -17,7 +7,6 @@ Rails.application.routes.draw do
   end
 
   root "home#index"
-  get "/home", to: "home#show"
   get "/terms", to: "terms#show"
   get "/privacy", to: "privacy#show"
   resource :user, only: :destroy
