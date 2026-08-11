@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-  before_action :require_login
   before_action :set_situation
   before_action :set_task, only: %i[update destroy]
 
@@ -15,7 +14,6 @@ class TasksController < ApplicationController
       @situation.completed! if @situation.failed?
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else
-      @tasks = @situation.tasks.order(:position)
       redirect_to situation_tasks_path(@situation), alert: t(".alert")
     end
   end
