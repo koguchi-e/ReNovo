@@ -13,6 +13,6 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get "auth/:provide/callback", to: "sessions#create"
+  get "auth/:provider/callback", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 end

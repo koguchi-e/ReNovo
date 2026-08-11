@@ -1,5 +1,4 @@
 class PositionsController < ApplicationController
-  before_action :require_login
   before_action :set_situation
   before_action :redirect_if_no_tasks, only: :edit
 
