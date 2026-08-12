@@ -75,7 +75,8 @@
         <%= render "form_text_area",
           f: f,
           attribute: :fact,
-          label_text: "現在の状況や起きた出来事"
+          label_text: "現在の状況や起きた出来事",
+          placeholder_text: "例：勉強したいのに、ずっとSNSを見てしまう"
         %>
         <div class="mt-6 flex justify-end">
           <button type="button" data-testid="fact-next-button" data-action="click->situation-form#next" class="rounded border border-calm-blue bg-calm-blue px-4 py-2 font-bold text-white hover:opacity-60">
@@ -102,7 +103,8 @@
         <%= render "form_text_area",
           f: f,
           attribute: :problem,
-          label_text: "今一番困っていること"
+          label_text: "今一番困っていること",
+          placeholder_text: "例：情報を集めすぎて、何から始めればよいか分からない"
         %>
         <div class="mt-6 flex items-center justify-between gap-3">
           <button type="button" data-action="click->situation-form#prev" class="rounded border border-calm-blue bg-white px-4 py-2 font-bold text-calm-blue hover:opacity-60">
@@ -133,7 +135,8 @@
         <%= render "form_text_area",
           f: f,
           attribute: :goal,
-          label_text: "目指したい状態"
+          label_text: "目指したい状態",
+          placeholder_text: "例：SNSを見る時間を減らして、少しでも作業を進めたい"
         %>
         <div class="mt-6 flex items-center justify-between gap-3">
           <button type="button" data-action="click->situation-form#prev" class="rounded border border-calm-blue bg-white px-4 py-2 font-bold text-calm-blue hover:opacity-60">
