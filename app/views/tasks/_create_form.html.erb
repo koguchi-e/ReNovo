@@ -6,6 +6,7 @@
     <%= form_with model: [situation, new_task] do |f| %>
       <%= f.text_area :content,
         rows: 3,
+        placeholder: "例：机の上に教材を用意する",
         aria: { label: "新しいタスク内容" },
         class: "min-h-10 w-full resize-y rounded border-2 border-gray-200 bg-gray-200 p-3 leading-relaxed text-gray-700 focus:border-bright-orange focus:bg-white focus:outline-none",
         data: {
