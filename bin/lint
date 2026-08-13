@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -e
+
+echo "Running RuboCop"
+bundle exec rubocop
+
+echo "Running ESLint"
+npm run lint
+
+echo "Running ERBLint"
+bundle exec erb_lint --lint-all
+
+echo "Lint complete!"
