@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SystemHelpers
   def sign_in_as(user)
     OmniAuth.config.mock_auth[:google_oauth2] =
