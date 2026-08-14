@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "TaskGenerations", type: :request do
   describe "POST /situations/:situation_id/task_generation" do

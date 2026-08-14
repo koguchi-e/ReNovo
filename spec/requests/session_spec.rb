@@ -26,7 +26,7 @@ RSpec.describe "セッション管理", type: :request do
         expect(session[:user_id]).to be_present
 
         expect(response).to redirect_to new_situation_path
-        expect(flash[:notice]).to eq('ログインしました。')
+        expect(flash[:notice]).to eq("ログインしました。")
       end
     end
 

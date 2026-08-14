@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Users", type: :request do
   let(:user) { create(:user) }
@@ -31,7 +31,7 @@ RSpec.describe "Users", type: :request do
       recreated_user = User.find(session[:user_id])
 
       expect(response).to redirect_to new_situation_path
-      expect(flash[:notice]).to eq('ログインしました。')
+      expect(flash[:notice]).to eq("ログインしました。")
 
       expect(Situation.count).to eq(0)
       expect(Task.count).to eq(0)

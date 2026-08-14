@@ -47,12 +47,11 @@ class SituationsController < ApplicationController
   end
 
   private
+    def situation_params
+      params.require(:situation).permit(:fact, :problem, :goal)
+    end
 
-  def situation_params
-    params.require(:situation).permit(:fact, :problem, :goal)
-  end
-
-  def monthly_usage_limit_reached?
-    current_user.situations.where(created_at: Time.current.all_month).count >= MONTHLY_USAGE_LIMIT
-  end
+    def monthly_usage_limit_reached?
+      current_user.situations.where(created_at: Time.current.all_month).count >= MONTHLY_USAGE_LIMIT
+    end
 end

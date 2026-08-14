@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Situations", type: :request do
   describe "GET /situations/new" do
@@ -54,7 +54,7 @@ RSpec.describe "Situations", type: :request do
         expect(GenerateTasksJob).to have_received(:perform_later).with(situation_id: situation.id)
 
         expect(response).to redirect_to situation_tasks_path(situation)
-        expect(flash[:notice]).to eq('質問に回答しました。')
+        expect(flash[:notice]).to eq("質問に回答しました。")
       end
     end
   end

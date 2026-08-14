@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "タスク生成状態の再確認", type: :system do
   let(:user) { FactoryBot.create(:user) }
@@ -19,7 +19,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
 
       5.times do |index|
         situation.tasks.create!(
-          content: "タスク#{index+1}",
+          content: "タスク#{index + 1}",
           position: index + 1
         )
       end
@@ -44,7 +44,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
 
       5.times do |index|
         situation.tasks.create!(
-          content: "タスク#{index+1}",
+          content: "タスク#{index + 1}",
           position: index + 1
         )
       end

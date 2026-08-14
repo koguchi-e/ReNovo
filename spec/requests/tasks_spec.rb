@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Tasks", type: :request do
   context "ログイン済みの場合" do
@@ -39,7 +39,7 @@ RSpec.describe "Tasks", type: :request do
           expect(task.content).to eq "追加したタスク"
           expect(task.situation).to eq situation
           expect(task.position).to eq(6)
-          expect(flash[:notice]).to eq('タスクを追加しました。')
+          expect(flash[:notice]).to eq("タスクを追加しました。")
         end
       end
 
@@ -50,7 +50,7 @@ RSpec.describe "Tasks", type: :request do
               task: { content: "" }
             }
           end.not_to change(Task, :count)
-          expect(flash[:alert]).to eq('タスクの追加に失敗しました。')
+          expect(flash[:alert]).to eq("タスクの追加に失敗しました。")
         end
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe "Tasks", type: :request do
           end.not_to change(Task, :count)
 
           expect(situation.reload).to be_failed
-          expect(flash[:alert]).to eq('タスクの追加に失敗しました。')
+          expect(flash[:alert]).to eq("タスクの追加に失敗しました。")
         end
       end
     end

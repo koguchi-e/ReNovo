@@ -19,14 +19,13 @@ class PositionsController < ApplicationController
   end
 
   private
+    def set_situation
+      @situation = current_user.situations.find(params[:situation_id])
+    end
 
-  def set_situation
-    @situation = current_user.situations.find(params[:situation_id])
-  end
+    def redirect_if_no_tasks
+      return if @situation.tasks.exists?
 
-  def redirect_if_no_tasks
-    return if @situation.tasks.exists?
-
-    redirect_to situation_tasks_path(@situation), alert: "タスクがありません"
-  end
+      redirect_to situation_tasks_path(@situation), alert: "タスクがありません"
+    end
 end

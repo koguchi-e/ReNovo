@@ -37,16 +37,15 @@ class TasksController < ApplicationController
   end
 
   private
+    def set_situation
+      @situation = current_user.situations.find(params[:situation_id])
+    end
 
-  def set_situation
-    @situation = current_user.situations.find(params[:situation_id])
-  end
+    def set_task
+      @task = @situation.tasks.find(params[:id])
+    end
 
-  def set_task
-    @task = @situation.tasks.find(params[:id])
-  end
-
-  def task_params
-    params.require(:task).permit(:content)
-  end
+    def task_params
+      params.require(:task).permit(:content)
+    end
 end
