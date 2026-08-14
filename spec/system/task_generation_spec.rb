@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "タスク生成状態の再確認", type: :system do
@@ -31,8 +33,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
 
   context "Situationがfailedの場合" do
     let(:situation) { FactoryBot.create(:situation, user: user, status: :failed) }
-    it "再生成ボタンを押すと生成中画面に切り替わり、完了後にタスク一覧を表示す
-  る" do
+    it "再生成ボタンを押すと生成中画面に切り替わり、完了後にタスク一覧を表示する" do
       visit situation_tasks_path(situation)
       expect(page).to have_content("タスクの作成に失敗しました。")
 

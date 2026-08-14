@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GenerateTasksJob < ApplicationJob
   queue_as :default
   discard_on ActiveJob::DeserializationError

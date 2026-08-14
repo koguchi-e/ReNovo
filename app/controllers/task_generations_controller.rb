@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TaskGenerationsController < ApplicationController
   def create
     situation = current_user.situations.find(params[:situation_id])

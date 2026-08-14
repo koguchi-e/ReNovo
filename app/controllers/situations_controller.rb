@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SituationsController < ApplicationController
   MONTHLY_USAGE_LIMIT = 50
 

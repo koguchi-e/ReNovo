@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Situations::CompletionsController < ApplicationController
   before_action :set_situation
   before_action :redirect_if_no_tasks, only: :show

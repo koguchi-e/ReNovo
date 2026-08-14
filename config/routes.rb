@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :situations, only: %i[index show new create] do
     resources :tasks, only: %i[index create update destroy]

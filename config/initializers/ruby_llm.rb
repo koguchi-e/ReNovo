@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RubyLLM.configure do |config|
   config.openai_api_key =
     if Rails.env.test?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TaskGenerationAgent < RubyLLM::Agent
   SYSTEM_PROMPT = <<~PROMPT
     あなたはユーザーが入力した状況、問題、目標を元に

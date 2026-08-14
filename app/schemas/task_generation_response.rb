@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "ruby_llm/schema"
 
 class TaskGenerationResponse < RubyLLM::Schema
