@@ -2,7 +2,10 @@
 <% content_for :description, "ReNovoは、状況や悩み、目標を整理し、今取り組める小さなタスクをAIが提案するサービスです。" %>
 <section class="flex w-full flex-col items-center gap-6">
   <div class="text-center">
-    <%= image_tag "top_logo.png", alt: "", class: "mx-auto h-auto w-full max-w-[220px] sm:max-w-[260px]" %>
+    <div class="mx-auto flex w-full max-w-[220px] flex-col items-center sm:max-w-[260px]" aria-hidden="true">
+      <%= image_tag "brand-symbol.png", alt: "", class: "h-auto w-3/4" %>
+      <%= image_tag "renovo-wordmark.svg", alt: "", class: "mt-2 h-auto w-full" %>
+    </div>
     <h1 class="mt-5 text-3xl font-bold leading-tight text-dark-blue">
       「考えすぎて動けない」を、小さな一歩に変える。
     </h1>
@@ -26,27 +29,30 @@
       <div class="flex items-center justify-between">
         <span class="rounded-full bg-calm-blue px-3 py-1 text-sm font-bold text-white">STEP 1</span>
       </div>
-      <h3 class="mt-3 text-lg font-bold text-dark-blue">状況・悩み・目標を書く</h3>
+      <h3 class="mt-3 text-lg font-bold text-dark-blue">3つの質問に答える</h3>
+      <p class="mt-2 text-sm leading-relaxed text-calm-blue">今の状況、困りごと、少し前に進めそうな状態を整理します。</p>
       <div class="mt-3 flex h-44 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        <%= image_tag "step1.png", alt: "状況・悩み・目標を入力する画面", class: "size-full object-contain" %>
+        <%= render "step_input_preview" %>
       </div>
     </li>
     <li class="rounded-xl border border-gray-200 bg-dawn-mist p-4 text-left">
       <div class="flex items-center justify-between">
         <span class="rounded-full bg-calm-blue px-3 py-1 text-sm font-bold text-white">STEP 2</span>
       </div>
-      <h3 class="mt-3 text-lg font-bold text-dark-blue">AIを使ってタスクを生成</h3>
+      <h3 class="mt-3 text-lg font-bold text-dark-blue">提案されたタスクを確認する</h3>
+      <p class="mt-2 text-sm leading-relaxed text-calm-blue">AIが作成したタスクを確認し、必要に応じて追加・編集します。</p>
       <div class="mt-3 flex h-44 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        <%= image_tag "step2.png", alt: "AIがタスクを生成している画面", class: "size-full object-contain" %>
+        <%= render "step_tasks_preview" %>
       </div>
     </li>
     <li class="rounded-xl border border-gray-200 bg-dawn-mist p-4 text-left">
       <div class="flex items-center justify-between">
         <span class="rounded-full bg-calm-blue px-3 py-1 text-sm font-bold text-white">STEP 3</span>
       </div>
-      <h3 class="mt-3 text-lg font-bold text-dark-blue">作成したタスクに取り掛かる！</h3>
+      <h3 class="mt-3 text-lg font-bold text-dark-blue">タスクに取り掛かる</h3>
+      <p class="mt-2 text-sm leading-relaxed text-calm-blue">整理したタスクから、今できる小さな一歩を始めます。</p>
       <div class="mt-3 flex h-44 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        <%= image_tag "step3.png", alt: "作成されたタスク一覧画面", class: "size-4/5 object-contain" %>
+        <%= image_tag "step3@2x.png", alt: "作成したタスクに取り掛かる人のイラスト", class: "size-full object-contain" %>
       </div>
     </li>
   </ol>

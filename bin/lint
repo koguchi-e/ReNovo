@@ -7,6 +7,9 @@ bundle exec rubocop
 echo "Running ESLint"
 npm run lint
 
+echo "Running Prettier"
+npm run format:check
+
 echo "Running ERBLint"
 bundle exec erb_lint --lint-all
 

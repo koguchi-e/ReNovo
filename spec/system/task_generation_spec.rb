@@ -15,7 +15,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
     it "完了配信を受信できなくてもタスク一覧に切り替わる" do
       visit situation_tasks_path(situation)
 
-      expect(page).to have_content("Loading")
+      expect(page).to have_content("タスクを作成しています")
 
       5.times do |index|
         situation.tasks.create!(
@@ -27,7 +27,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
       situation.completed!
       expect(page).to have_content("タスク1", wait: 10)
       expect(page).to have_content("タスク5")
-      expect(page).not_to have_content("Loading")
+      expect(page).not_to have_content("タスクを作成しています")
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
 
       click_button "もう一度タスクを生成する"
 
-      expect(page).to have_content("Loading")
+      expect(page).to have_content("タスクを作成しています")
       expect(situation.reload).to be_generating
 
       5.times do |index|
@@ -53,7 +53,7 @@ RSpec.describe "タスク生成状態の再確認", type: :system do
       expect(page).to have_content("タスク1", wait: 10)
       expect(page).to have_content("タスク5")
       expect(page).not_to have_content("もう一度タスクを生成する")
-      expect(page).not_to have_content("Loading")
+      expect(page).not_to have_content("タスクを作成しています")
     end
   end
 end

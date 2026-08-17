@@ -12,7 +12,7 @@ RSpec.describe "セッション管理", type: :system do
   scenario "ログインすると、ふりかえりの入力画面に遷移する" do
     visit root_path
 
-    click_button "Googleでログイン"
+    click_google_login_button
 
     expect(page).to have_content "ログインしました。"
     expect(page).to have_content "今どんなことが起きていますか？"

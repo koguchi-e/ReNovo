@@ -1,16 +1,10 @@
 <% content_for :title, "利用規約 | ReNovo" %>
 <% content_for :description, "ReNovoをご利用いただく際の条件を定めた利用規約です。" %>
 
-<section class="mx-auto max-w-4xl px-4 pb-10">
-  <h1 class="text-center text-3xl font-bold text-dark-blue">
-    利用規約
-  </h1>
-
-  <p class="mt-10 text-lg leading-relaxed text-calm-blue">
-    この利用規約（以下、「本規約」といいます。）は、ReNovo（以下、「管理者」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
-  </p>
-
-    <div class="text-lg text-gray-700 leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-dark-blue [&_p]:mb-3 [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-5 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5">
+<%= render layout: "shared/legal_document", locals: {
+  title: "利用規約",
+  introduction: "この利用規約（以下、「本規約」といいます。）は、ReNovo（以下、「管理者」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。"
+} do %>
     <h2>第1条（適用）</h2>
     <ol>
       <li>本規約は、ユーザーと管理者との間の本サービスの利用に関わる一切の関係に適用されるものとします。</li>
@@ -137,5 +131,4 @@
     <p>お問い合わせは <%= link_to "こちら", "https://forms.gle/EiqNdo63jMkgaWJeA", target: "_blank", rel: "noopener noreferrer", class: "text-calm-blue underline hover:opacity-60" %> の窓口までお願いいたします。</p>
 
     <p class="mt-8 text-right font-bold text-dark-blue">以上</p>
-  </div>
-</section>
+<% end %>
