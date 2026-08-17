@@ -20,7 +20,7 @@
             <span data-clipboard-target="message" class="task-export__copy-message font-bold" hidden>コピーしました</span>
           </button>
         </div>
-        <pre class="task-export__preformatted overflow-x-auto px-4 pb-4 pt-4"><code class="task-export__code" data-clipboard-target="source"><% tasks.each_with_index do |task, index| %> - [<%= task.completed? ? "x" : " " %>] <%= task.content %><%= tag.br unless index == tasks.size - 1 %><% end %></code></pre>
+        <pre class="task-export__preformatted overflow-x-auto px-4 pb-4 pt-4"><code class="task-export__code" data-clipboard-target="source"><% tasks.each do |task| %> - [ ] <%= task.content %><br><% end %></code></pre>
       </div>
     </div>
 
