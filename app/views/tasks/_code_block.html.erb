@@ -1,27 +1,26 @@
-<div class="mt-5 w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
-  <h2 class="text-2xl font-bold text-dark-blue">
+<section class="task-export mt-5 w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+  <h2 class="task-export__heading text-2xl font-bold text-dark-blue">
     <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
     作成したタスクリスト
   </h2>
-  <hr class="mt-3 border border-gray-200">
+  <hr class="task-export__divider mt-3 border border-gray-200">
 
   <% if situation.tasks.exists? %>
-    <p class="text-lg mt-5 text-calm-blue">
+    <p class="task-export__description mt-8 text-base text-calm-blue">
       Markdown形式のチェックリストでコピーできます。
     </p>
 
-    <div class="w-full mt-5" data-controller="clipboard">
-      <div class="relative block rounded bg-gray-800 text-white">
-        <div class="absolute top-0 right-0 ">
-          <button class="mb-1 min-h-10 min-w-10 px-2 flex items-center rounded justify-center bg-slate-400 hover:bg-slate-300" data-action="clipboard#copy" aria-label="Markdownをコピー">
-            <span data-clipboard-target="icon">
+    <div class="task-export__clipboard w-full mt-5" data-controller="clipboard">
+      <div class="task-export__code-container relative block rounded bg-gray-800 text-white">
+        <div class="task-export__copy-control absolute top-0 right-0 ">
+          <button class="task-export__copy-button mb-1 flex min-h-10 min-w-10 items-center justify-center rounded-bl rounded-tr bg-slate-400 px-2 opacity-40 hover:opacity-100 focus-visible:opacity-100" data-action="clipboard#copy" aria-label="Markdownをコピー">
+            <span class="task-export__copy-icon" data-clipboard-target="icon">
               <i class="fa-solid fa-copy" aria-hidden="true"></i>
             </span>
-            <span data-clipboard-target="message" class="font-bold" hidden>コピーしました</span>
+            <span data-clipboard-target="message" class="task-export__copy-message font-bold" hidden>コピーしました</span>
           </button>
         </div>
-        <pre class="overflow-x-auto pt-15 pl-10 pb-1"><code data-clipboard-target="source"><% tasks.each do |task| %> - [ ] <%= task.content %><br><% end %></code>
-        </pre>
+        <pre class="task-export__preformatted overflow-x-auto px-4 pb-4 pt-4"><code class="task-export__code" data-clipboard-target="source"><% tasks.each_with_index do |task, index| %> - [<%= task.completed? ? "x" : " " %>] <%= task.content %><%= tag.br unless index == tasks.size - 1 %><% end %></code></pre>
       </div>
     </div>
 
@@ -35,13 +34,16 @@
         タスクを並べ替える
       <% end %>
     </div>
+
   <% else %>
-    <div class="m-5 flex flex-col items-start gap-3">
-      <p class="mb-3 text-calm-blue text-lg">
-        タスクはまだありません。<br>
-        必要であれば、タスクを追加してください。
+    <section class="task-export__empty-state mt-5 flex flex-col items-start gap-3">
+      <p class="task-export__empty-message mb-3 text-base text-calm-blue">
+        タスクはまだありません。必要であれば、タスクを追加してください。
       </p>
-      <%= render "tasks/create_form", situation: situation, new_task: new_task %>
-    </div>
+      <%= link_to situation_tasks_path(situation, new_task: "open"), class: "action-button action-button--primary action-button--wide self-center" do %>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i>
+        タスクを追加する
+      <% end %>
+    </section>
   <% end %>
-</div>
+</section>
