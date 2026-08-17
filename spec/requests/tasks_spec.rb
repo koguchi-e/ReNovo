@@ -65,6 +65,29 @@ RSpec.describe "Tasks", type: :request do
         expect(task.reload.content).not_to eq "古いタスク"
         expect(response).to redirect_to situation_tasks_path(situation)
       end
+
+      it "タスクの完了状態を更新する" do
+        task = create(:task, situation: situation)
+
+        patch situation_task_path(situation, task), params: {
+          task: { completed: true }
+        }
+
+        expect(task.reload).to be_completed
+        expect(response).to redirect_to situation_tasks_path(situation)
+      end
+
+      it "詳細画面から完了状態を更新した場合は詳細画面に戻る" do
+        task = create(:task, situation: situation)
+
+        patch situation_task_path(situation, task), params: {
+          task: { completed: true },
+          return_to: "situation"
+        }
+
+        expect(task.reload).to be_completed
+        expect(response).to redirect_to situation_path(situation)
+      end
     end
 
     describe "DELETE /situations/:situation_id/tasks/:id" do

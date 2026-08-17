@@ -1,19 +1,18 @@
-<div class="mx-auto mt-12 flex w-full max-w-xl flex-col items-center rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center shadow-sm">
+<section class="task-failure mx-auto mt-8 flex w-full max-w-xl flex-col items-center rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center shadow-sm" aria-labelledby="task-failure-heading">
   <span class="mt-8 text-calm-blue text-7xl">
     <i aria-hidden="true" class="fa-solid fa-circle-exclamation"></i>
   </span>
-  <h1 class="mt-5 text-2xl font-bold text-dark-blue">
+  <h2 id="task-failure-heading" class="mt-5 text-2xl font-bold text-dark-blue">
     タスクの作成に失敗しました。
-  </h1>
-  <p class="mt-3 max-w-sm text-base leading-relaxed text-calm-blue sm:text-lg">
-    一時的な通信エラーが発生したか、入力内容からタスクを生成できなかった可能性があります。<br>
-    入力内容を確認・修正して、もう一度お試しください。
+  </h2>
+  <p class="mt-3 max-w-lg text-left text-base leading-relaxed text-calm-blue">
+    一時的な通信エラーが発生したか、入力内容からタスクを生成できなかった可能性があります。入力内容を確認・修正して、もう一度お試しください。
   </p>
-  <div class="mt-7 flex w-full flex-col gap-8">
-    <%= button_to situation_task_generation_path(situation), class: "border border-calm-blue bg-calm-blue text-white rounded px-4 py-2 font-bold hover:opacity-60" do %>
-      <i aria-hidden="true" class="fa-solid fa-robot"></i>
+  <div class="mt-7 flex w-full max-w-xs flex-col gap-8">
+    <%= button_to situation_task_generation_path(situation), form: { class: "w-full" }, class: "action-button action-button--primary w-full" do %>
+      <i aria-hidden="true" class="fa-solid fa-arrow-rotate-right"></i>
       もう一度タスクを生成する
     <% end %>
-    <%= render "/situations/review_modal", situation: situation %>
+    <%= render "/situations/review_modal", situation: situation, full_width: true %>
   </div>
-</div>
+</section>

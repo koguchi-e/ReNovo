@@ -1,0 +1,13 @@
+<% compact = local_assigns.fetch(:compact, false) %>
+<% update_params = { task: { completed: !task.completed? } } %>
+<% update_params[:return_to] = "situation" if compact %>
+<% testid_prefix = compact ? "compact-toggle-task-button" : "toggle-task-button" %>
+
+<%= button_to situation_task_path(situation, task), method: :patch,
+  params: update_params,
+  form: { class: "task-completion__form shrink-0" },
+  class: "task-completion__button #{compact ? "task-completion__button--compact size-9" : "task-completion__button--regular size-11"} inline-flex items-center justify-center rounded-full border-2 #{task.completed? ? "border-calm-blue bg-calm-blue text-white" : "border-gray-200 bg-white text-calm-blue hover:border-calm-blue"}",
+  aria: { label: task.completed? ? "#{task.content}を未完了に戻す" : "#{task.content}を完了にする" },
+  data: { testid: "#{testid_prefix}-#{task.id}" } do %>
+  <i class="fa-solid fa-check <%= "text-sm" if compact %>" aria-hidden="true"></i>
+<% end %>

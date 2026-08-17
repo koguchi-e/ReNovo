@@ -1,0 +1,10 @@
+<ul class="compact-task-list mt-5 space-y-3" aria-label="作成したタスク">
+  <% tasks.each do |task| %>
+    <li class="compact-task-list__item flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-3 py-2.5">
+      <%= render "tasks/completion_button", situation: situation, task: task, compact: true %>
+      <p class="compact-task-list__content min-w-0 flex-1 break-words text-base <%= "text-slate-400 line-through" if task.completed? %>">
+        <%= task.content %>
+      </p>
+    </li>
+  <% end %>
+</ul>

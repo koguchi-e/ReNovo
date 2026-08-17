@@ -15,7 +15,7 @@ RSpec.describe "TaskGenerations", type: :request do
       context "Situationがfailedの場合" do
         let(:situation) { create(:situation, user: user, status: :failed) }
 
-        it "failedのふりかえりのタスクを再生成できる" do
+        it "failedの状況整理のタスクを再生成できる" do
           post situation_task_generation_path(situation)
 
           expect(situation.reload).to be_generating

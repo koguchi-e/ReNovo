@@ -1,63 +1,77 @@
-<div>
-  <h1 class="flex items-center justify-center gap-3 text-4xl font-bold text-dark-blue">
-    <i class="fa-solid fa-list-check" aria-hidden="true"></i>
-    <span>タスク一覧</span>
-  </h1>
-  <p class="mt-5 text-center text-xl text-calm-blue">
-    内容は自由に追加・編集・並べ替えできます。
-  </p>
-</div>
-
-<ul>
+<section class="task-list__content" aria-label="タスクの編集操作">
+  <div class="task-list__review-action flex w-full justify-center">
+    <%= render "/situations/review_modal", situation: situation, full_width: true %>
+  </div>
+<ul data-controller="task-order" class="task-list__items mt-5">
+  <% first_actionable_task = tasks.detect { |task| !task.completed? } %>
+  <% recommendation_label = tasks.any?(&:completed?) ? "次はこれ" : "まずこれから" %>
   <% tasks.each do |task| %>
-    <li data-controller="task-form" class="relative m-5 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm hover:-translate-y-1 hover:scale-[1.02] sm:p-8">
-      <div data-task-form-target="display">
-        <p class="break-words hover:opacity-60">
-          <%= task.content %>
-        </p>
-        <div class="flex mt-2">
+    <li data-controller="task-form" data-task-id="<%= task.id %>" data-task-completed="<%= task.completed? %>" data-task-position-url="<%= situation_position_path(situation) %>" class="task-list__item relative my-4 rounded-2xl border <%= task == first_actionable_task ? "border-calm-blue" : "border-gray-200" %> bg-white px-4 pb-3 pt-4 text-dark-blue shadow-sm sm:px-5 sm:pb-3 sm:pt-5">
+      <article data-task-form-target="display" class="task-card flex items-start gap-3">
+        <span class="task-card__drag-handle js-grab inline-flex size-11 shrink-0 cursor-grab items-center justify-center rounded-lg hover:bg-dawn-mist" aria-label="ドラッグして並べ替える">
+          <i class="fa-solid fa-grip" aria-hidden="true"></i>
+        </span>
+        <%= render "tasks/completion_button", situation: situation, task: task %>
+        <div class="task-card__content min-w-0 flex-1">
+          <% if task == first_actionable_task %>
+            <span class="task-card__recommendation mb-2 inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-calm-blue"><%= recommendation_label %></span>
+          <% end %>
+          <p class="task-card__text break-words <%= "text-slate-400 line-through" if task.completed? %>">
+            <%= task.content %>
+          </p>
+          <footer class="task-card__actions mt-3 flex gap-1">
           <button type="button" data-action="task-form#edit"
             data-testid="edit-task-button"
             aria-label="タスクを編集"
-            class="pr-2 hover:opacity-60">
+            class="task-card__edit-button icon-button hover:bg-dawn-mist">
             <i class="fa-solid fa-pencil" aria-hidden="true"></i>
           </button>
-          <%= button_to situation_task_path(situation, task), method: :delete, class: "hover:opacity-60", aria: { label: "タスクを削除" }, data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
+          <%= button_to situation_task_path(situation, task), method: :delete, class: "task-card__delete-button icon-button text-red-700 hover:bg-red-50", aria: { label: "タスクを削除" }, data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
             <i class="fa-solid fa-trash" aria-hidden="true"></i>
           <% end %>
+          </footer>
         </div>
-      </div>
-      <div data-task-form-target="form" class="hidden">
-        <%= form_with model: [situation, task], method: :patch do |f| %>
+        <div class="task-card__move-actions ml-auto flex shrink-0 flex-col items-center gap-2">
+          <button type="button" data-action="task-order#moveUp" class="task-card__move-up-button px-2 text-sm hover:opacity-60" aria-label="<%= "#{task.content}を上へ移動" %>">
+            <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+          </button>
+          <button type="button" data-action="task-order#moveDown" class="task-card__move-down-button px-2 text-sm hover:opacity-60" aria-label="<%= "#{task.content}を下へ移動" %>">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+        </div>
+      </article>
+      <section data-task-form-target="form" class="task-card__edit-panel hidden" aria-label="タスクを編集">
+        <%= form_with model: [situation, task], method: :patch, html: { class: "task-card__edit-form" } do |f| %>
           <%= f.text_area :content,
             rows: 3,
             placeholder: "例：机の上に教材を用意する",
             aria: { label: "タスク内容を編集" },
-            class: "min-h-10 w-full resize-y rounded border-2 border-gray-200 bg-gray-200 p-3 leading-relaxed text-gray-700 focus:border-bright-orange focus:bg-white focus:outline-none",
+            class: "task-card__edit-textarea min-h-10 w-full appearance-none resize-y rounded-lg border border-gray-300 bg-white px-4 py-3 leading-relaxed text-gray-700 shadow-inner placeholder:text-slate-400 focus:border-bright-orange focus:outline-none focus:ring-2 focus:ring-bright-orange/20",
             data: {
               task_edit_target: "input",
               testid: "edit-task-content-input"
-            } %>
-          <div class="mt-3 flex w-full items-center justify-start gap-2">
-            <%= f.button type: "submit", class: "border border-calm-blue bg-calm-blue hover:opacity-60 text-white text-xs font-bold py-2 px-4 rounded", data: { testid: "update-task-button" }, aria: { label: "タスクを更新" } do %>
+            }
+          %>
+          <footer class="task-card__edit-actions mt-3 flex w-full items-center justify-start gap-2">
+            <%= f.button type: "submit", class: "action-button action-button--primary action-button--compact", data: { testid: "update-task-button" }, aria: { label: "タスクを更新" } do %>
               <i class="fa-solid fa-check" aria-hidden="true"></i>
             <% end %>
-            <button type="button" data-action="task-form#editCancel" class="border border-calm-blue bg-white text-calm-blue hover:opacity-60 text-xs font-bold py-2 px-4 rounded" aria-label="編集をキャンセル">
+            <button type="button" data-action="task-form#editCancel" class="action-button action-button--secondary action-button--compact" aria-label="編集をキャンセル">
               <i class="fa-solid fa-x" aria-hidden="true"></i>
             </button>
-          </div>
+          </footer>
         <% end %>
-      </div>
+      </section>
     </li>
   <% end %>
 </ul>
-<div class="m-5 flex flex-col items-center gap-3">
-  <%= render "tasks/create_form", situation: situation, new_task: new_task, full_width: true %>
-  <%= render "/situations/review_modal", situation: situation %>
-</div>
-<div class="m-5 flex justify-end">
-  <%= link_to edit_situation_position_path(situation), class: "rounded border border-calm-blue bg-calm-blue px-4 py-2 font-bold text-white hover:opacity-60" do %>
-    次へ
-    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-  <% end %>
-</div>
+<footer class="task-list__actions mx-auto my-5 flex w-full flex-row flex-wrap items-center justify-center gap-3">
+  <%= render "tasks/create_form", situation: situation, new_task: new_task, full_width: true, open_form: local_assigns[:open_new_task_form] %>
+  <div class="flex w-full basis-full justify-center">
+    <%= link_to situation_path(situation, completed: true), class: "action-button action-button--primary action-button--standard" do %>
+      <i class="fa-solid fa-check" aria-hidden="true"></i>
+      編集完了
+    <% end %>
+  </div>
+</footer>
+</section>

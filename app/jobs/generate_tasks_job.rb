@@ -39,6 +39,18 @@ class GenerateTasksJob < ApplicationJob
         end
         situation.completed!
       end
+
+      Turbo::StreamsChannel.broadcast_replace_to(
+        situation,
+        target: "status_screen",
+        partial: "tasks/status_screen",
+        locals: {
+          situation: situation,
+          tasks: situation.tasks.order(:position),
+          new_task: situation.tasks.build,
+          open_new_task_form: false
+        }
+      )
     rescue StandardError => e
       situation&.failed! unless situation.completed?
       Rails.logger.error("[GenerateTasksJob] failed: #{e.class}: #{e.message}")
@@ -51,23 +63,5 @@ class GenerateTasksJob < ApplicationJob
       raise
     end
 
-    begin
-      Turbo::StreamsChannel.broadcast_replace_to(
-        situation,
-        target: "status_screen",
-        partial: "tasks/list",
-        locals: { situation: situation, tasks: situation.tasks, new_task: Task.new }
-      )
-
-      Turbo::StreamsChannel.broadcast_append_to(
-        situation,
-        target: "flash_messages",
-        partial: "shared/flash",
-        locals: { type: :notice, message: "AIがタスクを整理しました！" }
-      )
-    rescue StandardError => e
-      Rails.logger.error("[GenerateTasksJob] notification failed: #{e.class}: #{e.message}")
-      raise
-    end
   end
 end

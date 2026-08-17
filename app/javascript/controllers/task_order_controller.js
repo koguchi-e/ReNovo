@@ -23,6 +23,7 @@ export default class extends Controller {
           };
 
           await patch(url, { body: params });
+          this.syncRecommendation();
         } catch (error) {
           console.warn(error);
           const task = event.item;
@@ -59,6 +60,7 @@ export default class extends Controller {
       await patch(url, {
         body: { task_id: task.dataset.taskId, insert_at: insertAt },
       });
+      this.syncRecommendation();
     } catch (error) {
       console.warn(error);
       if (task && previousTask) {
@@ -90,6 +92,7 @@ export default class extends Controller {
       await patch(url, {
         body: { task_id: task.dataset.taskId, insert_at: insertAt },
       });
+      this.syncRecommendation();
     } catch (error) {
       console.warn(error);
       if (task && nextTask) {
@@ -99,5 +102,28 @@ export default class extends Controller {
       this.saving = false;
       this.sortable.option("disabled", false);
     }
+  }
+
+  syncRecommendation() {
+    const tasks = Array.from(this.element.children);
+    const recommendation = this.element.querySelector(
+      ".task-card__recommendation",
+    );
+    const firstActionableTask = tasks.find(
+      (task) => task.dataset.taskCompleted === "false",
+    );
+
+    tasks.forEach((task) => {
+      task.classList.remove("border-calm-blue");
+      task.classList.add("border-gray-200");
+    });
+
+    if (!recommendation || !firstActionableTask) return;
+
+    firstActionableTask.classList.remove("border-gray-200");
+    firstActionableTask.classList.add("border-calm-blue");
+    firstActionableTask
+      .querySelector(".task-card__content")
+      .prepend(recommendation);
   }
 }

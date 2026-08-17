@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class TasksController < ApplicationController
   before_action :set_situation
   before_action :set_task, only: %i[update destroy]
@@ -8,6 +6,10 @@ class TasksController < ApplicationController
   def index
     @tasks = @situation.tasks.order(:position)
     @new_task = @situation.tasks.build
+    if @situation.completed? && session[:new_task_generation_id].to_i == @situation.id
+      @show_generation_message = true
+      session.delete(:new_task_generation_id)
+    end
   end
 
   def create
@@ -23,9 +25,9 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to situation_tasks_path(@situation), notice: t(".updated")
+      redirect_to task_redirect_path, notice: t(".updated")
     else
-      redirect_to situation_tasks_path(@situation), alert: t(".alert")
+      redirect_to task_redirect_path, alert: t(".alert")
     end
   end
 
@@ -38,23 +40,28 @@ class TasksController < ApplicationController
   end
 
   private
-    def set_situation
-      @situation = current_user.situations.find(params[:situation_id])
-    end
 
-    def set_task
-      @task = @situation.tasks.find(params[:id])
-    end
+  def set_situation
+    @situation = current_user.situations.find(params[:situation_id])
+  end
 
-    def task_params
-      params.require(:task).permit(:content)
-    end
+  def set_task
+    @task = @situation.tasks.find(params[:id])
+  end
 
-    def fail_timed_out_generation
-      @situation.with_lock do
-        @situation.reload
+  def task_params
+    params.require(:task).permit(:content, :completed)
+  end
 
-        @situation.failed! if @situation.generation_timed_out?
-      end
+  def fail_timed_out_generation
+    @situation.with_lock do
+      @situation.reload
+
+      @situation.failed! if @situation.generation_timed_out?
     end
+  end
+
+  def task_redirect_path
+    params[:return_to] == "situation" ? situation_path(@situation) : situation_tasks_path(@situation)
+  end
 end

@@ -1,0 +1,11 @@
+<% next_task = tasks.detect { |task| !task.completed? } %>
+<% if next_task %>
+  <section class="first-task mt-5 w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6" aria-labelledby="first-task-heading">
+    <h2 id="first-task-heading" class="first-task__heading text-xl font-bold text-dark-blue">
+      <i class="fa-solid fa-play" aria-hidden="true"></i>
+      <%= tasks.any?(&:completed?) ? "次に取り組むタスク" : "最初に取り組むタスク" %>
+    </h2>
+    <hr class="first-task__divider mb-5 mt-3 border border-gray-200">
+    <p class="first-task__content text-xl font-bold text-calm-blue"><%= next_task.content %></p>
+  </section>
+<% end %>

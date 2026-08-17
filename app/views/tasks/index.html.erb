@@ -1,15 +1,18 @@
-<% content_for :title, "タスクリスト | ReNovo" %>
+<% content_for :title, "タスク編集 | ReNovo" %>
 <% content_for :description, "整理した状況や目標をもとに作成されたタスクリストを確認できます。" %>
 
 <%= turbo_stream_from @situation %>
-<div id="status_screen">
-  <% if @situation.pending? || @situation.generating? %>
-    <%= render "generating", situation: @situation %>
-  <% elsif @situation.failed? %>
-    <%= render "failed", situation: @situation %>
-  <% elsif @tasks.exists? %>
-    <%= render "list", situation: @situation, tasks: @tasks, new_task: @new_task %>
-  <% else %>
-    <%= render "empty", situation: @situation, new_task: @new_task %>
+<% open_new_task_form = params[:new_task] == "open" %>
+<article class="task-page" aria-labelledby="task-page-heading">
+  <%= render "shared/page_header",
+    block_name: "task-list",
+    heading_id: "task-page-heading",
+    heading_size: "text-4xl",
+    icon_class: "fa-solid fa-list-check",
+    title: "タスク編集",
+    description: safe_join(["タスクの追加・編集・削除や、完了状態の変更ができます。", tag.br, "ドラッグまたは上下ボタンで並べ替えられ、並び順は自動で保存されます。"]) %>
+  <% if @show_generation_message %>
+    <%= render "generation_message" %>
   <% end %>
-</div>
+  <%= render "status_screen", situation: @situation, tasks: @tasks, new_task: @new_task, open_new_task_form: open_new_task_form %>
+</article>

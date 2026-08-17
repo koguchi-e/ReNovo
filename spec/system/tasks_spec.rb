@@ -22,6 +22,49 @@ RSpec.describe "Tasks", type: :system do
     expect(page).to have_content "新しいタスク"
   end
 
+  scenario "状況整理の詳細に最初のタスクが表示される" do
+    visit situation_path(situation)
+
+    expect(page).to have_css "h2", text: "最初に取り組むタスク"
+    expect(page).to have_css ".first-task__content", text: task.content
+    expect(page).to have_css ".task-export__guidance", text: "終わったタスクは、左のチェックマークをクリックして完了にしましょう。"
+    expect(page).to have_link "状況整理一覧に戻る", href: situations_path
+  end
+
+  scenario "状況整理の詳細でタスクを完了にできる" do
+    visit situation_path(situation)
+
+    find("[data-testid='compact-toggle-task-button-#{task.id}']").click
+
+    expect(page).to have_current_path situation_path(situation)
+    expect(page).to have_css ".compact-task-list__content.line-through", text: task.content
+  end
+
+  scenario "完了したタスクの次に取り組むタスクが表示される" do
+    next_task = create(:task, situation: situation, position: 2, content: "次に進めるタスク")
+    task.update!(completed: true)
+
+    visit situation_path(situation)
+
+    expect(page).to have_css "h2", text: "次に取り組むタスク"
+    expect(page).to have_css ".first-task__content", text: next_task.content
+    expect(page).not_to have_css ".first-task__content", text: task.content
+  end
+
+  scenario "状況整理の詳細からタスク追加へ移動すると追加フォームが開く" do
+    situation_without_tasks = create(:situation, user: user, status: :failed)
+
+    visit situation_path(situation_without_tasks)
+    click_link "タスクを追加する"
+
+    expect(page).to have_current_path(situation_tasks_path(situation_without_tasks, new_task: "open"))
+    expect(page).not_to have_content "タスクの作成に失敗しました。"
+    expect(page).not_to have_content "まずはタスクを1つ選んで始めてみましょう。"
+    expect(page).to have_css "h3", text: "タスクの追加"
+    expect(page).to have_css('[data-testid="new-task-content-input"]', visible: true)
+    expect(page).to have_css('[data-testid="open-task-form-button"]', visible: false)
+  end
+
   scenario "タスクが空欄だと登録できない" do
     visit situation_tasks_path(situation)
     find('[data-testid="open-task-form-button"]').click
@@ -53,5 +96,26 @@ RSpec.describe "Tasks", type: :system do
     end
 
     expect(page).not_to have_content "削除するタスク"
+  end
+
+  scenario "タスクを完了し、未完了に戻せる" do
+    visit situation_tasks_path(situation)
+
+    find("[data-testid='toggle-task-button-#{task.id}']").click
+    expect(page).to have_css("p.line-through", text: task.content)
+
+    find("[data-testid='toggle-task-button-#{task.id}']").click
+    expect(page).not_to have_css("p.line-through", text: task.content)
+  end
+
+  scenario "完了済みタスクがある場合は次のタスクを案内する" do
+    task.update!(completed: true)
+    next_task = create(:task, situation: situation, position: 2, content: "次に取り組むタスク")
+
+    visit situation_tasks_path(situation)
+
+    expect(page).to have_css ".task-card__recommendation", text: "次はこれ"
+    expect(page).to have_css ".task-list__item", text: next_task.content
+    expect(page).not_to have_content "まずこれから"
   end
 end

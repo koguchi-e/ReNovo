@@ -19,18 +19,17 @@ RSpec.describe GenerateTasksJob, type: :job do
         "勉強時間をカレンダーに30分だけ登録する"
       ]
       allow(TaskGenerationAgent).to receive(:generate).and_return(tasks)
-      expect(Turbo::StreamsChannel).to receive(:broadcast_append_to).with(
-        situation,
-        target: "flash_messages",
-        partial: "shared/flash",
-        locals: { type: :notice, message: "AIがタスクを整理しました！" }
-      )
+      allow(Turbo::StreamsChannel).to receive(:broadcast_replace_to)
       expect {
         described_class.perform_now(situation_id: situation.id)
       }.to change(Task, :count).by(5)
       expect(situation.reload).to be_completed
       expect(situation.tasks.order(:position).pluck(:content)).to eq(tasks)
       expect(situation.tasks.order(:position).pluck(:position)).to eq([ 1, 2, 3, 4, 5 ])
+      expect(Turbo::StreamsChannel).to have_received(:broadcast_replace_to).with(
+        situation,
+        hash_including(target: "status_screen", partial: "tasks/status_screen")
+      )
     end
 
     context "生成結果が不正な場合" do

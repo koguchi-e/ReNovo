@@ -1,0 +1,11 @@
+<section id="status_screen" class="task-status page-content mt-5" aria-label="タスクの状態">
+  <% if situation.pending? || situation.generating? %>
+    <%= render "tasks/generating", situation: situation %>
+  <% elsif situation.failed? && !open_new_task_form %>
+    <%= render "tasks/failed", situation: situation %>
+  <% elsif tasks.exists? %>
+    <%= render "tasks/list", situation: situation, tasks: tasks, new_task: new_task, open_new_task_form: open_new_task_form %>
+  <% else %>
+    <%= render "tasks/empty", situation: situation, new_task: new_task, open_new_task_form: open_new_task_form %>
+  <% end %>
+</section>

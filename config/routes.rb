@@ -3,8 +3,7 @@
 Rails.application.routes.draw do
   resources :situations, only: %i[index show new create] do
     resources :tasks, only: %i[index create update destroy]
-    resource :position, only: %i[edit update]
-    resource :completion, only: :show, module: :situations
+    resource :position, only: :update
     resource :task_generation, only: :create
   end
 
@@ -16,5 +15,6 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "auth/:provider/callback", to: "sessions#create"
+  post "/developer_login", to: "sessions#developer_create" if Rails.env.development?
   delete "/logout", to: "sessions#destroy"
 end
