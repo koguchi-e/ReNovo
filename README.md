@@ -1,7 +1,7 @@
 # ReNovo
 
 <p align="center">
-  <img src="app/assets/images/logo.png" alt="ReNovoロゴ" width="320">
+  <img src="app/assets/images/ogp.png" alt="ReNovoロゴ" width="480">
 </p>
 
 ## 概要
