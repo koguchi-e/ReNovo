@@ -19,15 +19,9 @@
 }
 
 @layer base {
-  a[href],
-  button:not(:disabled):not([aria-disabled="true"]) {
-    transition: opacity 150ms ease, transform 100ms ease;
-  }
-
   a[href]:active,
   button:not(:disabled):not([aria-disabled="true"]):active {
     opacity: 0.75;
-    transform: scale(0.97);
   }
 
   button:not(:disabled):not([aria-disabled="true"]) {
@@ -37,6 +31,48 @@
   button:disabled,
   button[aria-disabled="true"] {
     cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a[href],
+    button:not(:disabled):not([aria-disabled="true"]) {
+      transition: opacity 150ms ease, transform 100ms ease;
+    }
+
+    a[href]:active,
+    button:not(:disabled):not([aria-disabled="true"]):active {
+      transform: scale(0.97);
+    }
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .form-textarea {
+    @apply w-full resize-y appearance-none rounded border-2 border-gray-200 bg-gray-200 p-3 leading-relaxed text-gray-700 placeholder:text-slate-500 focus:border-bright-orange focus:bg-white focus:outline-none;
+  }
+
+  .primary-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-calm-blue bg-calm-blue px-5 py-3 font-bold text-white hover:opacity-60;
+  }
+
+  .secondary-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-calm-blue bg-white px-5 py-3 font-bold text-calm-blue hover:opacity-60;
+  }
+
+  .icon-button {
+    @apply inline-flex size-11 items-center justify-center rounded-lg text-calm-blue hover:bg-dawn-mist hover:opacity-60;
+  }
+
+  .icon-button-primary {
+    @apply inline-flex size-11 items-center justify-center rounded-lg bg-calm-blue text-white hover:opacity-60;
+  }
+
+  .icon-button-danger {
+    @apply inline-flex size-11 items-center justify-center rounded-lg text-red-700 hover:bg-red-50 hover:opacity-60;
   }
 }
 

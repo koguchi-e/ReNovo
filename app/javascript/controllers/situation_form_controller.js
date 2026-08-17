@@ -1,7 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["step", "input", "error", "output", "progressStep"];
+  static targets = [
+    "step",
+    "heading",
+    "input",
+    "error",
+    "output",
+    "progressStep",
+  ];
 
   connect() {
     this.currentStep = 0;
@@ -12,6 +19,7 @@ export default class extends Controller {
     if (!this.validateCurrentStep()) return;
     this.currentStep++;
     this.showCurrentStep();
+    this.focusCurrentHeading();
   }
 
   prev() {
@@ -30,6 +38,13 @@ export default class extends Controller {
       step.classList.toggle("hidden", index !== this.currentStep);
     });
     this.updateProgress();
+  }
+
+  focusCurrentHeading() {
+    const heading = this.headingTargets[this.currentStep];
+
+    heading.focus({ preventScroll: true });
+    heading.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   updateProgress() {

@@ -12,16 +12,16 @@
 <ul data-controller="task-order" class="mt-5">
   <% @tasks.each do |task| %>
     <li data-task-id="<%= task.id %>" data-task-position-url="<%= situation_position_path(@situation) %>"
-    class="relative m-5 flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm hover:-translate-y-1 hover:scale-[1.02] sm:p-8">
+    class="relative m-5 flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm sm:p-8">
       <span class="js-grab shrink-0 cursor-grab">
         <i class="fa-solid fa-grip" aria-hidden="true"></i>
       </span>
       <span class="flex-1"><%= task.content %></span>
       <div class="ml-auto flex shrink-0 items-center gap-2">
-        <button type="button" data-action="task-order#moveUp" class="pr-2 text-sm hover:opacity-60" aria-label="<%= "#{task.content}を上へ移動" %>">
+        <button type="button" data-action="task-order#moveUp" class="icon-button text-sm" aria-label="<%= "#{task.content}を上へ移動" %>">
           <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
         </button>
-        <button type="button" data-action="task-order#moveDown" class="pr-2 text-sm hover:opacity-60" aria-label="<%= "#{task.content}を下へ移動" %>">
+        <button type="button" data-action="task-order#moveDown" class="icon-button text-sm" aria-label="<%= "#{task.content}を下へ移動" %>">
           <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
         </button>
       </div>
@@ -32,11 +32,11 @@
   <%= render "/situations/review_modal", situation: @situation %>
 </div>
 <div class="m-5 flex items-center justify-between gap-3">
-  <%= link_to situation_tasks_path(@situation), class: "border border-calm-blue bg-white text-calm-blue hover:opacity-60 font-bold py-2 px-4 rounded" do %>
+  <%= link_to situation_tasks_path(@situation), class: "secondary-button" do %>
     <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     戻る
   <% end %>
-  <%= link_to situation_completion_path(@situation), class: "bg-calm-blue hover:opacity-60 text-white font-bold py-2 px-4 rounded" do %>
+  <%= link_to situation_completion_path(@situation), class: "primary-button" do %>
     <i class="fa-solid fa-check" aria-hidden="true"></i>
     完了
   <% end %>

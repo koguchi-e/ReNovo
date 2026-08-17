@@ -14,7 +14,7 @@
         <li>
           <%= link_to situation_path(situation.id),
             class: "m-3 block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-blue focus-visible:ring-offset-2 focus-visible:ring-offset-dawn-mist" do %>
-            <div class="relative rounded-2xl border border-gray-200 bg-white p-4 text-dark-blue shadow-sm hover:-translate-y-1 hover:scale-[1.02] hover:opacity-80 sm:p-5">
+            <div class="relative rounded-2xl border border-gray-200 bg-white p-4 text-dark-blue shadow-sm transition hover:border-calm-blue hover:shadow-md sm:p-5">
               <time datetime="<%= situation.created_at.iso8601 %>" class="text-sm">
                 <%= situation.created_at.strftime('%Y年%m月%d日 %H時%M分') %>
               </time>

@@ -15,6 +15,7 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
     <script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.1.1/dist/css/yakuhanjp_s.css">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -26,31 +27,39 @@
     <meta property="og:url" content="<%= request.base_url + request.path %>">
     <meta name="twitter:card" content="summary_large_image">
   </head>
-  <body class="flex min-h-screen flex-col bg-dawn-mist">
-    <header class="relative w-full border-b border-gray-200 bg-dawn-mist" data-controller="hamburger-menu">
-      <div class="relative mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <%= link_to root_path, class: "text-xl font-bold text-dark-blue hover:opacity-60" do %>
-          <%= image_tag "logo.png", alt: "ReNovo ホーム", class: "h-auto w-full max-w-[180px]" %>
-        <% end %>
-        <% if current_user %>
-          <%= render "shared/header_menu" %>
-        <% end %>
-      </div>
-    </header>
-    <div id="flash_messages" class="pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6">
+  <body class="site-body flex min-h-screen flex-col bg-dawn-mist">
+    <% unless content_for?(:hide_header) %>
+      <header
+        class="site-header relative w-full border-b border-gray-200 bg-dawn-mist"
+        data-controller="hamburger-menu"
+        data-action="click@window->hamburger-menu#closeOnOutside keydown.esc@window->hamburger-menu#closeOnEscape">
+        <div class="page-container site-header__inner relative flex items-center justify-between py-3">
+          <%= link_to root_path, class: "site-header__brand inline-flex items-center gap-0.5 text-dark-blue hover:opacity-70", aria: { label: "ReNovo ホーム" } do %>
+            <%= image_tag "brand-symbol.png", alt: "", class: "site-header__brand-symbol size-11 shrink-0" %>
+            <%= image_tag "renovo-wordmark.svg", alt: "ReNovo", class: "site-header__brand-name h-auto w-28" %>
+          <% end %>
+          <% if current_user && !content_for?(:simple_header) %>
+            <%= render "shared/header_menu" %>
+          <% end %>
+        </div>
+      </header>
+    <% end %>
+    <aside id="flash_messages" class="flash-messages pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6" aria-label="お知らせ">
       <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
       <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
-    </div>
+    </aside>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
-      <div class="flex-1 bg-dawn-mist p-4 sm:p-8">
-        <div class="mx-auto w-full max-w-5xl rounded-2xl bg-white p-4 shadow-sm sm:p-10">
-          <main class="mx-auto flex w-full max-w-4xl flex-col items-center justify-center">
-            <%= yield %>
+      <% public_page_content = yield %>
+      <div class="page-container public-page-layout flex flex-1 flex-col py-4 sm:py-6">
+        <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
+        <div class="public-page-layout__panel w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
+          <main class="public-page-layout__main flex w-full flex-col items-center">
+            <%= public_page_content %>
           </main>
         </div>
       </div>
     <% else %>
-      <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
+      <main class="app-main relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
         <%= yield %>
       </main>
     <% end %>

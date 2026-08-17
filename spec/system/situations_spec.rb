@@ -20,7 +20,7 @@ RSpec.describe "Situations", type: :system do
     find('[data-testid="problem-next-button"]').click
 
     fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
-    click_button "送信"
+    click_button "タスクを作成する"
 
     visit situations_path
 
@@ -53,7 +53,7 @@ RSpec.describe "Situations", type: :system do
     find('[data-testid="problem-next-button"]').click
 
     fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
-    click_button "送信"
+    click_button "タスクを作成する"
 
     visit situations_path
     expect(page).to have_content "会議で進捗報告をしたが、うまく説明できなかった。"
