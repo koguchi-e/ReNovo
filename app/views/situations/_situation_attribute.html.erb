@@ -1,9 +1,9 @@
-<div class="mt-5 mb-2">
-  <dt class="pt-3 pb-3 text-xl font-bold text-calm-blue">
+<div class="situation-response mt-5 mb-2">
+  <dt class="situation-response__term pt-3 pb-3 text-xl font-bold text-calm-blue">
     <%= Situation.human_attribute_name(attribute) %>
   </dt>
-  <dd class="p-2 w-full appearance-none rounded border-2 border-gray-200 bg-gray-200">
-    <p class="p-5">
+  <dd class="situation-response__description w-full appearance-none rounded border-2 border-gray-200 bg-dawn-mist p-3">
+    <p class="situation-response__text">
       <%= situation.public_send(attribute) %>
     </p>
   </dd>

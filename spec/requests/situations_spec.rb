@@ -44,7 +44,7 @@ RSpec.describe "Situations", type: :request do
     end
 
     context "ログインしている場合" do
-      it "ふりかえりを作成し、タスク生成ジョブを登録する" do
+      it "状況整理を作成し、タスク生成ジョブを登録する" do
         expect do
           post situations_path, params: params
         end.to change(Situation, :count).by(1)
@@ -55,6 +55,33 @@ RSpec.describe "Situations", type: :request do
 
         expect(response).to redirect_to situation_tasks_path(situation)
         expect(flash[:notice]).to eq("質問に回答しました。")
+      end
+
+      it "新規作成後の詳細画面に完了メッセージを一度だけ表示する" do
+        post situations_path, params: params
+        situation = Situation.last
+        create(:task, situation: situation)
+
+        get situation_path(situation, completed: true)
+        expect(response.body).to include("タスクの整理が完了しました！")
+
+        get situation_path(situation, completed: true)
+        expect(response.body).not_to include("タスクの整理が完了しました！")
+      end
+
+      it "生成完了後のタスク編集画面に案内を一度だけ表示する" do
+        post situations_path, params: params
+        situation = Situation.last
+        create(:task, situation: situation)
+        situation.completed!
+
+        get situation_tasks_path(situation)
+        expect(response.body).to include("タスクを生成しました。")
+        expect(response.body).to include("タスクの追加・編集・削除ができます。")
+        expect(response.body).to include("タスクの順番も自由に並べ替えられます。")
+
+        get situation_tasks_path(situation)
+        expect(response.body).not_to include("タスクを生成しました。")
       end
     end
   end

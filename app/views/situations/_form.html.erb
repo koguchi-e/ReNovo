@@ -1,148 +1,148 @@
-<div class="mx-auto w-full max-w-2xl" data-controller="situation-form">
-  <aside class="mx-3 mb-10 rounded-xl border border-blue-100 bg-blue-50 p-4">
-    <div class="flex gap-3">
-      <i class="fa-solid fa-circle-info mt-1 shrink-0 text-calm-blue" aria-hidden="true"></i>
-      <div class="space-y-3 text-base leading-relaxed text-slate-600">
-        <div>
-          <p class="font-bold text-dark-blue">AI利用について</p>
-          <p>
-            入力内容はタスク生成のためOpenAI APIへ送信されます。
-            個人情報や病歴などの機微な情報は入力しないでください。
-          </p>
-        </div>
-        <div>
-          <p class="font-bold text-dark-blue">医療上の注意</p>
-          <p>
-            本サービスは医療行為ではありません。
-            心身の不調がある場合は医療専門職へご相談ください。
-          </p>
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
-    <h1 class="sr-only">状況を整理してタスクリストを作成する</h1>
-    <ul class="mx-auto mb-10 flex w-3/4 flex-row">
-      <li class="basis-0 flex-1">
-        <div class="inline-flex min-h-7 w-full items-center text-xs">
+<section class="situation-form mx-auto w-full max-w-2xl" data-controller="situation-form" aria-labelledby="situation-page-heading">
+  <div class="situation-form__panel rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+    <ol class="situation-progress mx-auto mb-8 flex w-full max-w-md flex-row" aria-label="入力の進捗">
+      <li class="situation-progress__item basis-0 flex-1">
+        <div class="situation-progress__content flex w-full flex-col text-sm">
+          <div class="situation-progress__indicator-row inline-flex min-h-8 w-full items-center">
           <span
-            class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700 font-medium"
-            data-situation-form-target="progressStep">
+            class="situation-progress__indicator flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700 font-medium"
+            data-situation-form-target="progressStep"
+          >
             1
           </span>
-          <div class="ms-2 h-px flex-1 bg-gray-200"></div>
+          <div class="situation-progress__connector ms-2 h-px flex-1 bg-gray-200" aria-hidden="true"></div>
+          </div>
+          <span class="situation-progress__label relative left-4 mt-1 -translate-x-1/2 self-start whitespace-nowrap text-center text-gray-600" data-situation-form-target="progressLabel">出来事</span>
         </div>
       </li>
-      <li class="basis-0 flex-1">
-        <div class="inline-flex min-h-7 w-full items-center text-xs">
+      <li class="situation-progress__item basis-0 flex-1">
+        <div class="situation-progress__content flex w-full flex-col text-sm">
+          <div class="situation-progress__indicator-row inline-flex min-h-8 w-full items-center">
           <span
-            class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700 font-medium"
-            data-situation-form-target="progressStep">
+            class="situation-progress__indicator flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700 font-medium"
+            data-situation-form-target="progressStep"
+          >
             2
           </span>
-          <div class="ms-2 h-px flex-1 bg-gray-200"></div>
+          <div class="situation-progress__connector ms-2 h-px flex-1 bg-gray-200" aria-hidden="true"></div>
+          </div>
+          <span class="situation-progress__label relative left-4 mt-1 -translate-x-1/2 self-start whitespace-nowrap text-center text-gray-600" data-situation-form-target="progressLabel">困りごと</span>
         </div>
       </li>
-      <li class="shrink-0">
-        <div class="inline-flex min-h-7 w-full items-center text-xs">
+      <li class="situation-progress__item shrink-0">
+        <div class="situation-progress__content flex w-full flex-col text-sm">
+          <div class="situation-progress__indicator-row inline-flex min-h-8 w-full items-center">
           <span
-            class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700 font-medium"
-            data-situation-form-target="progressStep">
+            class="situation-progress__indicator flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700 font-medium"
+            data-situation-form-target="progressStep"
+          >
             3
           </span>
+          </div>
+          <span class="situation-progress__label relative left-4 mt-1 -translate-x-1/2 self-start whitespace-nowrap text-center text-gray-600" data-situation-form-target="progressLabel">目標</span>
         </div>
       </li>
-    </ul>
-    <%= form_with model: situation, data: { action: "submit->situation-form#submit" } do |f| %>
-      <div data-situation-form-target="step" class="block">
-        <h2 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
-          今どんなことが起きていますか？
+    </ol>
+    <%= form_with model: situation, html: { class: "situation-form__questions" }, data: { action: "submit->situation-form#submit" } do |f| %>
+      <section data-situation-form-target="step" class="situation-form__step block" aria-labelledby="fact-question-heading">
+        <h2 id="fact-question-heading" tabindex="-1" class="situation-form__question flex flex-col items-center text-center text-2xl font-bold leading-tight text-dark-blue sm:text-[2rem]">
+          <span class="situation-form__question-label mb-5 rounded-none border-b-2 bg-transparent px-1 pb-1 text-sm">質問 1</span>
+          <span class="situation-form__question-text">今、どんなことが<br>起きていますか？</span>
         </h2>
-        <p class="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-calm-blue">
-          現在の状況や起きた出来事を具体的に書き出してみましょう。
+        <p class="situation-form__guidance mt-4 text-left text-base font-semibold leading-relaxed text-calm-blue sm:text-center sm:text-lg">
+          現在の状況や、<br class="hidden sm:block">
+          起きた出来事を具体的に書き出してみましょう。
         </p>
-        <div class="mb-5 mt-6 rounded-xl border border-gray-200 px-4 py-3">
-          <p class="text-sm font-bold text-dark-blue">入力例</p>
-          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-500">
-            <li>「ビジネスメールが書けていない」と上司に指摘された</li>
-            <li>勉強したいのにずっとSNSを見てしまう</li>
-            <li>やりたいことがあるのに疲れて何も始められない</li>
+        <aside class="input-examples mx-auto my-8 flex w-fit max-w-full flex-col items-start gap-3 rounded-xl sm:flex-row" aria-labelledby="fact-examples-heading">
+          <h3 id="fact-examples-heading" class="input-examples__heading shrink-0 rounded-full border border-calm-blue bg-[#fff] px-3 py-1 text-xs font-bold text-calm-blue">入力例</h3>
+          <ul class="input-examples__list min-w-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-500">
+            <li class="input-examples__item">「メールが長くて、要点が分かりにくい」と上司に指摘された</li>
+            <li class="input-examples__item">勉強したいのにずっとSNSを見てしまう</li>
+            <li class="input-examples__item">やりたいことがあるのに疲れて何も始められない</li>
           </ul>
-        </div>
+        </aside>
         <%= render "form_text_area",
           f: f,
           attribute: :fact,
           label_text: "現在の状況や起きた出来事",
-          placeholder_text: "例：勉強したいのに、ずっとSNSを見てしまう" %>
-        <div class="mt-6 flex justify-end">
-          <button type="button" data-testid="fact-next-button" data-action="click->situation-form#next" class="rounded border border-calm-blue bg-calm-blue px-4 py-2 font-bold text-white hover:opacity-60">
+          placeholder_text: "例：勉強したいのに、ずっとSNSを見てしまう"
+        %>
+        <%= render "input_notice" %>
+        <footer class="situation-form__actions mt-6 flex justify-end">
+          <button type="button" disabled data-testid="fact-next-button" data-situation-form-target="factNextButton" data-action="click->situation-form#next" class="situation-form__next-button action-button action-button--primary action-button--standard disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-300 disabled:text-gray-500 disabled:opacity-70">
             次へ
             <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
           </button>
-        </div>
-      </div>
-      <div data-situation-form-target="step" class="block">
-        <h2 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
-          今一番困っていることは何ですか？
+        </footer>
+      </section>
+      <section data-situation-form-target="step" class="situation-form__step block" aria-labelledby="problem-question-heading">
+        <h2 id="problem-question-heading" tabindex="-1" class="situation-form__question flex flex-col items-center text-center text-2xl font-bold leading-tight text-dark-blue sm:text-[2rem]">
+          <span class="situation-form__question-label mb-5 rounded-none border-b-2 bg-transparent px-1 pb-1 text-sm">質問 2</span>
+          <span class="situation-form__question-text">今、一番困っていることは<br>何ですか？</span>
         </h2>
-        <p class="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-calm-blue">
-          一番モヤモヤしたことや気になっていることを書き出してみましょう。
+        <p class="situation-form__guidance mt-4 text-left text-base font-semibold leading-relaxed text-calm-blue sm:text-center sm:text-lg">
+          一番モヤモヤしていることや、<br class="hidden sm:block">
+          気になっていることを書き出してみましょう。
         </p>
-        <div class="mb-5 mt-6 rounded-xl border border-gray-200 px-4 py-3">
-          <p class="text-sm font-bold text-dark-blue">入力例</p>
-          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-500">
-            <li>メールのどこが悪いのか分からず修正できない</li>
-            <li>周りが気になって自分の作業に集中できない</li>
-            <li>情報を集めすぎて動けなくなっている</li>
+        <aside class="input-examples mx-auto my-8 flex w-fit max-w-full flex-col items-start gap-3 rounded-xl sm:flex-row" aria-labelledby="problem-examples-heading">
+          <h3 id="problem-examples-heading" class="input-examples__heading shrink-0 rounded-full border border-calm-blue bg-[#fff] px-3 py-1 text-xs font-bold text-calm-blue">入力例</h3>
+          <ul class="input-examples__list min-w-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-500">
+            <li class="input-examples__item">メールのどこが悪いのか分からず修正できない</li>
+            <li class="input-examples__item">周りが気になって自分の作業に集中できない</li>
+            <li class="input-examples__item">情報を集めすぎて動けなくなっている</li>
           </ul>
-        </div>
+        </aside>
         <%= render "form_text_area",
           f: f,
           attribute: :problem,
           label_text: "今一番困っていること",
-          placeholder_text: "例：情報を集めすぎて、何から始めればよいか分からない" %>
-        <div class="mt-6 flex items-center justify-between gap-3">
-          <button type="button" data-action="click->situation-form#prev" class="rounded border border-calm-blue bg-white px-4 py-2 font-bold text-calm-blue hover:opacity-60">
+          placeholder_text: "例：情報を集めすぎて、何から始めればよいか分からない"
+        %>
+        <footer class="situation-form__actions mt-6 flex items-center justify-between gap-3">
+          <button type="button" data-action="click->situation-form#prev" class="situation-form__previous-button action-button action-button--secondary action-button--paired">
             <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
             戻る
           </button>
-          <button type="button" data-testid="problem-next-button" data-action="click->situation-form#next" class="rounded border border-calm-blue bg-calm-blue px-4 py-2 font-bold text-white hover:opacity-60">
+          <button type="button" data-testid="problem-next-button" data-action="click->situation-form#next" class="situation-form__next-button action-button action-button--primary action-button--paired">
             次へ
             <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
           </button>
-        </div>
-      </div>
-      <div data-situation-form-target="step" class="block">
-        <h2 class="text-center text-3xl font-bold leading-tight text-dark-blue sm:text-4xl">
-          どんな状態になれたら良さそうですか？
+        </footer>
+      </section>
+      <section data-situation-form-target="step" class="situation-form__step block" aria-labelledby="goal-question-heading">
+        <h2 id="goal-question-heading" tabindex="-1" class="situation-form__question flex flex-col items-center text-center text-2xl font-bold leading-[1.5] text-dark-blue sm:text-[2rem]">
+          <span class="situation-form__question-label mb-5 rounded-none border-b-2 bg-transparent px-1 pb-1 text-sm">質問 3</span>
+          <span class="situation-form__question-text">どうなったら、<br>少し前に進めそうですか？</span>
         </h2>
-        <p class="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-calm-blue">
-          自分自身が将来的にどのような状態になりたいか、理想の状態を書き出してみましょう。
+        <p class="situation-form__guidance mt-4 text-left text-base font-semibold leading-relaxed text-calm-blue sm:text-center sm:text-lg">
+          このあと、どのような状態になっていたいか、<br class="hidden sm:block">
+          理想の状態を書き出してみましょう。
         </p>
-        <div class="mb-5 mt-6 rounded-xl border border-gray-200 px-4 py-3">
-          <p class="text-sm font-bold text-dark-blue">入力例</p>
-          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-500">
-            <li>メールを修正して、次回は自分で書けるようになりたい</li>
-            <li>SNSを見る時間を減らして、少しでも作業を進めたい</li>
-            <li>自分の作業に集中できるようになりたい</li>
+        <aside class="input-examples mx-auto my-8 flex w-fit max-w-full flex-col items-start gap-3 rounded-xl sm:flex-row" aria-labelledby="goal-examples-heading">
+          <h3 id="goal-examples-heading" class="input-examples__heading shrink-0 rounded-full border border-calm-blue bg-[#fff] px-3 py-1 text-xs font-bold text-calm-blue">入力例</h3>
+          <ul class="input-examples__list min-w-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-slate-500">
+            <li class="input-examples__item">メールを修正して、次回は自分で書けるようになりたい</li>
+            <li class="input-examples__item">SNSを見る時間を減らして、少しでも作業を進めたい</li>
+            <li class="input-examples__item">自分の作業に集中できるようになりたい</li>
           </ul>
-        </div>
+        </aside>
         <%= render "form_text_area",
           f: f,
           attribute: :goal,
           label_text: "目指したい状態",
-          placeholder_text: "例：SNSを見る時間を減らして、少しでも作業を進めたい" %>
-        <div class="mt-6 flex items-center justify-between gap-3">
-          <button type="button" data-action="click->situation-form#prev" class="rounded border border-calm-blue bg-white px-4 py-2 font-bold text-calm-blue hover:opacity-60">
+          placeholder_text: "例：SNSを見る時間を減らして、少しでも作業を進めたい"
+        %>
+        <footer class="situation-form__actions mt-6 flex items-center justify-between gap-3">
+          <button type="button" data-action="click->situation-form#prev" class="situation-form__previous-button action-button action-button--secondary w-[calc(45%-0.375rem)] max-w-48">
             <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
             戻る
           </button>
-          <%= f.button type: "submit", class: "rounded border border-calm-blue bg-calm-blue px-4 py-2 font-bold text-white hover:opacity-60" do %>
+          <%= f.button type: "submit", class: "situation-form__submit-button action-button action-button--primary w-[calc(55%-0.375rem)] max-w-48" do %>
             <i class="fa-solid fa-check" aria-hidden="true"></i>
-            送信
+            タスクを作成する
           <% end %>
-        </div>
-      </div>
+        </footer>
+      </section>
     <% end %>
   </div>
-</div>
+</section>

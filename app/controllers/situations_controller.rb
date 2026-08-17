@@ -10,7 +10,10 @@ class SituationsController < ApplicationController
   def show
     @situation = current_user.situations.find(params[:id])
     @tasks = @situation.tasks.order(:position)
-    @new_task = @situation.tasks.build
+    if params[:completed] == "true" && session[:new_situation_id].to_i == @situation.id
+      @show_completion_message = true
+      session.delete(:new_situation_id)
+    end
   end
 
   def new
@@ -37,6 +40,8 @@ class SituationsController < ApplicationController
       @usage_limit_reached = true
       render :new, status: :too_many_requests
     elsif saved
+      session[:new_situation_id] = @situation.id
+      session[:new_task_generation_id] = @situation.id
       GenerateTasksJob.perform_later(situation_id: @situation.id)
       redirect_to situation_tasks_path(@situation), notice: t(".created")
     else

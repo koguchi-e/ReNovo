@@ -1,8 +1,19 @@
-<% content_for :title, "新しくふりかえる | ReNovo" %>
+<% content_for :title, "新しく状況整理を行う | ReNovo" %>
 <% content_for :description, "現在の状況や悩み、目標を整理して、取り組みやすいタスクを作成します。" %>
 
-<% if @usage_limit_reached %>
-  <%= render "usage_limit_reached" %>
-<% else %>
-  <%= render "form", situation: @situation %>
-<% end %>
+<article class="situation-new" aria-labelledby="situation-page-heading">
+  <%= render "shared/page_header",
+    block_name: "situation-new",
+    heading_id: "situation-page-heading",
+    heading_size: "text-4xl",
+    icon_class: "fa-solid fa-pen-to-square",
+    title: "状況整理",
+    description: "3つの質問に答えて現在の状況を整理します。" %>
+  <section class="situation-new__content page-content mt-6" aria-label="状況整理の入力">
+    <% if @usage_limit_reached %>
+      <%= render "usage_limit_reached" %>
+    <% else %>
+      <%= render "form", situation: @situation %>
+    <% end %>
+  </section>
+</article>

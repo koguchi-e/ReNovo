@@ -10,7 +10,7 @@ RSpec.describe "Situations", type: :system do
     sign_in_as(user)
   end
 
-  scenario "ユーザーが振り返りを作成できる" do
+  scenario "ユーザーが状況整理を作成できる" do
     visit new_situation_path
 
     fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
@@ -20,7 +20,7 @@ RSpec.describe "Situations", type: :system do
     find('[data-testid="problem-next-button"]').click
 
     fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
-    click_button "送信"
+    click_button "タスクを作成する"
 
     visit situations_path
 
@@ -35,15 +35,17 @@ RSpec.describe "Situations", type: :system do
     expect(page).to have_content "300文字以内にしてください。"
   end
 
-  scenario "空欄では次に進めない" do
+  scenario "空欄では次へボタンを押せない" do
     visit new_situation_path
-    fill_in "situation_fact", with: ""
-    find('[data-testid="fact-next-button"]').click
 
-    expect(page).to have_content "入力してください。"
+    expect(find('[data-testid="fact-next-button"]')).to be_disabled
+
+    fill_in "situation_fact", with: "会議でうまく説明できなかった。"
+
+    expect(find('[data-testid="fact-next-button"]')).not_to be_disabled
   end
 
-  scenario "作成したふりかえりが一覧画面に表示される" do
+  scenario "作成した状況整理が一覧画面に表示される" do
     visit new_situation_path
 
     fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
@@ -53,15 +55,15 @@ RSpec.describe "Situations", type: :system do
     find('[data-testid="problem-next-button"]').click
 
     fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
-    click_button "送信"
+    click_button "タスクを作成する"
 
     visit situations_path
     expect(page).to have_content "会議で進捗報告をしたが、うまく説明できなかった。"
   end
 
-  scenario "ふりかえり履歴がない時その旨とリンクが表示される" do
+  scenario "状況整理がない時その旨とリンクが表示される" do
     visit situations_path
-    expect(page).to have_content "ふりかえりはまだありません。"
-    expect(page).to have_link("新しくふりかえる", href: new_situation_path)
+    expect(page).to have_content "状況整理はまだありません。"
+    expect(page).to have_link("新しく状況整理を行う", href: new_situation_path)
   end
 end
