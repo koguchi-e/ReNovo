@@ -51,9 +51,9 @@
     </aside>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
       <% public_page_content = yield %>
-      <div class="public-page-layout mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
+      <div class="public-page-layout mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
         <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
-        <div class="public-page-layout__panel w-full rounded-2xl bg-white px-5 py-7 shadow-sm sm:px-8 sm:py-9">
+        <div class="public-page-layout__panel w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
           <main class="public-page-layout__main mx-auto flex w-full max-w-4xl flex-col items-center">
             <%= public_page_content %>
           </main>
