@@ -1,16 +1,25 @@
 <% content_for :title, "プライバシーポリシー | ReNovo" %>
 <% content_for :description, "ReNovoにおける個人情報の取り扱いについてご案内します。" %>
 
-<section class="mx-auto max-w-4xl px-4 pb-10">
-  <h1 class="text-center text-3xl font-bold text-dark-blue">
-    プライバシーポリシー
-  </h1>
+<% content_for :public_page_navigation do %>
+  <nav class="legal-document__back-navigation mb-5" aria-label="トップページへの移動">
+    <%= link_to root_path, class: "legal-document__back-link inline-flex items-center gap-2 font-bold text-calm-blue hover:opacity-70" do %>
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+      トップページへ戻る
+    <% end %>
+  </nav>
+<% end %>
+<article class="legal-document legal-document--privacy w-full pb-6">
+  <header class="legal-document__header page-header">
+    <h1 class="legal-document__heading text-center text-3xl font-bold text-dark-blue">
+      プライバシーポリシー
+    </h1>
+    <p class="legal-document__introduction mt-10 text-lg leading-relaxed text-calm-blue">
+      「ReNovo」で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
+    </p>
+  </header>
 
-  <p class="mt-10 text-lg leading-relaxed text-calm-blue">
-    「ReNovo」で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
-  </p>
-
-  <div class="text-lg text-gray-700 leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-dark-blue [&_p]:mb-3 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5">
+  <section class="legal-document__body page-content text-lg text-gray-700 leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-dark-blue [&_p]:mb-3 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5" aria-label="プライバシーポリシーの本文">
     <h2>第1条（個人情報）</h2>
     <p>本サービスでは登録およびご利用に際して以下の情報を取得し、それらを個人情報として取り扱います。</p>
     <ul>
@@ -80,5 +89,5 @@
 
     <h2>第7条（お問い合わせ窓口）</h2>
     <p>お問い合わせは <%= link_to "こちら", "https://forms.gle/EiqNdo63jMkgaWJeA", target: "_blank", rel: "noopener noreferrer", class: "text-calm-blue underline hover:opacity-60" %> の窓口までお願いいたします。</p>
-  </div>
-</section>
+  </section>
+</article>

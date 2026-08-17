@@ -1,0 +1,12 @@
+<header class="<%= block_name %>__header page-header text-center">
+  <h1 id="<%= heading_id %>" class="<%= block_name %>__heading flex items-center justify-center gap-3 <%= heading_size %> font-bold text-dark-blue">
+    <% if local_assigns[:icon_class] %>
+      <i class="<%= icon_class %>" aria-hidden="true"></i>
+    <% end %>
+    <span class="<%= block_name %>__heading-text"><%= title %></span>
+  </h1>
+  <p class="<%= block_name %>__description mt-5 text-left text-base leading-relaxed text-calm-blue sm:text-center">
+    <%= description %>
+  </p>
+  <%= metadata if local_assigns[:metadata] %>
+</header>

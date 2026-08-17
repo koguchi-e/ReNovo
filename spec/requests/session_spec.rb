@@ -61,7 +61,7 @@ RSpec.describe "セッション管理", type: :request do
         expect(flash[:notice]).to eq("ログアウトしました。")
       end
 
-      it "ログアウトするとふりかえり画面には入れない" do
+      it "ログアウトすると状況整理画面には入れない" do
         delete logout_path
         get new_situation_path
         expect(response).to redirect_to(root_path)

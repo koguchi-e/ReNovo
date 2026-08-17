@@ -1,11 +1,24 @@
 <% if current_user %>
-  <%= link_to new_situation_path, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60" do %>
-    <i class="fa-solid fa-plus" aria-hidden="true"></i>
-    新しくふりかえる
-  <% end %>
+  <nav class="home-actions <%= local_assigns[:compact] ? "mt-6" : "mt-9" %> flex w-full flex-col items-center justify-center gap-3 sm:flex-row" aria-label="状況整理の操作">
+    <%= link_to new_situation_path, class: "primary-call-to-action action-button action-button--primary action-button--wide text-lg" do %>
+      <i class="fa-solid fa-plus" aria-hidden="true"></i>
+      新しく状況を整理する
+    <% end %>
+    <%= link_to situations_path, class: "situation-list-call-to-action action-button action-button--secondary action-button--wide text-lg" do %>
+      <i class="fa-solid fa-list" aria-hidden="true"></i>
+      状況整理の一覧
+    <% end %>
+  </nav>
 <% else %>
-  <%= button_to "/auth/google_oauth2", method: :post, class: "mt-10 inline-flex items-center justify-center gap-3 rounded-lg bg-calm-blue px-6 py-4 text-xl font-bold text-white hover:opacity-60", form: { data: { turbo: false } } do %>
-    <i class="fa-brands fa-google" aria-hidden="true"></i>
-    Googleでログイン
+  <% if Rails.env.development? && !Rails.application.credentials.google.present? %>
+    <%= button_to developer_login_path, method: :post, class: "primary-call-to-action action-button action-button--primary action-button--wide #{local_assigns[:compact] ? "mt-6" : "mt-9"} text-lg", form: { class: "authentication-form flex w-full justify-center" } do %>
+      <i class="fa-solid fa-code" aria-hidden="true"></i>
+      開発用ログイン
+    <% end %>
+  <% else %>
+    <%= button_to "/auth/google_oauth2", method: :post, class: "primary-call-to-action action-button action-button--primary action-button--wide #{local_assigns[:compact] ? "mt-6" : "mt-9"} text-lg", form: { class: "authentication-form flex w-full justify-center", data: { turbo: false } } do %>
+      <i class="fa-brands fa-google" aria-hidden="true"></i>
+      <%= local_assigns[:compact] ? "Googleで始める" : "Googleでログイン" %>
+    <% end %>
   <% end %>
 <% end %>

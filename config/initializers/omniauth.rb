@@ -7,7 +7,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       "dummy_client_id",
       "dummy_client_secret",
     )
-  else
+  elsif Rails.application.credentials.google.present?
     provider(
       :google_oauth2,
       Rails.application.credentials.google[:client_id],

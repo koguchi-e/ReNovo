@@ -5,6 +5,7 @@
   --color-calm-blue: #586EA6;
   --color-bright-orange: #F2B98F;
   --color-dawn-mist: #F4F1F3;
+  --color-muted-error: #9A5961;
   --color-white: #FFFCFA;
   --color-gray-200: #E8E1E5;
   
@@ -19,6 +20,10 @@
 }
 
 @layer base {
+  body {
+    font-family: YakuHanJPs, ui-sans-serif, system-ui, sans-serif;
+  }
+
   a[href],
   button:not(:disabled):not([aria-disabled="true"]) {
     transition: opacity 150ms ease, transform 100ms ease;
@@ -40,6 +45,40 @@
   }
 }
 
+@layer components {
+  .action-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg border px-4 py-2 text-sm font-bold hover:opacity-70;
+  }
+
+  .action-button--primary {
+    @apply border-calm-blue bg-calm-blue text-white;
+  }
+
+  .action-button--secondary {
+    @apply border-calm-blue bg-white text-calm-blue;
+  }
+
+  .action-button--standard {
+    @apply w-full max-w-48;
+  }
+
+  .action-button--wide {
+    @apply w-full max-w-xs;
+  }
+
+  .action-button--paired {
+    @apply w-[calc(50%-0.375rem)] max-w-48;
+  }
+
+  .action-button--compact {
+    @apply min-h-10 px-4 py-2 text-xs;
+  }
+
+  .icon-button {
+    @apply inline-flex size-11 items-center justify-center rounded-lg;
+  }
+}
+
 .completion-circle {
   stroke-dasharray: 264;
   stroke-dashoffset: 264;
@@ -53,6 +92,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  a[href],
+  button:not(:disabled):not([aria-disabled="true"]) {
+    transition: none;
+  }
+
+  a[href]:active,
+  button:not(:disabled):not([aria-disabled="true"]):active {
+    transform: none;
+  }
+
   .completion-circle,
   .completion-check {
     animation: none;

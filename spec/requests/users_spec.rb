@@ -12,7 +12,7 @@ RSpec.describe "Users", type: :request do
   end
 
   describe "DELETE /user" do
-    it "ユーザーと関連するふりかえり・タスクが削除される" do
+    it "ユーザーと関連する状況整理・タスクが削除される" do
       expect { delete user_path }.to change(User, :count).by(-1).and change(Situation, :count).by(-1).and change(Task, :count).by(-1)
     end
 
@@ -22,7 +22,7 @@ RSpec.describe "Users", type: :request do
       expect(flash[:notice]).to eq("退会が完了しました。")
     end
 
-    it "退会後再登録でき、ふりかえり・タスク・使用制限もリセットされる" do
+    it "退会後再登録でき、状況整理・タスク・使用制限もリセットされる" do
       delete user_path
       expect do
         get "/auth/google_oauth2/callback"
