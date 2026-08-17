@@ -34,4 +34,39 @@ RSpec.describe Situation, type: :model do
       expect(situation).not_to be_valid
     end
   end
+
+  describe "generation_timed_out?" do
+    context "pendingで5分以上経過している場合" do
+      it "trueを返す" do
+        situation = create(
+          :situation,
+          status: :pending,
+          created_at: 6.minutes.ago
+        )
+        expect(situation.generation_timed_out?).to be true
+      end
+    end
+
+    context "pendingで5分経過していない場合" do
+      it "falseを返す" do
+        situation = create(
+          :situation,
+          status: :pending,
+          created_at: 4.minutes.ago
+        )
+        expect(situation.generation_timed_out?).to be false
+      end
+    end
+
+    context "completedの場合" do
+      it "falseを返す" do
+        situation = create(
+          :situation,
+          status: :completed,
+          created_at: 6.minutes.ago
+        )
+        expect(situation.generation_timed_out?).to be false
+      end
+    end
+  end
 end

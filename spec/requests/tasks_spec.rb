@@ -108,5 +108,45 @@ RSpec.describe "Tasks", type: :request do
         end
       end
     end
+    describe "GET /situations/:situation_id/tasks" do
+      context "Situationがタイムアウトしている場合" do
+        it "failedに変更する" do
+          situation = create(
+            :situation,
+            user: user,
+            status: :pending,
+            created_at: 6.minutes.ago
+          )
+          get situation_tasks_path(situation)
+          expect(situation.reload).to be_failed
+        end
+      end
+
+      context "Situationがタイムアウトしてない場合" do
+        it "pendingのままにする" do
+          situation = create(
+            :situation,
+            user: user,
+            status: :pending,
+            created_at: 4.minutes.ago
+          )
+          get situation_tasks_path(situation)
+          expect(situation.reload).to be_pending
+        end
+      end
+
+      context "Situationがcompledtedの場合" do
+        it "completedのままにする" do
+          situation = create(
+            :situation,
+            user: user,
+            status: :completed,
+            created_at: 6.minutes.ago
+          )
+          get situation_tasks_path(situation)
+          expect(situation.reload).to be_completed
+        end
+      end
+    end
   end
 end

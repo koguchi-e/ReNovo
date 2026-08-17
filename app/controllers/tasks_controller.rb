@@ -3,6 +3,7 @@
 class TasksController < ApplicationController
   before_action :set_situation
   before_action :set_task, only: %i[update destroy]
+  before_action :fail_timed_out_generation, only: :index
 
   def index
     @tasks = @situation.tasks.order(:position)
@@ -47,5 +48,13 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:content)
+    end
+
+    def fail_timed_out_generation
+      @situation.with_lock do
+        @situation.reload
+
+        @situation.failed! if @situation.generation_timed_out?
+      end
     end
 end
