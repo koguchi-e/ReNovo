@@ -84,7 +84,7 @@ RSpec.describe "Situations", type: :request do
           post situations_path, params: params
         end.not_to change(Situation, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(flash[:alert]).to eq("質問の回答に失敗しました。")
         expect(GenerateTasksJob).not_to have_received(:perform_later)
       end
@@ -108,8 +108,15 @@ RSpec.describe "Situations", type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).to include(situation.fact)
-        expect(response.body).to include("1個目のタスク")
-        expect(response.body).to include("2個目のタスク")
+        expect(response.body.index("1個目のタスク")).to be < response.body.index("2個目のタスク")
+      end
+
+      it "他のユーザーのふりかえりは表示できない" do
+        other_situation = create(:situation)
+
+        get situation_path(other_situation)
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
