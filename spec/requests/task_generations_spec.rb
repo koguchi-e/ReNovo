@@ -8,7 +8,7 @@ RSpec.describe "TaskGenerations", type: :request do
       let(:user) { create(:user) }
 
       before do
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        sign_in_as(user)
         allow(GenerateTasksJob).to receive(:perform_later)
       end
 
@@ -26,6 +26,29 @@ RSpec.describe "TaskGenerations", type: :request do
           post situation_task_generation_path(situation)
           expect(response).to redirect_to(situation_tasks_path(situation))
         end
+      end
+
+      context "Situationがfailed以外の場合" do
+        let(:situation) { create(:situation, user: user, status: :generating) }
+
+        it "再生成せず、警告付きでタスク画面にリダイレクトする" do
+          post situation_task_generation_path(situation)
+
+          expect(situation.reload).to be_generating
+          expect(GenerateTasksJob).not_to have_received(:perform_later)
+          expect(response).to redirect_to(situation_tasks_path(situation))
+          expect(flash[:alert]).to eq("現在タスクの再生成はできません。")
+        end
+      end
+
+      it "他のユーザーのふりかえりは再生成できない" do
+        other_situation = create(:situation, status: :failed)
+
+        post situation_task_generation_path(other_situation)
+
+        expect(response).to have_http_status(:not_found)
+        expect(other_situation.reload).to be_failed
+        expect(GenerateTasksJob).not_to have_received(:perform_later)
       end
     end
   end

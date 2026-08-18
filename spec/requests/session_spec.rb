@@ -45,6 +45,8 @@ RSpec.describe "セッション管理", type: :request do
         expect do
           get "/auth/google_oauth2/callback"
         end.not_to change(User, :count)
+
+        expect(session[:user_id]).to eq(user.id)
       end
     end
   end

@@ -42,7 +42,7 @@ class SituationsController < ApplicationController
     else
       flash.now[:alert] = t(".alert")
       @usage_limit_reached = false
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
