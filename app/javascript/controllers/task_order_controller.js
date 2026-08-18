@@ -11,6 +11,7 @@ export default class extends Controller {
 
       onEnd: async (event) => {
         const oldIndex = event.oldIndex;
+        this.updateRecommendation();
 
         try {
           this.saving = true;
@@ -31,6 +32,7 @@ export default class extends Controller {
           );
           const referenceElement = siblings[oldIndex] || null;
           this.element.insertBefore(task, referenceElement);
+          this.updateRecommendation();
         } finally {
           this.saving = false;
           this.sortable.option("disabled", false);
@@ -52,6 +54,7 @@ export default class extends Controller {
       this.saving = true;
       this.sortable.option("disabled", true);
       this.element.insertBefore(task, previousTask);
+      this.updateRecommendation();
 
       const url = task.dataset.taskPositionUrl;
       const insertAt = Array.from(this.element.children).indexOf(task) + 1;
@@ -63,6 +66,7 @@ export default class extends Controller {
       console.warn(error);
       if (task && previousTask) {
         this.element.insertBefore(previousTask, task);
+        this.updateRecommendation();
       }
     } finally {
       this.saving = false;
@@ -83,6 +87,7 @@ export default class extends Controller {
       this.saving = true;
       this.sortable.option("disabled", true);
       this.element.insertBefore(nextTask, task);
+      this.updateRecommendation();
 
       const url = task.dataset.taskPositionUrl;
       const insertAt = Array.from(this.element.children).indexOf(task) + 1;
@@ -94,10 +99,24 @@ export default class extends Controller {
       console.warn(error);
       if (task && nextTask) {
         this.element.insertBefore(task, nextTask);
+        this.updateRecommendation();
       }
     } finally {
       this.saving = false;
       this.sortable.option("disabled", false);
+    }
+  }
+
+  updateRecommendation() {
+    const firstTaskContent = this.element.querySelector(
+      "li:first-child [data-task-order-target='content']",
+    );
+    const recommendation = this.element.querySelector(
+      "[data-task-order-target='recommendation']",
+    );
+
+    if (firstTaskContent && recommendation) {
+      firstTaskContent.prepend(recommendation);
     }
   }
 }

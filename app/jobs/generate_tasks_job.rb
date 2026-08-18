@@ -56,7 +56,7 @@ class GenerateTasksJob < ApplicationJob
         situation,
         target: "status_screen",
         partial: "tasks/list",
-        locals: { situation: situation, tasks: situation.tasks, new_task: Task.new }
+        locals: { situation: situation, tasks: situation.tasks.order(:position), new_task: Task.new }
       )
 
       Turbo::StreamsChannel.broadcast_append_to(
