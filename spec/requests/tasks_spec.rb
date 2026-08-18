@@ -16,6 +16,14 @@ RSpec.describe "Tasks", type: :request do
         get situation_tasks_path(situation)
         expect(response).to have_http_status(:success)
       end
+
+      it "他のユーザーのふりかえりのタスクは表示できない" do
+        other_situation = create(:situation)
+
+        get situation_tasks_path(other_situation)
+
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     describe "POST /situations/:situation_id/tasks" do
@@ -53,6 +61,18 @@ RSpec.describe "Tasks", type: :request do
           expect(flash[:alert]).to eq("タスクの追加に失敗しました。")
         end
       end
+
+      it "他のユーザーのふりかえりにはタスクを追加できない" do
+        other_situation = create(:situation)
+
+        expect do
+          post situation_tasks_path(other_situation), params: {
+            task: { content: "追加しようとしたタスク" }
+          }
+        end.not_to change(Task, :count)
+
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     describe "PATCH /situations/:situation_id/tasks/:id" do
@@ -76,6 +96,17 @@ RSpec.describe "Tasks", type: :request do
         expect(task.reload.content).to eq "古いタスク"
         expect(flash[:alert]).to eq("タスクの修正に失敗しました。")
       end
+
+      it "他のユーザーのタスクは更新できない" do
+        other_task = create(:task, content: "変更前のタスク")
+
+        patch situation_task_path(other_task.situation, other_task), params: {
+          task: { content: "変更後のタスク" }
+        }
+
+        expect(response).to have_http_status(:not_found)
+        expect(other_task.reload.content).to eq("変更前のタスク")
+      end
     end
 
     describe "DELETE /situations/:situation_id/tasks/:id" do
@@ -98,6 +129,16 @@ RSpec.describe "Tasks", type: :request do
 
         expect(response).to redirect_to situation_tasks_path(situation)
         expect(flash[:alert]).to eq("タスクの削除に失敗しました。")
+      end
+
+      it "他のユーザーのタスクは削除できない" do
+        other_task = create(:task)
+
+        expect do
+          delete situation_task_path(other_task.situation, other_task)
+        end.not_to change(Task, :count)
+
+        expect(response).to have_http_status(:not_found)
       end
     end
 

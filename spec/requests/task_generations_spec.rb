@@ -40,6 +40,16 @@ RSpec.describe "TaskGenerations", type: :request do
           expect(flash[:alert]).to eq("現在タスクの再生成はできません。")
         end
       end
+
+      it "他のユーザーのふりかえりは再生成できない" do
+        other_situation = create(:situation, status: :failed)
+
+        post situation_task_generation_path(other_situation)
+
+        expect(response).to have_http_status(:not_found)
+        expect(other_situation.reload).to be_failed
+        expect(GenerateTasksJob).not_to have_received(:perform_later)
+      end
     end
   end
 end

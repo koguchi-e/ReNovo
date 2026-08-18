@@ -40,7 +40,7 @@ class GenerateTasksJob < ApplicationJob
         situation.completed!
       end
     rescue StandardError => e
-      situation&.failed! unless situation.completed?
+      situation.failed! unless situation.completed?
       Rails.logger.error("[GenerateTasksJob] failed: #{e.class}: #{e.message}")
       Turbo::StreamsChannel.broadcast_replace_to(
         situation,
