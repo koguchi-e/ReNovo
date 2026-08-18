@@ -57,5 +57,60 @@ RSpec.describe "Situations", type: :request do
         expect(flash[:notice]).to eq("質問に回答しました。")
       end
     end
+
+    context "今月の上限に達している場合" do
+      before do
+        create_list(:situation, SituationsController::MONTHLY_USAGE_LIMIT, user: user, created_at: Time.current)
+      end
+
+      it "作成されず429で入力画面を再表示する" do
+        expect do
+          post situations_path, params: params
+        end.not_to change(Situation, :count)
+
+        expect(response).to have_http_status(:too_many_requests)
+        expect(response.body).to include("今月の利用上限に達しました。翌月に再び利用できます。")
+        expect(GenerateTasksJob).not_to have_received(:perform_later)
+      end
+    end
+
+    context "入力内容が不正な場合" do
+      before do
+        params[:situation][:fact] = ""
+      end
+
+      it "作成せず入力画面を再表示する" do
+        expect do
+          post situations_path, params: params
+        end.not_to change(Situation, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include("質問の回答に失敗しました。")
+        expect(GenerateTasksJob).not_to have_received(:perform_later)
+      end
+    end
+  end
+
+  describe "GET /situations/:id" do
+    context "ログインしている場合" do
+      let(:user) { create(:user) }
+      let(:situation) { create(:situation, user: user) }
+
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      end
+
+      it "ふりかえりの詳細とposition順にタスクを表示する" do
+       create(:task, situation: situation, content: "1個目のタスク", position: 1)
+       create(:task, situation: situation, content: "2個目のタスク", position: 2)
+
+        get situation_path(situation)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(situation.fact)
+        expect(response.body).to include("1個目のタスク")
+        expect(response.body).to include("2個目のタスク")
+      end
+    end
   end
 end
