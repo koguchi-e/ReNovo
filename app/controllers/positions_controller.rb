@@ -13,8 +13,6 @@ class PositionsController < ApplicationController
 
     if @task.insert_at(params[:insert_at])
       head :no_content
-    else
-      render json: @task.errors, status: :unprocessable_entity
     end
   end
 
