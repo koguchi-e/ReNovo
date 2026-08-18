@@ -31,6 +31,15 @@ RSpec.describe "Positions", type: :request do
         expect(flash[:alert]).to eq("タスクがありません")
       end
     end
+
+    it "他のユーザーのふりかえりの並び替え画面は表示できない" do
+      other_situation = create(:situation)
+      create(:task, situation: other_situation)
+
+      get edit_situation_position_path(other_situation)
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 
   describe "PATCH /situations/:situation_id/position" do
@@ -48,6 +57,21 @@ RSpec.describe "Positions", type: :request do
       expect(first_task.reload.position).to eq(2)
     end
 
+    it "タスクの移動に失敗した場合は並び順を変更しない" do
+      first_task = create(:task, situation: situation, position: 1)
+      second_task = create(:task, situation: situation, position: 2)
+      allow_any_instance_of(Task).to receive(:insert_at).and_return(false)
+
+      patch situation_position_path(situation), params: {
+        task_id: second_task.id,
+        insert_at: 1
+      }, as: :json
+
+      expect(response).to have_http_status(:no_content)
+      expect(first_task.reload.position).to eq(1)
+      expect(second_task.reload.position).to eq(2)
+    end
+
     it "他のSituationのタスクは更新できない" do
       other_situation = create(:situation, user:)
       other_task = create(:task, situation: other_situation)
@@ -59,6 +83,21 @@ RSpec.describe "Positions", type: :request do
       }, as: :json
       expect(response).to have_http_status(:not_found)
       expect(other_task.reload.position).to eq(original_position)
+    end
+
+    it "他のユーザーのふりかえりのタスク順は更新できない" do
+      other_situation = create(:situation)
+      first_task = create(:task, situation: other_situation, position: 1)
+      second_task = create(:task, situation: other_situation, position: 2)
+
+      patch situation_position_path(other_situation), params: {
+        task_id: second_task.id,
+        insert_at: 1
+      }, as: :json
+
+      expect(response).to have_http_status(:not_found)
+      expect(first_task.reload.position).to eq(1)
+      expect(second_task.reload.position).to eq(2)
     end
   end
 end

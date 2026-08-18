@@ -4,6 +4,16 @@ require "rails_helper"
 
 RSpec.describe GenerateTasksJob, type: :job do
   describe "#perform" do
+    it "対象のふりかえりが存在しない場合は何もしない" do
+      allow(TaskGenerationAgent).to receive(:generate)
+
+      expect {
+        described_class.perform_now(situation_id: -1)
+      }.not_to change(Task, :count)
+
+      expect(TaskGenerationAgent).not_to have_received(:generate)
+    end
+
     it "タスクを5つ作成し、positionを割り振って、生成完了状態にする" do
       situation = create(
         :situation,
@@ -78,6 +88,17 @@ RSpec.describe GenerateTasksJob, type: :job do
           described_class.perform_now(situation_id: situation.id)
         }.to raise_error(StandardError, "AI Error")
         expect(situation.reload).to be_failed
+      end
+
+      it "既にcompletedの場合はstatusをfailedに変更しない" do
+        situation = create(:situation, status: :completed)
+        allow(TaskGenerationAgent).to receive(:generate).and_raise(StandardError, "AI Error")
+
+        expect {
+          described_class.perform_now(situation_id: situation.id)
+        }.to raise_error(StandardError, "AI Error")
+
+        expect(situation.reload).to be_completed
       end
     end
 

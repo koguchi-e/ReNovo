@@ -32,5 +32,14 @@ RSpec.describe "Situations::Completions", type: :request do
         expect(flash[:alert]).to eq("タスクがありません")
       end
     end
+
+    it "他のユーザーのふりかえりの完了画面は表示できない" do
+      other_situation = create(:situation)
+      create(:task, situation: other_situation)
+
+      get situation_completion_path(other_situation)
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end
