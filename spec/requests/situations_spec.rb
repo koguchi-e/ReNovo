@@ -69,7 +69,7 @@ RSpec.describe "Situations", type: :request do
         end.not_to change(Situation, :count)
 
         expect(response).to have_http_status(:too_many_requests)
-        expect(response.body).to include("今月の利用上限に達しました。翌月に再び利用できます。")
+        expect(flash[:alert]).to eq("今月の利用上限に達しました。翌月に再び利用できます。")
         expect(GenerateTasksJob).not_to have_received(:perform_later)
       end
     end
@@ -85,7 +85,7 @@ RSpec.describe "Situations", type: :request do
         end.not_to change(Situation, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include("質問の回答に失敗しました。")
+        expect(flash[:alert]).to eq("質問の回答に失敗しました。")
         expect(GenerateTasksJob).not_to have_received(:perform_later)
       end
     end
