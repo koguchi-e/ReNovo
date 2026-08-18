@@ -4,7 +4,8 @@
     <span>タスク一覧</span>
   </h1>
   <p class="mt-5 text-center text-xl text-calm-blue">
-    内容は自由に追加・編集・並べ替えできます。
+    内容は自由に追加・編集・並べ替えできます。<br>
+    内容を整えたら、次ページに進み、取り組む順番を決めましょう。
   </p>
 </div>
 
@@ -12,6 +13,12 @@
   <% tasks.each do |task| %>
     <li data-controller="task-form" class="relative m-5 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm sm:p-8">
       <div data-task-form-target="display">
+        <% if task.position == 1 %>
+          <span class="task-card__recommendation mb-2 inline-flex rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-calm-blue">
+            <i class="fa-solid fa-flag" aria-hidden="true"></i>
+            最初に取り組むタスク
+          </span>
+        <% end %>
         <p class="break-words">
           <%= task.content %>
         </p>
@@ -19,10 +26,10 @@
           <button type="button" data-action="task-form#edit"
             data-testid="edit-task-button"
             aria-label="タスクを編集"
-            class="icon-button">
+            class="icon-button text-sm">
             <i class="fa-solid fa-pencil" aria-hidden="true"></i>
           </button>
-          <%= button_to situation_task_path(situation, task), method: :delete, class: "icon-button-danger", aria: { label: "タスクを削除" }, data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
+          <%= button_to situation_task_path(situation, task), method: :delete, class: "icon-button-danger text-sm", aria: { label: "タスクを削除" }, data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
             <i class="fa-solid fa-trash" aria-hidden="true"></i>
           <% end %>
         </div>
@@ -39,10 +46,10 @@
               testid: "edit-task-content-input"
             } %>
           <div class="mt-3 flex w-full items-center justify-start gap-2">
-            <%= f.button type: "submit", class: "icon-button-primary", data: { testid: "update-task-button" }, aria: { label: "タスクを更新" } do %>
+            <%= f.button type: "submit", class: "icon-button-primary text-sm", data: { testid: "update-task-button" }, aria: { label: "タスクを更新" } do %>
               <i class="fa-solid fa-check" aria-hidden="true"></i>
             <% end %>
-            <button type="button" data-action="task-form#editCancel" class="icon-button border border-calm-blue bg-white" aria-label="編集をキャンセル">
+            <button type="button" data-action="task-form#editCancel" class="icon-button border border-calm-blue bg-white text-sm" aria-label="編集をキャンセル">
               <i class="fa-solid fa-x" aria-hidden="true"></i>
             </button>
           </div>
@@ -57,7 +64,7 @@
 </div>
 <div class="m-5 flex justify-end">
   <%= link_to edit_situation_position_path(situation), class: "primary-button" do %>
-    次へ
+    並べ替えへ進む
     <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
   <% end %>
 </div>

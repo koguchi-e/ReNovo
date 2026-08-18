@@ -16,7 +16,15 @@
       <span class="js-grab shrink-0 cursor-grab">
         <i class="fa-solid fa-grip" aria-hidden="true"></i>
       </span>
-      <span class="flex-1"><%= task.content %></span>
+      <div class="flex flex-1 flex-col items-start justify-center gap-2 self-stretch sm:flex-row sm:items-center sm:gap-3" data-task-order-target="content">
+        <% if task.position == 1 %>
+          <span class="task-card__recommendation inline-flex shrink-0 rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-calm-blue" data-task-order-target="recommendation">
+            <i class="fa-solid fa-flag" aria-hidden="true"></i>
+            最初に取り組むタスク
+          </span>
+        <% end %>
+        <span><%= task.content %></span>
+      </div>
       <div class="ml-auto flex shrink-0 items-center gap-2">
         <button type="button" data-action="task-order#moveUp" class="icon-button text-sm" aria-label="<%= "#{task.content}を上へ移動" %>">
           <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
