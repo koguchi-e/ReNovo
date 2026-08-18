@@ -43,11 +43,11 @@ RSpec.describe "Tasks", type: :request do
 
           task = situation.tasks.order(:position).last
 
-          expect(response).to redirect_to situation_tasks_path(situation)
+          expect(response).to have_http_status(:ok)
           expect(task.content).to eq "追加したタスク"
           expect(task.situation).to eq situation
           expect(task.position).to eq(6)
-          expect(flash[:notice]).to eq("タスクを追加しました。")
+          expect(response.body).to include("タスクを追加しました。")
         end
       end
 
@@ -83,8 +83,8 @@ RSpec.describe "Tasks", type: :request do
         }
         expect(task.reload.content).to eq "更新後のタスク"
         expect(task.reload.content).not_to eq "古いタスク"
-        expect(response).to redirect_to situation_tasks_path(situation)
-        expect(flash[:notice]).to eq("タスクを修正しました。")
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("タスクを更新しました。")
       end
 
       it "タスクの内容が空欄の場合、タスクの更新に失敗する" do
@@ -94,7 +94,7 @@ RSpec.describe "Tasks", type: :request do
         }
         expect(response).to redirect_to situation_tasks_path(situation)
         expect(task.reload.content).to eq "古いタスク"
-        expect(flash[:alert]).to eq("タスクの修正に失敗しました。")
+        expect(flash[:alert]).to eq("タスクの更新に失敗しました。")
       end
 
       it "他のユーザーのタスクは更新できない" do
@@ -115,8 +115,8 @@ RSpec.describe "Tasks", type: :request do
         expect {
           delete situation_task_path(situation, task)
         }.to change(Task, :count).by(-1)
-        expect(response).to redirect_to situation_tasks_path(situation)
-        expect(flash[:notice]).to eq("タスクを削除しました。")
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("タスクを削除しました。")
       end
 
       it "タスクの削除に失敗する" do
@@ -155,7 +155,7 @@ RSpec.describe "Tasks", type: :request do
 
           task = situation.tasks.order(:position).last
 
-          expect(response).to redirect_to situation_tasks_path(situation)
+          expect(response).to have_http_status(:ok)
           expect(task.content).to eq "手動で追加したタスク"
           expect(task.position).to eq(1)
           expect(situation.reload).to be_completed

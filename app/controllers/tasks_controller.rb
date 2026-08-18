@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     @new_task.position = @situation.tasks.maximum(:position).to_i + 1
     if @new_task.save
       @situation.completed! if @situation.failed?
-      redirect_to situation_tasks_path(@situation), notice: t(".created")
+      render_task_list(notice: t(".created"))
     else
       redirect_to situation_tasks_path(@situation), alert: t(".alert")
     end
@@ -23,7 +23,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to situation_tasks_path(@situation), notice: t(".updated")
+      render_task_list(notice: t(".updated"))
     else
       redirect_to situation_tasks_path(@situation), alert: t(".alert")
     end
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-      redirect_to situation_tasks_path(@situation), notice: t(".destroyed")
+      render_task_list(notice: t(".destroyed"))
     else
       redirect_to situation_tasks_path(@situation), alert: t(".alert")
     end
@@ -56,5 +56,27 @@ class TasksController < ApplicationController
 
         @situation.failed! if @situation.generation_timed_out?
       end
+    end
+
+    def render_task_list(notice:)
+      render turbo_stream: [
+        turbo_stream.update(
+          "status_screen",
+          partial: "tasks/list",
+          locals: {
+            situation: @situation,
+            tasks: @situation.tasks.order(:position),
+            new_task: @situation.tasks.build
+          }
+        ),
+        turbo_stream.update(
+          "flash_messages",
+          partial: "shared/flash",
+          locals: {
+            type: :notice,
+            message: notice
+          }
+        )
+      ]
     end
 end
