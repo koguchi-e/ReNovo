@@ -8,7 +8,7 @@ RSpec.describe "Tasks", type: :request do
     let(:situation) { create(:situation, user: user) }
 
     before do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      sign_in_as(user)
     end
 
     describe "GET /situations/:situation_id/tasks" do
@@ -64,6 +64,17 @@ RSpec.describe "Tasks", type: :request do
         expect(task.reload.content).to eq "更新後のタスク"
         expect(task.reload.content).not_to eq "古いタスク"
         expect(response).to redirect_to situation_tasks_path(situation)
+        expect(flash[:notice]).to eq("タスクを修正しました。")
+      end
+
+      it "タスクの内容が空欄の場合、タスクの更新に失敗する" do
+        task = create(:task, situation: situation, content: "古いタスク")
+        patch situation_task_path(situation, task), params: {
+          task: { content: "" }
+        }
+        expect(response).to redirect_to situation_tasks_path(situation)
+        expect(task.reload.content).to eq "古いタスク"
+        expect(flash[:alert]).to eq("タスクの修正に失敗しました。")
       end
     end
 
@@ -74,10 +85,23 @@ RSpec.describe "Tasks", type: :request do
           delete situation_task_path(situation, task)
         }.to change(Task, :count).by(-1)
         expect(response).to redirect_to situation_tasks_path(situation)
+        expect(flash[:notice]).to eq("タスクを削除しました。")
+      end
+
+      it "タスクの削除に失敗する" do
+        task = create(:task, situation: situation)
+        allow_any_instance_of(Task).to receive(:destroy).and_return(false)
+
+        expect {
+          delete situation_task_path(situation, task)
+        }.not_to change(Task, :count)
+
+        expect(response).to redirect_to situation_tasks_path(situation)
+        expect(flash[:alert]).to eq("タスクの削除に失敗しました。")
       end
     end
 
-    describe "POST /situations/:situation_id/tasks after generation failure" do
+    describe "タスク生成失敗後のPOST /situations/:situation_id/tasks" do
       context "タスクの生成に失敗している場合" do
         let(:situation) { create(:situation, user: user, status: :failed) }
 
@@ -135,7 +159,7 @@ RSpec.describe "Tasks", type: :request do
         end
       end
 
-      context "Situationがcompledtedの場合" do
+      context "Situationがcompletedの場合" do
         it "completedのままにする" do
           situation = create(
             :situation,

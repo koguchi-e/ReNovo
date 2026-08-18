@@ -15,7 +15,7 @@ RSpec.describe "Situations", type: :request do
       let(:user) { create(:user) }
 
       before do
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        sign_in_as(user)
       end
 
       it "質問入力画面を表示する" do
@@ -29,7 +29,7 @@ RSpec.describe "Situations", type: :request do
     let(:user) { create(:user) }
 
     before do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      sign_in_as(user)
       allow(GenerateTasksJob).to receive(:perform_later)
     end
 
@@ -97,12 +97,12 @@ RSpec.describe "Situations", type: :request do
       let(:situation) { create(:situation, user: user) }
 
       before do
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        sign_in_as(user)
       end
 
       it "ふりかえりの詳細とposition順にタスクを表示する" do
-       create(:task, situation: situation, content: "1個目のタスク", position: 1)
-       create(:task, situation: situation, content: "2個目のタスク", position: 2)
+        create(:task, situation: situation, content: "1個目のタスク", position: 1)
+        create(:task, situation: situation, content: "2個目のタスク", position: 2)
 
         get situation_path(situation)
 

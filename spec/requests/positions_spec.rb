@@ -7,7 +7,7 @@ RSpec.describe "Positions", type: :request do
   let(:situation) { create(:situation, user: user) }
 
   before do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    sign_in_as(user)
   end
 
   describe "GET /situations/:situation_id/position/edit" do
