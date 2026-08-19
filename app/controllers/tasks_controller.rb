@@ -59,13 +59,15 @@ class TasksController < ApplicationController
     end
 
     def render_task_list(notice:)
+      tasks = @situation.tasks.order(:position)
+      partial = tasks.empty? ? "tasks/empty" : "tasks/list"
       render turbo_stream: [
         turbo_stream.update(
           "status_screen",
-          partial: "tasks/list",
+          partial: partial,
           locals: {
             situation: @situation,
-            tasks: @situation.tasks.order(:position),
+            tasks: tasks,
             new_task: @situation.tasks.build
           }
         ),

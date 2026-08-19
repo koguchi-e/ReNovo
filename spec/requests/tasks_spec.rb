@@ -38,12 +38,16 @@ RSpec.describe "Tasks", type: :request do
           expect do
             post situation_tasks_path(situation), params: {
               task: { content: "追加したタスク" }
-            }
+            }, as: :turbo_stream
           end.to change(Task, :count).by(1)
 
           task = situation.tasks.order(:position).last
 
           expect(response).to have_http_status(:ok)
+          expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+          expect(response.body).to include('target="status_screen"')
+          expect(response.body).to include('target="flash_messages"')
+          expect(response.body).to include("追加したタスク")
           expect(task.content).to eq "追加したタスク"
           expect(task.situation).to eq situation
           expect(task.position).to eq(6)
@@ -80,10 +84,14 @@ RSpec.describe "Tasks", type: :request do
         task = create(:task, situation: situation, content: "古いタスク")
         patch situation_task_path(situation, task), params: {
           task: { content: "更新後のタスク" }
-        }
+        }, as: :turbo_stream
         expect(task.reload.content).to eq "更新後のタスク"
-        expect(task.reload.content).not_to eq "古いタスク"
         expect(response).to have_http_status(:ok)
+        expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+        expect(response.body).to include('target="status_screen"')
+        expect(response.body).to include('target="flash_messages"')
+        expect(response.body).to include("更新後のタスク")
+        expect(response.body).not_to include("古いタスク")
         expect(response.body).to include("タスクを更新しました。")
       end
 
@@ -111,11 +119,17 @@ RSpec.describe "Tasks", type: :request do
 
     describe "DELETE /situations/:situation_id/tasks/:id" do
       it "タスクを削除する" do
-        task = create(:task, situation: situation)
+        remaining_task = create(:task, situation: situation, content: "残るタスク")
+        task = create(:task, situation: situation, content: "削除対象のタスク")
         expect {
-          delete situation_task_path(situation, task)
+          delete situation_task_path(situation, task), as: :turbo_stream
         }.to change(Task, :count).by(-1)
         expect(response).to have_http_status(:ok)
+        expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+        expect(response.body).to include('target="status_screen"')
+        expect(response.body).to include('target="flash_messages"')
+        expect(response.body).to include(remaining_task.content)
+        expect(response.body).not_to include(task.content)
         expect(response.body).to include("タスクを削除しました。")
       end
 
@@ -140,6 +154,19 @@ RSpec.describe "Tasks", type: :request do
 
         expect(response).to have_http_status(:not_found)
       end
+
+      it "タスクを全て削除すると空状態を表示する" do
+        task = create(:task, situation: situation)
+
+        delete situation_task_path(situation, task),
+              as: :turbo_stream
+
+        expect(response).to have_http_status(:ok)
+        expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+        expect(response.body).to include('target="status_screen"')
+        expect(response.body).to include('target="flash_messages"')
+        expect(response.body).to include("タスクはまだありません")
+      end
     end
 
     describe "タスク生成失敗後のPOST /situations/:situation_id/tasks" do
@@ -150,12 +177,17 @@ RSpec.describe "Tasks", type: :request do
           expect do
             post situation_tasks_path(situation), params: {
               task: { content: "手動で追加したタスク" }
-            }
+            }, as: :turbo_stream
           end.to change(Task, :count).by(1)
 
           task = situation.tasks.order(:position).last
 
           expect(response).to have_http_status(:ok)
+          expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+          expect(response.body).to include('target="status_screen"')
+          expect(response.body).to include('target="flash_messages"')
+          expect(response.body).to include("手動で追加したタスク")
+          expect(response.body).to include("タスクを追加しました。")
           expect(task.content).to eq "手動で追加したタスク"
           expect(task.position).to eq(1)
           expect(situation.reload).to be_completed
