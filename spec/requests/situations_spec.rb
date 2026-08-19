@@ -91,6 +91,41 @@ RSpec.describe "Situations", type: :request do
     end
   end
 
+  describe "GET /situations" do
+    context "ログインしている場合" do
+      let(:user) { create(:user) }
+      let!(:situation) { create(:situation, user: user) }
+      let!(:other_situation) do
+        create(:situation, user: create(:user), fact: "他ユーザーのふりかえり")
+      end
+
+      before do
+        sign_in_as(user)
+      end
+
+      it "ふりかえりの履歴を表示する" do
+        get situations_path
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(situation.fact)
+        expect(response.body).not_to include(other_situation.fact)
+      end
+    end
+
+    context "ふりかえりが0件の場合" do
+      let(:user) { create(:user) }
+
+      before do
+        sign_in_as(user)
+      end
+      it "空画面が表示される" do
+        get situations_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("ふりかえりはまだありません。")
+      end
+    end
+  end
+
   describe "GET /situations/:id" do
     context "ログインしている場合" do
       let(:user) { create(:user) }
