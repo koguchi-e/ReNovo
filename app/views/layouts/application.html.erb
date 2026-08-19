@@ -27,16 +27,16 @@
     <meta property="og:url" content="<%= request.base_url + request.path %>">
     <meta name="twitter:card" content="summary_large_image">
   </head>
-  <body class="site-body flex min-h-screen flex-col bg-dawn-mist">
+  <body class="flex min-h-screen flex-col bg-dawn-mist">
     <% unless content_for?(:hide_header) %>
       <header
-        class="site-header relative w-full border-b border-gray-200 bg-dawn-mist"
+        class="relative w-full border-b border-gray-200 bg-dawn-mist"
         data-controller="hamburger-menu"
         data-action="click@window->hamburger-menu#closeOnOutside keydown.esc@window->hamburger-menu#closeOnEscape">
-        <div class="page-container site-header__inner relative flex items-center justify-between py-3">
-          <%= link_to root_path, class: "site-header__brand inline-flex items-center gap-0.5 text-dark-blue hover:opacity-70", aria: { label: "ReNovo ホーム" } do %>
-            <%= image_tag "brand-symbol.png", alt: "", class: "site-header__brand-symbol size-11 shrink-0" %>
-            <%= image_tag "renovo-wordmark.svg", alt: "ReNovo", class: "site-header__brand-name h-auto w-28" %>
+        <div class="page-container relative flex items-center justify-between py-3">
+          <%= link_to root_path, class: "inline-flex items-center gap-0.5 text-dark-blue hover:opacity-70", aria: { label: "ReNovo ホーム" } do %>
+            <%= image_tag "brand-symbol.png", alt: "", class: "size-11 shrink-0" %>
+            <%= image_tag "renovo-wordmark.svg", alt: "ReNovo", class: "h-auto w-28" %>
           <% end %>
           <% if current_user && !content_for?(:simple_header) %>
             <%= render "shared/header_menu" %>
@@ -50,16 +50,16 @@
     </aside>
     <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
       <% public_page_content = yield %>
-      <div class="page-container public-page-layout flex flex-1 flex-col py-4 sm:py-6">
+      <div class="page-container flex flex-1 flex-col py-4 sm:py-6">
         <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
-        <div class="public-page-layout__panel w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
-          <main class="public-page-layout__main flex w-full flex-col items-center">
+        <div class="w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
+          <main class="flex w-full flex-col items-center">
             <%= public_page_content %>
           </main>
         </div>
       </div>
     <% else %>
-      <main class="app-main relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
+      <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
         <%= yield %>
       </main>
     <% end %>
