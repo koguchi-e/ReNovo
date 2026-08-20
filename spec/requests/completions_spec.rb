@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Situations::Completions", type: :request do
   let(:user) { create(:user) }
-  let(:situation) { create(:situation, user:) }
+  let!(:situation) { create(:situation, user:) }
 
   before do
     sign_in_as(user)
@@ -12,20 +12,18 @@ RSpec.describe "Situations::Completions", type: :request do
 
   describe "GET /situations/:situation_id/completion" do
     context "タスクが存在する場合" do
-      it "最初のタスクとposition順のタスク一覧が表示される" do
-        create(:task, situation: situation, content: "1個目のタスク", position: 1)
-        create(:task, situation: situation, content: "2個目のタスク", position: 2)
+      it "タスク整理の完了を通知し、状況整理の詳細画面へリダイレクトする" do
+        create(:task, situation:, position: 1)
 
         get situation_completion_path(situation)
 
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("最初に取り組むタスク")
-        expect(response.body.index("1個目のタスク")).to be < response.body.index("2個目のタスク")
+        expect(response).to redirect_to(situation_path(situation))
+        expect(flash[:notice]).to eq("タスクの整理が完了しました！")
       end
     end
 
     context "タスクが存在しない場合" do
-      it "タスク一覧にリダイレクトする" do
+      it "タスク編集画面へリダイレクトする" do
         get situation_completion_path(situation)
 
         expect(response).to redirect_to(situation_tasks_path(situation))
@@ -33,13 +31,15 @@ RSpec.describe "Situations::Completions", type: :request do
       end
     end
 
-    it "他のユーザーの状況整理の完了画面は表示できない" do
-      other_situation = create(:situation)
-      create(:task, situation: other_situation)
+    context "他のユーザーの状況整理の場合" do
+      it "アクセスできない" do
+        other_situation = create(:situation)
+        create(:task, situation: other_situation)
 
-      get situation_completion_path(other_situation)
+        get situation_completion_path(other_situation)
 
-      expect(response).to have_http_status(:not_found)
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 end

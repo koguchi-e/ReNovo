@@ -5,8 +5,7 @@ class Situations::CompletionsController < ApplicationController
   before_action :redirect_if_no_tasks, only: :show
 
   def show
-    @first_task = @situation.tasks.order(:position).first
-    @tasks = @situation.tasks.order(:position)
+    redirect_to situation_path(@situation), notice: "タスクの整理が完了しました！"
   end
 
   private
