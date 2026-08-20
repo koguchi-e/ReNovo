@@ -11,8 +11,7 @@ class SituationsController < ApplicationController
     @situation = current_user.situations.find(params[:id])
     @tasks = @situation.tasks.order(:position)
     @new_task = @situation.tasks.build
-    @first_task = @situation.tasks.order(:position).first
-    @tasks = @situation.tasks.order(:position)
+    @first_task = @tasks.first
   end
 
   def new
