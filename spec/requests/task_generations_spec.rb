@@ -15,7 +15,7 @@ RSpec.describe "TaskGenerations", type: :request do
       context "Situationがfailedの場合" do
         let(:situation) { create(:situation, user: user, status: :failed) }
 
-        it "failedのふりかえりのタスクを再生成できる" do
+        it "タスク生成に失敗した状況整理のタスクを再生成できる" do
           post situation_task_generation_path(situation)
 
           expect(situation.reload).to be_generating
@@ -41,7 +41,7 @@ RSpec.describe "TaskGenerations", type: :request do
         end
       end
 
-      it "他のユーザーのふりかえりは再生成できない" do
+      it "他のユーザーの状況整理は再生成できない" do
         other_situation = create(:situation, status: :failed)
 
         post situation_task_generation_path(other_situation)

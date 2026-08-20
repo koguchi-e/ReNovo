@@ -1,7 +1,7 @@
 <% if current_user %>
   <%= link_to new_situation_path, class: "inline-flex items-center justify-center gap-2 rounded-lg bg-calm-blue px-5 py-3 text-lg font-bold text-white hover:opacity-60" do %>
     <i class="fa-solid fa-plus" aria-hidden="true"></i>
-    新しくふりかえる
+    状況整理を始める
   <% end %>
 <% else %>
   <%= button_to "/auth/google_oauth2", method: :post, class: "inline-flex items-center justify-center gap-2 rounded-lg bg-calm-blue px-5 py-3 text-lg font-bold text-white hover:opacity-60", form: { data: { turbo: false } } do %>

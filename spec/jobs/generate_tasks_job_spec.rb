@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe GenerateTasksJob, type: :job do
   describe "#perform" do
-    it "対象のふりかえりが存在しない場合は何もしない" do
+    it "対象の状況整理が存在しない場合は何もしない" do
       allow(TaskGenerationAgent).to receive(:generate)
 
       expect {

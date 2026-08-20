@@ -3,7 +3,7 @@
 require "ruby_llm/schema"
 
 class TaskGenerationResponse < RubyLLM::Schema
-  description "AIが送られてきたふりかえりに対して、タスクを5件生成する"
+  description "AIが状況整理で入力された内容に対して、タスクを5件生成する"
 
   array :tasks,
         of: :string,

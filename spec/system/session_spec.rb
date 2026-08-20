@@ -9,7 +9,7 @@ RSpec.describe "セッション管理", type: :system do
     driven_by(:selenium_chrome_headless)
   end
 
-  scenario "ログインすると、ふりかえりの入力画面に遷移する" do
+  scenario "ログインすると、状況整理の入力画面に遷移する" do
     visit root_path
 
     click_google_login_button

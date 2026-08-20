@@ -33,7 +33,7 @@ RSpec.describe "Situations::Completions", type: :request do
       end
     end
 
-    it "他のユーザーのふりかえりの完了画面は表示できない" do
+    it "他のユーザーの状況整理の完了画面は表示できない" do
       other_situation = create(:situation)
       create(:task, situation: other_situation)
 

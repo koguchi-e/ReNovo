@@ -44,7 +44,7 @@ RSpec.describe "Situations", type: :request do
     end
 
     context "ログインしている場合" do
-      it "ふりかえりを作成し、タスク生成ジョブを登録する" do
+      it "状況整理を作成し、タスク生成ジョブを登録する" do
         expect do
           post situations_path, params: params
         end.to change(Situation, :count).by(1)
@@ -96,14 +96,14 @@ RSpec.describe "Situations", type: :request do
       let(:user) { create(:user) }
       let!(:situation) { create(:situation, user: user) }
       let!(:other_situation) do
-        create(:situation, user: create(:user), fact: "他ユーザーのふりかえり")
+        create(:situation, user: create(:user), fact: "他ユーザーの状況整理")
       end
 
       before do
         sign_in_as(user)
       end
 
-      it "ふりかえりの履歴を表示する" do
+      it "状況整理の履歴を表示する" do
         get situations_path
 
         expect(response).to have_http_status(:success)
@@ -112,7 +112,7 @@ RSpec.describe "Situations", type: :request do
       end
     end
 
-    context "ふりかえりが0件の場合" do
+    context "状況整理が0件の場合" do
       let(:user) { create(:user) }
 
       before do
@@ -121,7 +121,7 @@ RSpec.describe "Situations", type: :request do
       it "空画面が表示される" do
         get situations_path
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("ふりかえりはまだありません。")
+        expect(response.body).to include("まだ状況整理を行っていません。")
       end
     end
   end
@@ -135,18 +135,19 @@ RSpec.describe "Situations", type: :request do
         sign_in_as(user)
       end
 
-      it "ふりかえりの詳細とposition順にタスクを表示する" do
+      it "状況整理の詳細とposition順にタスクを表示する" do
         create(:task, situation: situation, content: "1個目のタスク", position: 1)
         create(:task, situation: situation, content: "2個目のタスク", position: 2)
 
         get situation_path(situation)
 
         expect(response).to have_http_status(:success)
+        expect(response.body).to include("現在の状況", "解決したい問題", "達成したい目標")
         expect(response.body).to include(situation.fact)
         expect(response.body.index("1個目のタスク")).to be < response.body.index("2個目のタスク")
       end
 
-      it "他のユーザーのふりかえりは表示できない" do
+      it "他のユーザーの状況整理は表示できない" do
         other_situation = create(:situation)
 
         get situation_path(other_situation)

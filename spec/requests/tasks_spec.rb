@@ -17,7 +17,7 @@ RSpec.describe "Tasks", type: :request do
         expect(response).to have_http_status(:success)
       end
 
-      it "他のユーザーのふりかえりのタスクは表示できない" do
+      it "他のユーザーの状況整理のタスクは表示できない" do
         other_situation = create(:situation)
 
         get situation_tasks_path(other_situation)
@@ -66,7 +66,7 @@ RSpec.describe "Tasks", type: :request do
         end
       end
 
-      it "他のユーザーのふりかえりにはタスクを追加できない" do
+      it "他のユーザーの状況整理にはタスクを追加できない" do
         other_situation = create(:situation)
 
         expect do
