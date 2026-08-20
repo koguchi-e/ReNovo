@@ -123,3 +123,7 @@ bin/lint
 ```bash
 bundle exec rspec
 ```
+
+## 設計資料
+
+- [ユビキタス言語](docs/ubiquitous-language.md)

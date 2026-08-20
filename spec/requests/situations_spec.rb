@@ -142,6 +142,7 @@ RSpec.describe "Situations", type: :request do
         get situation_path(situation)
 
         expect(response).to have_http_status(:success)
+        expect(response.body).to include("現在の状況", "解決したい問題", "達成したい目標")
         expect(response.body).to include(situation.fact)
         expect(response.body.index("1個目のタスク")).to be < response.body.index("2個目のタスク")
       end

@@ -13,13 +13,13 @@ RSpec.describe "Situations", type: :system do
   scenario "ユーザーが状況整理を行える" do
     visit new_situation_path
 
-    fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
+    fill_in "現在の状況", with: "会議で進捗報告をしたが、うまく説明できなかった。"
     find('[data-testid="fact-next-button"]').click
 
-    fill_in "situation_problem", with: "話す内容が整理できておらず、自信を持って説明できない。"
+    fill_in "解決したい問題", with: "話す内容が整理できておらず、自信を持って説明できない。"
     find('[data-testid="problem-next-button"]').click
 
-    fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
+    fill_in "達成したい目標", with: "次回の会議では要点を整理して説明できるようになりたい。"
     click_button "タスクを作成する"
 
     visit situations_path
@@ -46,13 +46,13 @@ RSpec.describe "Situations", type: :system do
   scenario "状況整理の内容が一覧画面に表示される" do
     visit new_situation_path
 
-    fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
+    fill_in "現在の状況", with: "会議で進捗報告をしたが、うまく説明できなかった。"
     find('[data-testid="fact-next-button"]').click
 
-    fill_in "situation_problem", with: "話す内容が整理できておらず、自信を持って説明できない。"
+    fill_in "解決したい問題", with: "話す内容が整理できておらず、自信を持って説明できない。"
     find('[data-testid="problem-next-button"]').click
 
-    fill_in "situation_goal", with: "次回の会議では要点を整理して説明できるようになりたい。"
+    fill_in "達成したい目標", with: "次回の会議では要点を整理して説明できるようになりたい。"
     click_button "タスクを作成する"
 
     visit situations_path
