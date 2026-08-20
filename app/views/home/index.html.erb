@@ -31,12 +31,9 @@
       </div>
       <h3 class="mt-3 text-lg font-bold text-dark-blue">3つの質問に答える</h3>
       <p class="mt-2 text-sm leading-relaxed text-calm-blue">今の状況、困りごと、少し前に進めそうな状態を整理します。</p>
-      <figure class="pointer-events-none relative mt-3 flex h-44 select-none items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        <figcaption class="absolute right-2 top-2 z-10 rounded-full bg-dark-blue/80 px-2 py-1 text-[10px] font-bold text-white">
-          画面イメージ
-        </figcaption>
-        <%= render "step_input_preview" %>
-      </figure>
+      <div class="mt-3 flex h-44 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+        <%= image_tag "step1.png", alt: "手が止まっている人が現在の状況・問題・目標を入力するイラスト", class: "size-full object-contain" %>
+      </div>
     </li>
     <li class="rounded-xl border border-gray-200 bg-dawn-mist p-4 text-left">
       <div class="flex items-center justify-between">
@@ -44,12 +41,9 @@
       </div>
       <h3 class="mt-3 text-lg font-bold text-dark-blue">提案されたタスクを確認する</h3>
       <p class="mt-2 text-sm leading-relaxed text-calm-blue">AIが作成したタスクを確認し、必要に応じて追加・編集します。</p>
-      <figure class="pointer-events-none relative mt-3 flex h-44 select-none items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        <figcaption class="absolute right-2 top-2 z-10 rounded-full bg-dark-blue/80 px-2 py-1 text-[10px] font-bold text-white">
-          画面イメージ
-        </figcaption>
-        <%= render "step_tasks_preview" %>
-      </figure>
+      <div class="mt-3 flex h-44 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+        <%= image_tag "step2.png", alt: "思考を整理し、タスクを分解するイラスト", class: "size-full object-contain" %>
+      </div>
     </li>
     <li class="rounded-xl border border-gray-200 bg-dawn-mist p-4 text-left">
       <div class="flex items-center justify-between">
@@ -58,7 +52,7 @@
       <h3 class="mt-3 text-lg font-bold text-dark-blue">タスクに取り掛かる</h3>
       <p class="mt-2 text-sm leading-relaxed text-calm-blue">整理したタスクから、今できる小さな一歩を始めます。</p>
       <div class="mt-3 flex h-44 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        <%= image_tag "step3@2x.png", alt: "作成したタスクに取り掛かる人のイラスト", class: "size-full object-contain" %>
+        <%= image_tag "step3.png", alt: "タスクを選び、パソコンで作業を始める人のイラスト", class: "size-full object-contain" %>
       </div>
     </li>
   </ol>
