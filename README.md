@@ -20,7 +20,7 @@ ReNovoは、考えすぎて行動に移せない人のためのタスク分解�
 
 「現在の状況」「解決したい問題」「達成したい目標」を3ステップで入力し、今の状況を整理します。
 
-<img src="app/assets/images/readme/situation.png" alt="ふりかえり入力画面" width="480">
+<img src="app/assets/images/readme/situation.png" alt="状況整理の入力画面" width="480">
 
 ### AIが生成したタスクを編集
 

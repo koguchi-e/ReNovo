@@ -10,7 +10,7 @@ RSpec.describe "Situations", type: :system do
     sign_in_as(user)
   end
 
-  scenario "ユーザーが振り返りを作成できる" do
+  scenario "ユーザーが状況整理を行える" do
     visit new_situation_path
 
     fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
@@ -43,7 +43,7 @@ RSpec.describe "Situations", type: :system do
     expect(page).to have_content "入力してください。"
   end
 
-  scenario "作成したふりかえりが一覧画面に表示される" do
+  scenario "状況整理の内容が一覧画面に表示される" do
     visit new_situation_path
 
     fill_in "situation_fact", with: "会議で進捗報告をしたが、うまく説明できなかった。"
@@ -59,9 +59,9 @@ RSpec.describe "Situations", type: :system do
     expect(page).to have_content "会議で進捗報告をしたが、うまく説明できなかった。"
   end
 
-  scenario "ふりかえり履歴がない時その旨とリンクが表示される" do
+  scenario "状況整理の履歴がない時その旨とリンクが表示される" do
     visit situations_path
-    expect(page).to have_content "ふりかえりはまだありません。"
-    expect(page).to have_link("新しくふりかえる", href: new_situation_path)
+    expect(page).to have_content "まだ状況整理を行っていません。"
+    expect(page).to have_link("状況整理を始める", href: new_situation_path)
   end
 end

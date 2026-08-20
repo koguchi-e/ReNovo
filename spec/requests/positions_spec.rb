@@ -32,7 +32,7 @@ RSpec.describe "Positions", type: :request do
       end
     end
 
-    it "他のユーザーのふりかえりの並び替え画面は表示できない" do
+    it "他のユーザーの状況整理の並び替え画面は表示できない" do
       other_situation = create(:situation)
       create(:task, situation: other_situation)
 
@@ -85,7 +85,7 @@ RSpec.describe "Positions", type: :request do
       expect(other_task.reload.position).to eq(original_position)
     end
 
-    it "他のユーザーのふりかえりのタスク順は更新できない" do
+    it "他のユーザーの状況整理のタスク順は更新できない" do
       other_situation = create(:situation)
       first_task = create(:task, situation: other_situation, position: 1)
       second_task = create(:task, situation: other_situation, position: 2)
