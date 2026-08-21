@@ -1,37 +1,66 @@
 <div>
   <h1 class="flex items-center justify-center gap-3 text-4xl font-bold text-dark-blue">
     <i class="fa-solid fa-list-check" aria-hidden="true"></i>
-    <span>タスク一覧</span>
+    <span>タスク編集</span>
   </h1>
   <p class="mt-5 text-center text-xl text-calm-blue">
-    内容は自由に追加・編集・並べ替えできます。<br>
-    内容を整えたら、次ページに進み、取り組む順番を決めましょう。
+    タスクの追加・編集・削除・並べ替えができます。<br>
+    ドラッグまたは上下ボタンで順番を変更できます。変更内容は自動で保存されます。
   </p>
 </div>
 
-<ul>
+<ul data-controller="task-order" class="mt-5">
   <% tasks.each do |task| %>
-    <li data-controller="task-form" class="relative m-5 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm sm:p-8">
+    <li
+      data-controller="task-form"
+      data-task-id="<%= task.id %>"
+      data-task-position-url="<%= situation_position_path(situation) %>"
+      class="relative m-5 rounded-2xl border border-gray-200 bg-white p-5 text-dark-blue shadow-sm sm:p-8">
       <div data-task-form-target="display">
+        <span class="js-grab absolute left-8 top-1/2 -translate-y-1/2 cursor-grab">
+          <i class="fa-solid fa-grip" aria-hidden="true"></i>
+        </span>
         <% if task.position == 1 %>
-          <span class="mb-2 inline-flex rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-calm-blue">
+          <span
+            class="absolute left-8 top-1 inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-calm-blue sm:top-3"
+            data-task-order-target="recommendation">
             <i class="fa-solid fa-flag" aria-hidden="true"></i>
             最初に取り組むタスク
           </span>
         <% end %>
-        <p class="break-words">
-          <%= task.content %>
-        </p>
-        <div class="flex mt-2">
-          <button type="button" data-action="task-form#edit"
-            data-testid="edit-task-button"
-            aria-label="タスクを編集"
-            class="icon-button text-sm">
-            <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+        <div class="flex items-center gap-2 pl-12 pr-24">
+          <div class="min-w-0 flex-1" data-task-order-target="content">
+            <p class="break-words">
+              <%= task.content %>
+            </p>
+          </div>
+          <div class="flex shrink-0">
+            <button type="button" data-action="task-form#edit"
+              data-testid="edit-task-button"
+              aria-label="タスクを編集"
+              class="icon-button text-sm">
+              <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+            </button>
+            <%= button_to situation_task_path(situation, task), method: :delete, class: "icon-button-danger text-sm", aria: { label: "タスクを削除" }, data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
+              <i class="fa-solid fa-trash" aria-hidden="true"></i>
+            <% end %>
+          </div>
+        </div>
+        <div class="absolute right-8 top-1/2 flex -translate-y-1/2 flex-col">
+          <button
+            type="button"
+            data-action="task-order#moveUp"
+            class="icon-button text-sm"
+            aria-label="<%= "#{task.content}を上へ移動" %>">
+            <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
           </button>
-          <%= button_to situation_task_path(situation, task), method: :delete, class: "icon-button-danger text-sm", aria: { label: "タスクを削除" }, data: { turbo_confirm: '本当に削除しますか？', testid: "delete-task-button-#{task.id}" } do %>
-            <i class="fa-solid fa-trash" aria-hidden="true"></i>
-          <% end %>
+          <button
+            type="button"
+            data-action="task-order#moveDown"
+            class="icon-button text-sm"
+            aria-label="<%= "#{task.content}を下へ移動" %>">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <div data-task-form-target="form" class="hidden">
@@ -63,8 +92,8 @@
   <%= render "/situations/review_modal", situation: situation %>
 </div>
 <div class="m-5 flex justify-end">
-  <%= link_to edit_situation_position_path(situation), class: "primary-button" do %>
-    並べ替えへ進む
-    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+  <%= link_to situation_path(situation), class: "primary-button" do %>
+    <i class="fa-solid fa-check" aria-hidden="true"></i>
+    完了
   <% end %>
 </div>
