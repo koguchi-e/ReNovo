@@ -9,29 +9,23 @@ RSpec.describe Situation, type: :model do
       expect(situation).to be_valid
     end
 
-    it "状況、問題、目標が空欄だと登録できない" do
-      situation = build(:situation, fact: nil, problem: nil, goal: nil)
-      expect(situation).not_to be_valid
-    end
+    %i[fact problem goal].each do |attribute|
+      context "#{attribute}について" do
+        it "空欄だと登録できない" do
+          situation = build(:situation, attribute => nil)
+          expect(situation).not_to be_valid
+        end
 
-    it "状況、問題、目標が300文字以内なら登録できる" do
-      situation = build(
-        :situation,
-        fact: "あ" * 300,
-        problem: "あ" * 300,
-        goal: "あ" * 300
-      )
-      expect(situation).to be_valid
-    end
+        it "300文字なら登録できる" do
+          situation = build(:situation, attribute => "あ" * 300)
+          expect(situation).to be_valid
+        end
 
-    it "状況、問題、目標が301文字だと登録できない" do
-      situation = build(
-        :situation,
-        fact: "あ" * 301,
-        problem: "あ" * 301,
-        goal: "あ" * 301
-      )
-      expect(situation).not_to be_valid
+        it "301文字だと登録できない" do
+          situation = build(:situation, attribute => "あ" * 301)
+          expect(situation).not_to be_valid
+        end
+      end
     end
   end
 
