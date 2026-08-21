@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.1.1/dist/css/yakuhanjp_s.css">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload", preload_links_header: false %>
     <%= javascript_importmap_tags %>
     <meta property="og:title" content="<%= content_for(:title) || "ReNovo" %>">
     <meta property="og:description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
