@@ -3,6 +3,16 @@
 require "rails_helper"
 
 RSpec.describe GenerateTasksJob, type: :job do
+  def expect_failed_screen_update(situation)
+    allow(Turbo::StreamsChannel).to receive(:broadcast_update_to).and_call_original
+    expect(Turbo::StreamsChannel).to receive(:broadcast_update_to).with(
+      situation,
+      target: "status_screen",
+      partial: "tasks/failed",
+      locals: { situation: situation }
+    )
+  end
+
   describe "#perform" do
     it "対象の状況整理が存在しない場合は何もしない" do
       allow(TaskGenerationAgent).to receive(:generate)
@@ -29,6 +39,22 @@ RSpec.describe GenerateTasksJob, type: :job do
         "勉強時間をカレンダーに30分だけ登録する"
       ]
       allow(TaskGenerationAgent).to receive(:generate).and_return(tasks)
+      expect(Turbo::StreamsChannel).to receive(:broadcast_update_to).with(
+        situation,
+        target: "status_screen",
+        partial: "tasks/generating",
+        locals: { situation: situation }
+      )
+      expect(Turbo::StreamsChannel).to receive(:broadcast_update_to).with(
+        situation,
+        target: "status_screen",
+        partial: "tasks/list",
+        locals: {
+          situation: situation,
+          tasks: kind_of(ActiveRecord::Relation),
+          new_task: kind_of(Task)
+        }
+      )
       expect(Turbo::StreamsChannel).to receive(:broadcast_append_to).with(
         situation,
         target: "flash_messages",
@@ -47,6 +73,7 @@ RSpec.describe GenerateTasksJob, type: :job do
       it "生成結果が5件でなければstatusをfailedにする" do
         situation = create(:situation, status: :pending)
         allow(TaskGenerationAgent).to receive(:generate).and_return([ "1件のみのタスク" ])
+        expect_failed_screen_update(situation)
         described_class.perform_now(situation_id: situation.id)
         expect(situation.reload).to be_failed
       end
@@ -54,6 +81,7 @@ RSpec.describe GenerateTasksJob, type: :job do
       it "生成結果が配列でなければstatusをfailedにする" do
         situation = create(:situation, status: :pending)
         allow(TaskGenerationAgent).to receive(:generate).and_return("配列ではないタスク")
+        expect_failed_screen_update(situation)
         described_class.perform_now(situation_id: situation.id)
         expect(situation.reload).to be_failed
       end
@@ -61,6 +89,7 @@ RSpec.describe GenerateTasksJob, type: :job do
       it "生成結果がnilならstatusをfailedにする" do
         situation = create(:situation, status: :pending)
         allow(TaskGenerationAgent).to receive(:generate).and_return(nil)
+        expect_failed_screen_update(situation)
         described_class.perform_now(situation_id: situation.id)
         expect(situation.reload).to be_failed
       end
@@ -75,6 +104,7 @@ RSpec.describe GenerateTasksJob, type: :job do
           "勉強時間をカレンダーに30分だけ登録する"
         ]
         allow(TaskGenerationAgent).to receive(:generate).and_return(tasks)
+        expect_failed_screen_update(situation)
         described_class.perform_now(situation_id: situation.id)
         expect(situation.reload).to be_failed
       end
@@ -84,6 +114,7 @@ RSpec.describe GenerateTasksJob, type: :job do
       it "statusをfailedにして例外を再送出する" do
         situation = create(:situation, status: :pending)
         allow(TaskGenerationAgent).to receive(:generate).and_raise(StandardError, "AI Error")
+        expect_failed_screen_update(situation)
         expect {
           described_class.perform_now(situation_id: situation.id)
         }.to raise_error(StandardError, "AI Error")
@@ -93,6 +124,7 @@ RSpec.describe GenerateTasksJob, type: :job do
       it "既にcompletedの場合はstatusをfailedに変更しない" do
         situation = create(:situation, status: :completed)
         allow(TaskGenerationAgent).to receive(:generate).and_raise(StandardError, "AI Error")
+        expect_failed_screen_update(situation)
 
         expect {
           described_class.perform_now(situation_id: situation.id)
@@ -107,7 +139,7 @@ RSpec.describe GenerateTasksJob, type: :job do
         situation = create(:situation, status: :pending)
         tasks = Array.new(5) { |index| "タスク#{index + 1}" }
         allow(TaskGenerationAgent).to receive(:generate).and_return(tasks)
-        allow(Turbo::StreamsChannel).to receive(:broadcast_replace_to) do |_, **options|
+        allow(Turbo::StreamsChannel).to receive(:broadcast_update_to) do |_, **options|
           raise StandardError, "Notification Error" if options[:partial] == "tasks/list"
         end
         allow(Rails.logger).to receive(:error).and_call_original
