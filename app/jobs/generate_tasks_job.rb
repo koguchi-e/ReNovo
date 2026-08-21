@@ -9,7 +9,7 @@ class GenerateTasksJob < ApplicationJob
     return if situation.nil?
 
     begin
-      Turbo::StreamsChannel.broadcast_replace_to(
+      Turbo::StreamsChannel.broadcast_update_to(
         situation,
         target: "status_screen",
         partial: "tasks/generating",
@@ -21,7 +21,7 @@ class GenerateTasksJob < ApplicationJob
       unless task_contents.is_a?(Array) && task_contents.size == 5 && task_contents.all?(&:present?)
         situation.failed!
         Rails.logger.error("[GenerateTasksJob] invalid task content: #{task_contents.inspect}")
-        Turbo::StreamsChannel.broadcast_replace_to(
+        Turbo::StreamsChannel.broadcast_update_to(
           situation,
           target: "status_screen",
           partial: "tasks/failed",
@@ -42,7 +42,7 @@ class GenerateTasksJob < ApplicationJob
     rescue StandardError => e
       situation.failed! unless situation.completed?
       Rails.logger.error("[GenerateTasksJob] failed: #{e.class}: #{e.message}")
-      Turbo::StreamsChannel.broadcast_replace_to(
+      Turbo::StreamsChannel.broadcast_update_to(
         situation,
         target: "status_screen",
         partial: "tasks/failed",
@@ -52,7 +52,7 @@ class GenerateTasksJob < ApplicationJob
     end
 
     begin
-      Turbo::StreamsChannel.broadcast_replace_to(
+      Turbo::StreamsChannel.broadcast_update_to(
         situation,
         target: "status_screen",
         partial: "tasks/list",
