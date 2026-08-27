@@ -45,7 +45,7 @@ RSpec.describe TaskGenerationAgent do
     it "生成ルールを含んでいる" do
       prompt = TaskGenerationAgent::SYSTEM_PROMPT
       expect(prompt).to include("タスクは5つだけ出力")
-      expect(prompt).to include("医療的判断をしないでください")
+      expect(prompt).to include("診断、治療、服薬に関する判断や助言をしないでください")
       expect(prompt).to include("人生アドバイスをしないでください")
     end
   end
