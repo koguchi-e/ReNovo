@@ -44,9 +44,13 @@ RSpec.describe TaskGenerationAgent do
   describe "SYSTEM_PROMPT" do
     it "生成ルールを含んでいる" do
       prompt = TaskGenerationAgent::SYSTEM_PROMPT
-      expect(prompt).to include("タスクは5つだけ出力")
+      expect(prompt).to include("タスクだけを必ず5つ出力してください")
       expect(prompt).to include("診断、治療、服薬に関する判断や助言をしないでください")
-      expect(prompt).to include("人生アドバイスをしないでください")
+      expect(prompt).to include("自傷、自殺、他者への暴力を促さないでください")
+      expect(prompt).to include("退職、転職、離婚、別れ、引っ越し、人間関係の断絶など、人生に大きな影響を与える決断を提案しないでください")
+      expect(prompt).to include("ユーザーの生き方や価値観を評価しないでください")
+      expect(prompt).to include("ユーザーが何を選ぶべきか決めないでください")
+      expect(prompt).to include("安全上の問題がない場合は、ユーザーが入力した目標に向けたタスクを提案してください")
     end
   end
 end
