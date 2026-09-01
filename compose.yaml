@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      POSTGRES_USER: ${RE_NOVO_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${RE_NOVO_DB_PASSWORD:-postgres}
+      POSTGRES_DB: re_novo_development
+    volumes:
+      - postgres18_data:/var/lib/postgresql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${RE_NOVO_DB_USER:-postgres} -d re_novo_development
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres18_data:
