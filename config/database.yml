@@ -22,6 +22,10 @@ default: &default
 development:
   <<: *default
   database: re_novo_development
+  host: <%= ENV.fetch("RE_NOVO_DB_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("RE_NOVO_DB_PORT", 5433) %>
+  username: <%= ENV["RE_NOVO_DB_USER"].presence || "postgres" %>
+  password: <%= ENV["RE_NOVO_DB_PASSWORD"].presence || "postgres" %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -56,6 +60,10 @@ development:
 test:
   <<: *default
   database: re_novo_test
+  host: <%= ENV.fetch("RE_NOVO_DB_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("RE_NOVO_DB_PORT", 5433) %>
+  username: <%= ENV["RE_NOVO_DB_USER"].presence || "postgres" %>
+  password: <%= ENV["RE_NOVO_DB_PASSWORD"].presence || "postgres" %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
