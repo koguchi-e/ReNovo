@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PositionsController < ApplicationController
+class Tasks::PositionsController < ApplicationController
   before_action :set_situation
 
   def update
