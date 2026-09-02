@@ -22,6 +22,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    return update_position if params[:insert_at].present?
     if @task.update(task_params)
       render_task_list(notice: t(".updated"))
     else
@@ -80,5 +81,13 @@ class TasksController < ApplicationController
           }
         )
       ]
+    end
+
+    def update_position
+      if @task.insert_at(params[:insert_at])
+        head :no_content
+      else
+        head :unprocessable_content
+      end
     end
 end

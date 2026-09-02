@@ -17,11 +17,8 @@ export default class extends Controller {
           this.saving = true;
           this.sortable.option("disabled", true);
 
-          const url = event.item.dataset.taskPositionUrl;
-          const params = {
-            task_id: event.item.dataset.taskId,
-            insert_at: event.newIndex + 1,
-          };
+          const url = event.item.dataset.taskUrl;
+          const params = { insert_at: event.newIndex + 1 };
 
           await patch(url, { body: params });
         } catch (error) {
@@ -56,11 +53,11 @@ export default class extends Controller {
       this.element.insertBefore(task, previousTask);
       this.updateRecommendation();
 
-      const url = task.dataset.taskPositionUrl;
+      const url = task.dataset.taskUrl;
       const insertAt = Array.from(this.element.children).indexOf(task) + 1;
 
       await patch(url, {
-        body: { task_id: task.dataset.taskId, insert_at: insertAt },
+        body: { insert_at: insertAt },
       });
     } catch (error) {
       console.warn(error);
@@ -89,11 +86,11 @@ export default class extends Controller {
       this.element.insertBefore(nextTask, task);
       this.updateRecommendation();
 
-      const url = task.dataset.taskPositionUrl;
+      const url = task.dataset.taskUrl;
       const insertAt = Array.from(this.element.children).indexOf(task) + 1;
 
       await patch(url, {
-        body: { task_id: task.dataset.taskId, insert_at: insertAt },
+        body: { insert_at: insertAt },
       });
     } catch (error) {
       console.warn(error);
