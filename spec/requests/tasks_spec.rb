@@ -78,13 +78,12 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    describe "PATCH /situations/:situation_id/position" do
+    describe "PATCH /situations/:situation_id/tasks/:id" do
       it "指定した位置にタスクを移動する" do
         first_task = create(:task, situation: situation, content: "1個目のタスク", position: 1)
         second_task = create(:task, situation: situation, content: "2個目のタスク", position: 2)
 
-        patch situation_position_path(situation), params: {
-          task_id: second_task.id,
+        patch situation_task_path(situation, second_task), params: {
           insert_at: 1
         }, as: :json
 
@@ -98,8 +97,7 @@ RSpec.describe "Tasks", type: :request do
         second_task = create(:task, situation: situation, position: 2)
         allow_any_instance_of(Task).to receive(:insert_at).and_return(false)
 
-        patch situation_position_path(situation), params: {
-          task_id: second_task.id,
+        patch situation_task_path(situation, second_task), params: {
           insert_at: 1
         }, as: :json
 
@@ -113,8 +111,7 @@ RSpec.describe "Tasks", type: :request do
         other_task = create(:task, situation: other_situation)
         original_position = other_task.position
 
-        patch situation_position_path(situation), params: {
-          task_id: other_task.id,
+        patch situation_task_path(situation, other_task), params: {
           insert_at: 1
         }, as: :json
 
@@ -127,8 +124,7 @@ RSpec.describe "Tasks", type: :request do
         first_task = create(:task, situation: other_situation, position: 1)
         second_task = create(:task, situation: other_situation, position: 2)
 
-        patch situation_position_path(other_situation), params: {
-          task_id: second_task.id,
+        patch situation_task_path(other_situation, second_task), params: {
           insert_at: 1
         }, as: :json
 
