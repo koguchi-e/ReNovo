@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SituationsController < ApplicationController
-  MONTHLY_USAGE_LIMIT = 50
-
   def index
     @situations = current_user.situations.order(created_at: :desc).page(params[:page])
   end
@@ -16,7 +14,7 @@ class SituationsController < ApplicationController
 
   def new
     @situation = Situation.new
-    @usage_limit_reached = monthly_usage_limit_reached?
+    @usage_limit_reached = current_user.monthly_usage_limit_reached?
   end
 
   def create
@@ -26,7 +24,7 @@ class SituationsController < ApplicationController
     saved = false
 
     current_user.with_lock do
-      if monthly_usage_limit_reached?
+      if current_user.monthly_usage_limit_reached?
         limit_reached = true
       else
         saved = @situation.save
@@ -50,9 +48,5 @@ class SituationsController < ApplicationController
   private
     def situation_params
       params.require(:situation).permit(:fact, :problem, :goal)
-    end
-
-    def monthly_usage_limit_reached?
-      current_user.situations.where(created_at: Time.current.all_month).count >= MONTHLY_USAGE_LIMIT
     end
 end
