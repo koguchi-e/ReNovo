@@ -65,4 +65,13 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#monthly_usage_limit_reached?" do
+    it "今月のSituationが50件ならtrueを返す" do
+      user = create(:user)
+      create_list(:situation, 50, user: user)
+
+      expect(user.monthly_usage_limit_reached?).to be(true)
+    end
+  end
 end

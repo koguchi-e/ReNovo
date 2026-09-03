@@ -60,7 +60,7 @@ RSpec.describe "Situations", type: :request do
 
     context "今月の上限に達している場合" do
       before do
-        create_list(:situation, SituationsController::MONTHLY_USAGE_LIMIT, user: user, created_at: Time.current)
+        create_list(:situation, User::MONTHLY_USAGE_LIMIT, user: user, created_at: Time.current)
       end
 
       it "作成されず429で入力画面を再表示する" do
