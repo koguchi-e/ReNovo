@@ -106,6 +106,7 @@ http://localhost:3000/auth/google_oauth2/callback
 ```bash
 git clone https://github.com/koguchi-e/ReNovo.git
 cd ReNovo
+docker compose up -d db
 bin/setup
 ```
 
@@ -126,66 +127,3 @@ bundle exec rspec
 ## 設計資料
 
 - [ユビキタス言語](docs/ubiquitous-language.md)
-
-## 概要
-
-ローカル開発環境で使用していたPostgreSQL 15を、本番のRender環境と同じPostgreSQL 18に揃えました。
-
-PostgreSQL 18はDocker Composeで起動し、Rails自体はこれまでどおりWSL上で実行します。
-
-## 変更内容
-
-- `compose.yaml`を追加
-
-  - PostgreSQL公式イメージの`postgres:18`を使用
-  - 既存のPostgreSQLとポートが重複しないよう、ホスト側の`5433`番ポートを使用
-  - 名前付きVolumeを使用してDBデータを永続化
-  - `healthcheck`でPostgreSQLの接続可能状態を確認
-
-- `config/database.yml`を変更
-
-  - development・test環境の接続先をDocker上のPostgreSQLへ変更
-  - ユーザー名とパスワードを環境変数から変更可能に設定
-
-- production環境の`DATABASE_URL`設定は変更していません
-
-## 開発環境の起動方法
-
-PostgreSQLを起動します。
-
-```bash
-docker compose up -d db
-```
-
-初回は開発・テスト用DBを準備します。
-
-```bash
-bin/rails db:prepare
-RAILS_ENV=test bin/rails db:prepare
-```
-
-Railsはこれまでどおり起動します。
-
-```bash
-bin/dev
-```
-
-## 動作確認
-
-- `docker compose ps`でDBコンテナが`healthy`になること
-- RailsがPostgreSQL 18へ接続していること
-
-```bash
-bin/rails runner \
-  'puts ActiveRecord::Base.connection.select_value("SHOW server_version")'
-```
-
-- RSpecが通ること
-
-```bash
-bundle exec rspec
-```
-
-## 補足
-
-Docker上のPostgreSQLは`127.0.0.1:5433`で公開しています。WSLに既存のPostgreSQLがインストールされていても、ポートが重複しない構成です。
