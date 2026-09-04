@@ -28,6 +28,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
+
   <body class="flex min-h-screen flex-col bg-dawn-mist">
     <% unless content_for?(:hide_header) %>
       <header
@@ -45,25 +46,20 @@
         </div>
       </header>
     <% end %>
+
     <aside id="flash_messages" class="flash-messages pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6" aria-label="お知らせ">
       <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
       <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
     </aside>
-    <% if controller_name == "home" && action_name == "index" || controller_name == "terms" && action_name == "show" || controller_name == "privacy" && action_name == "show" %>
-      <% public_page_content = yield %>
-      <div class="page-container flex flex-1 flex-col py-4 sm:py-6">
-        <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
-        <div class="w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
-          <main class="flex w-full flex-col items-center">
-            <%= public_page_content %>
-          </main>
-        </div>
-      </div>
+
+    <% if content_for?(:content) %>
+      <%= yield :content %>
     <% else %>
       <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
         <%= yield %>
       </main>
     <% end %>
+
     <%= render "shared/footer" %>
   </body>
 </html>

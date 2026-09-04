@@ -1,0 +1,12 @@
+<% content_for :content do %>
+  <div class="page-container flex flex-1 flex-col py-4 sm:py-6">
+    <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
+    <div class="w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
+      <main class="flex w-full flex-col items-center">
+        <%= yield %>
+      </main>
+    </div>
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>
