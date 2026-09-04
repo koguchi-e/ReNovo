@@ -36,10 +36,7 @@
       <p class="mb-3 text-base text-calm-blue">
         タスクはまだありません。必要であれば、タスクを追加してください。
       </p>
-      <%= link_to situation_tasks_path(situation, new_task: "open"), class: "primary-button self-center" do %>
-        <i class="fa-solid fa-plus" aria-hidden="true"></i>
-        タスクを追加する
-      <% end %>
+      <%= render "tasks/create_form", situation: situation, new_task: new_task, full_width: true, primary_button: true, redirect_to_tasks_index: true, show_form: true %>
     </section>
   <% end %>
 </section>
