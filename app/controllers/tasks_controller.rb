@@ -15,9 +15,18 @@ class TasksController < ApplicationController
     @new_task.position = @situation.tasks.maximum(:position).to_i + 1
     if @new_task.save
       @situation.completed! if @situation.failed?
-      render_task_list(notice: t(".created"))
+
+      if params[:after_create] == "tasks_index"
+        redirect_to situation_tasks_path(@situation), notice: t(".created"), status: :see_other
+      else
+        render_task_list(notice: t(".created"))
+      end
     else
-      redirect_to situation_tasks_path(@situation), alert: t(".alert")
+      if params[:after_create] == "tasks_index"
+        redirect_to situation_path(@situation), alert: t(".alert"), status: :see_other
+      else
+        redirect_to situation_tasks_path(@situation), alert: t(".alert")
+      end
     end
   end
 

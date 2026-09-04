@@ -2,8 +2,11 @@
   <button type="button" data-task-form-target="button" data-action="task-form#create" class="<%= local_assigns[:primary_button] ? "primary-button" : "secondary-button" %>" data-testid="open-task-form-button">
     <i class="fa-solid fa-plus" aria-hidden="true"></i> タスクを追加
   </button>
+
   <div data-task-form-target="createForm" class="relative hidden <%= local_assigns[:full_width] ? "w-full" : "w-[min(32rem,calc(100vw-2rem))]" %> rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
     <%= form_with model: [situation, new_task] do |f| %>
+      <%= hidden_field_tag :after_create, "tasks_index" if local_assigns[:redirect_to_tasks_index] %>
+
       <%= f.text_area :content,
         rows: 3,
         placeholder: "例：机の上に教材を用意する",

@@ -76,6 +76,35 @@ RSpec.describe "Tasks", type: :request do
           expect(situation.reload).to be_completed
         end
       end
+
+      context "after_createがtasks_indexの場合" do
+        it "タスクを作成し、タスクが一覧画面にリダイレクトする" do
+          expect do
+            post situation_tasks_path(situation), params: {
+              task: { content: "机を整理する" },
+              after_create: "tasks_index"
+            },
+            as: :turbo_stream
+          end.to change(Task, :count).by(1)
+          expect(response).to redirect_to(situation_tasks_path(situation))
+          expect(response).to have_http_status(:see_other)
+          expect(flash[:notice]).to include("タスクを追加しました。")
+        end
+        it "タスクを作成できない場合、状況詳細画面へリダイレクトする" do
+          expect do
+            post situation_tasks_path(situation),
+              params: {
+                task: { content: "" },
+                after_create: "tasks_index"
+              },
+              as: :turbo_stream
+          end.not_to change(Task, :count)
+
+          expect(response).to redirect_to(situation_path(situation))
+          expect(response).to have_http_status(:see_other)
+          expect(flash[:alert]).to be_present
+        end
+      end
     end
 
     describe "PATCH /situations/:situation_id/tasks/:id" do
