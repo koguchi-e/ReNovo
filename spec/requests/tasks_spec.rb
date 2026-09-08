@@ -76,35 +76,6 @@ RSpec.describe "Tasks", type: :request do
           expect(situation.reload).to be_completed
         end
       end
-
-      context "after_createがtasks_indexの場合" do
-        it "タスクを作成し、タスクが一覧画面にリダイレクトする" do
-          expect do
-            post situation_tasks_path(situation), params: {
-              task: { content: "机を整理する" },
-              after_create: "tasks_index"
-            },
-            as: :turbo_stream
-          end.to change(Task, :count).by(1)
-          expect(response).to redirect_to(situation_tasks_path(situation))
-          expect(response).to have_http_status(:see_other)
-          expect(flash[:notice]).to include("タスクを追加しました。")
-        end
-        it "タスクを作成できない場合、状況詳細画面へリダイレクトする" do
-          expect do
-            post situation_tasks_path(situation),
-              params: {
-                task: { content: "" },
-                after_create: "tasks_index"
-              },
-              as: :turbo_stream
-          end.not_to change(Task, :count)
-
-          expect(response).to redirect_to(situation_path(situation))
-          expect(response).to have_http_status(:see_other)
-          expect(flash[:alert]).to be_present
-        end
-      end
     end
 
     describe "PATCH /situations/:situation_id/tasks/:id" do
@@ -164,6 +135,35 @@ RSpec.describe "Tasks", type: :request do
     end
 
     describe "POST /situations/:situation_id/tasks" do
+      context "HTMLリクエストの場合" do
+        it "タスクを作成し、タスクが一覧画面にリダイレクトする" do
+          expect do
+            post situation_tasks_path(situation), params: {
+              task: { content: "机を整理する" }
+            }
+          end.to change(Task, :count).by(1)
+          expect(response).to redirect_to(situation_tasks_path(situation))
+          expect(response).to have_http_status(:see_other)
+        end
+        it "タスクを作成できない場合、422を返す" do
+          expect do
+            post situation_tasks_path(situation),
+              params: {
+                task: { content: "" }
+              }
+          end.not_to change(Task, :count)
+          expect(response).to have_http_status(:unprocessable_content)
+        end
+      end
+      context "Turbo Streamリクエストの場合" do
+        it "タスクを作成し、Turbo Streamを返す" do
+          post situation_tasks_path(situation), params: {
+            task: { content: "追加したタスク" }
+          }, as: :turbo_stream
+          expect(response).to have_http_status(:ok)
+          expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+        end
+      end
       context "タスクが既に5件作成されている場合" do
         before do
           1.upto(5) do |position|
@@ -189,17 +189,6 @@ RSpec.describe "Tasks", type: :request do
           expect(task.situation).to eq situation
           expect(task.position).to eq(6)
           expect(response.body).to include("タスクを追加しました。")
-        end
-      end
-
-      context "タスクの内容が空欄の場合" do
-        it "タスクを追加しない" do
-          expect do
-            post situation_tasks_path(situation), params: {
-              task: { content: "" }
-            }
-          end.not_to change(Task, :count)
-          expect(flash[:alert]).to eq("タスクの追加に失敗しました。")
         end
       end
 
@@ -337,8 +326,8 @@ RSpec.describe "Tasks", type: :request do
             }
           end.not_to change(Task, :count)
 
+          expect(response).to have_http_status(:unprocessable_content)
           expect(situation.reload).to be_failed
-          expect(flash[:alert]).to eq("タスクの追加に失敗しました。")
         end
       end
     end

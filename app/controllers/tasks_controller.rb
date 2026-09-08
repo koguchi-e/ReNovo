@@ -16,16 +16,27 @@ class TasksController < ApplicationController
     if @new_task.save
       @situation.completed! if @situation.failed?
 
-      if params[:after_create] == "tasks_index"
-        redirect_to situation_tasks_path(@situation), notice: t(".created"), status: :see_other
-      else
-        render_task_list(notice: t(".created"))
+      respond_to do |format|
+        format.html do
+          redirect_to situation_tasks_path(@situation), notice: t(".created"), status: :see_other
+        end
+
+        format.turbo_stream do
+          render_task_list(notice: t(".created"))
+        end
       end
     else
-      if params[:after_create] == "tasks_index"
-        redirect_to situation_path(@situation), alert: t(".alert"), status: :see_other
-      else
-        redirect_to situation_tasks_path(@situation), alert: t(".alert")
+      respond_to do |format|
+        format.html do
+          @tasks = @situation.tasks.order(:position)
+          @first_task = @tasks.first
+          flash.now[:alert] = t(".alert")
+          render "situations/show", status: :unprocessable_content
+        end
+
+        format.turbo_stream do
+          render_task_list(notice: t(".alert"))
+        end
       end
     end
   end
