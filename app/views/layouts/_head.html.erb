@@ -1,0 +1,26 @@
+<title><%= content_for(:title) || "ReNovo" %></title>
+<meta name="description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Re Novo">
+<meta name="mobile-web-app-capable" content="yes">
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+<%= yield :head %>
+<%= favicon_link_tag('favicon.ico') %>
+<%= favicon_link_tag "apple-touch-icon-180x180.png", rel: "apple-touch-icon", type: "image/png", sizes: "180x180" %>
+<%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+<%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+<script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.1.1/dist/css/yakuhanjp_s.css">
+<%# Includes all stylesheet files in app/assets/stylesheets %>
+<%= stylesheet_link_tag :app, "data-turbo-track": "reload", preload_links_header: false %>
+<%= javascript_importmap_tags %>
+<meta property="og:title" content="<%= content_for(:title) || "ReNovo" %>">
+<meta property="og:description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
+<meta property="og:type" content="website">
+<meta property="og:image" content="<%= image_url("ogp.png") %>">
+<meta property="og:site_name" content="ReNovo">
+<meta property="og:url" content="<%= request.base_url + request.path %>">
+<meta name="twitter:card" content="summary_large_image">
+<%= Sentry.get_trace_propagation_meta.html_safe %>

@@ -1,65 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title><%= content_for(:title) || "ReNovo" %></title>
-    <meta name="description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Re Novo">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= yield :head %>
-    <%= favicon_link_tag('favicon.ico') %>
-    <%= favicon_link_tag "apple-touch-icon-180x180.png", rel: "apple-touch-icon", type: "image/png", sizes: "180x180" %>
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-    <script src="https://kit.fontawesome.com/54c0760265.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.1.1/dist/css/yakuhanjp_s.css">
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload", preload_links_header: false %>
-    <%= javascript_importmap_tags %>
-    <meta property="og:title" content="<%= content_for(:title) || "ReNovo" %>">
-    <meta property="og:description" content="<%= content_for(:description) || "考えすぎて動けない人のためのタスク作成サービス" %>">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="<%= image_url("ogp.png") %>">
-    <meta property="og:site_name" content="ReNovo">
-    <meta property="og:url" content="<%= request.base_url + request.path %>">
-    <meta name="twitter:card" content="summary_large_image">
-    <%= Sentry.get_trace_propagation_meta.html_safe %>
+    <%= render "layouts/head" %>
   </head>
-
   <body class="flex min-h-screen flex-col bg-dawn-mist">
     <% unless content_for?(:hide_header) %>
-      <header
-        class="relative w-full border-b border-gray-200 bg-dawn-mist"
-        data-controller="hamburger-menu"
-        data-action="click@window->hamburger-menu#closeOnOutside keydown.esc@window->hamburger-menu#closeOnEscape">
-        <div class="page-container relative flex items-center justify-between py-3">
-          <%= link_to root_path, class: "inline-flex items-center gap-0.5 text-dark-blue hover:opacity-70", aria: { label: "ReNovo ホーム" } do %>
-            <%= image_tag "brand-symbol.png", alt: "", class: "size-11 shrink-0" %>
-            <%= image_tag "renovo-wordmark.svg", alt: "ReNovo", class: "h-auto w-28" %>
-          <% end %>
-          <% if current_user && !content_for?(:simple_header) %>
-            <%= render "shared/header_menu" %>
-          <% end %>
-        </div>
-      </header>
+      <%= render "shared/header" %>
     <% end %>
-
     <aside id="flash_messages" class="flash-messages pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6" aria-label="お知らせ">
       <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
       <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
     </aside>
-
-    <% if content_for?(:content) %>
-      <%= yield :content %>
-    <% else %>
-      <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
-        <%= yield %>
-      </main>
-    <% end %>
-
+    <main class="relative mx-auto mt-10 w-full max-w-3xl flex-1 px-4 pb-10 sm:px-6 lg:px-8">
+      <%= yield %>
+    </main>
     <%= render "shared/footer" %>
   </body>
 </html>

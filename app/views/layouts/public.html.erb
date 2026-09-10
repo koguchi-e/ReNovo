@@ -1,12 +1,24 @@
-<% content_for :content do %>
-  <div class="page-container flex flex-1 flex-col py-4 sm:py-6">
-    <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
-    <div class="w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
-      <main class="flex w-full flex-col items-center">
-        <%= yield %>
-      </main>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%= render "layouts/head" %>
+  </head>
+  <body class="flex min-h-screen flex-col bg-dawn-mist">
+    <% unless content_for?(:hide_header) %>
+      <%= render "shared/header" %>
+    <% end %>
+    <aside id="flash_messages" class="flash-messages pointer-events-none fixed right-4 top-20 z-50 flex flex-col items-end gap-3 sm:right-6" aria-label="お知らせ">
+      <%= render "shared/flash", type: :notice, message: notice if notice.present? %>
+      <%= render "shared/flash", type: :alert, message: alert if alert.present? %>
+    </aside>
+    <div class="page-container flex flex-1 flex-col py-4 sm:py-6">
+      <%= content_for(:public_page_navigation) if content_for?(:public_page_navigation) %>
+      <div class="w-full rounded-2xl bg-white px-5 py-6 shadow-sm sm:px-7 sm:py-8">
+        <main class="flex w-full flex-col items-center">
+          <%= yield %>
+        </main>
+      </div>
     </div>
-  </div>
-<% end %>
-
-<%= render template: "layouts/application" %>
+    <%= render "shared/footer" %>
+  </body>
+</html>
