@@ -1,6 +1,5 @@
 <% content_for :title, "状況整理の詳細 | ReNovo" %>
 <% content_for :description, "過去に入力した内容と、作成したタスクリストを確認できます。" %>
-
 <div>
   <div class="mb-5 flex flex-col items-start">
     <%= link_to situations_path, class: "text-dark-blue hover:opacity-60" do %>
@@ -40,9 +39,9 @@
     </h2>
     <hr class="mt-3 border border-gray-200">
     <dl>
-      <%= render "situation_attribute", situation: @situation, attribute: :fact %>
-      <%= render "situation_attribute", situation: @situation, attribute: :problem %>
-      <%= render "situation_attribute", situation: @situation, attribute: :goal %>
+      <%= render "situations/situation_attribute", situation: @situation, attribute: :fact %>
+      <%= render "situations/situation_attribute", situation: @situation, attribute: :problem %>
+      <%= render "situations/situation_attribute", situation: @situation, attribute: :goal %>
     </dl>
   </div>
 </div>

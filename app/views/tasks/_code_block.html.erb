@@ -4,12 +4,10 @@
     作成したタスクリスト
   </h2>
   <hr class="mt-3 border border-gray-200">
-
   <% if situation.tasks.exists? %>
     <p class="mt-8 text-base text-calm-blue">
       Markdown形式のチェックリストでコピーできます。
     </p>
-
     <div class="w-full mt-5" data-controller="clipboard">
       <div class="relative block rounded bg-gray-800 text-white">
         <div class="absolute top-0 right-0 ">
@@ -23,23 +21,18 @@
         <pre class="overflow-x-auto px-4 pb-4 pt-4"><code data-clipboard-target="source"><% tasks.each do |task| %> - [ ] <%= task.content %><br><% end %></code></pre>
       </div>
     </div>
-
     <div class="mt-8 flex flex-wrap items-center justify-start gap-3">
       <%= link_to situation_tasks_path(situation), class: "secondary-button" do %>
         <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
         タスクを編集する
       <% end %>
     </div>
-
   <% else %>
     <section class="mt-5 flex flex-col items-start gap-3">
       <p class="mb-3 text-base text-calm-blue">
         タスクはまだありません。必要であれば、タスクを追加してください。
       </p>
-      <%= link_to situation_tasks_path(situation, new_task: "open"), class: "primary-button self-center" do %>
-        <i class="fa-solid fa-plus" aria-hidden="true"></i>
-        タスクを追加する
-      <% end %>
+      <%= render "tasks/create_form", situation: situation, new_task: new_task, full_width: true, primary_button: true, disable_turbo: true %>
     </section>
   <% end %>
 </section>
