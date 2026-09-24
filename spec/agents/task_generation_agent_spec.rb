@@ -33,7 +33,7 @@ RSpec.describe TaskGenerationAgent do
         "明日解く問題のページに付箋を貼る",
         "勉強時間をカレンダーに30分だけ登録する"
       ]
-      response = instance_double("RubyLLM::Message", content: { tasks: tasks })
+      response = instance_double("RubyLLM::Message", parsed: { tasks: tasks })
       agent = instance_double(TaskGenerationAgent, ask: response)
       allow(TaskGenerationAgent).to receive(:new).and_return(agent)
 

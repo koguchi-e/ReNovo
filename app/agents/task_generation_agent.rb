@@ -57,7 +57,7 @@ class TaskGenerationAgent < RubyLLM::Agent
 
   def self.generate(situation)
     response = new.ask(prompt_for(situation))
-    content = response.content.to_h
+    content = response.parsed
 
     content.fetch("tasks") { content.fetch(:tasks) }
   end
