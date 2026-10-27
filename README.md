@@ -41,7 +41,7 @@ ReNovoは、考えすぎて行動に移せない人のためのタスク分解�
 
 | 分類           | 技術                  |
 | -------------- | --------------------- |
-| Backend        | Ruby 4.0.5            |
+| Backend        | Ruby 4.0.9            |
 |                | Ruby on Rails 8.1.3.1 |
 |                | PostgreSQL 18         |
 | Frontend       | Hotwire               |
@@ -63,7 +63,7 @@ ReNovoは、考えすぎて行動に移せない人のためのタスク分解�
 
 ローカル環境で起動するには、以下が必要です。
 
-- Ruby 4.0.5
+- Ruby 4.0.9
 - Docker Desktop、またはDocker Engine + Docker Compose v2
 - Node.js
 - npm
