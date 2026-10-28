@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-# This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -t re_novo .
+# This Dockerfile is designed for production, not development. Build and run by hand:
+# docker build -t re_novo .
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name re_novo re_novo
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
@@ -51,11 +51,8 @@ COPY . .
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
-# Precompile assets using Rails credentials supplied as a BuildKit secret.
-RUN --mount=type=secret,id=RAILS_MASTER_KEY \
-    RAILS_MASTER_KEY="$(cat /run/secrets/RAILS_MASTER_KEY)" \
-    SECRET_KEY_BASE_DUMMY=1 \
-    ./bin/rails assets:precompile
+# Precompile assets without production credentials.
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for app image
 FROM base
