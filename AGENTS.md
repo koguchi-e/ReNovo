@@ -6,7 +6,7 @@ ReNovoは、現在の状況・解決したい問題・達成したい目標を�
 
 ## 技術スタック
 
-- Ruby 4.0.5 / Ruby on Rails 8.1
+- Ruby 4.0.9 / Ruby on Rails 8.1
 - PostgreSQL 18
 - Hotwire（Turbo、Stimulus）
 - Tailwind CSS
@@ -15,6 +15,11 @@ ReNovoは、現在の状況・解決したい問題・達成したい目標を�
 - OpenAI API、Google OAuth
 
 依存関係の正確なバージョンは`Gemfile`、`Gemfile.lock`、`package.json`を参照すること。
+
+## デプロイ
+
+- 本番環境はRenderを使用する。Kamalは使用しない。
+- Render用の`bin/render-build.sh`およびDocker関連ファイルは、Renderで利用する設定として維持する。
 
 ## リポジトリ構成
 
