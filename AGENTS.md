@@ -49,7 +49,11 @@ ReNovoは、現在の状況・解決したい問題・達成したい目標を�
 
 - `main`ブランチへ直接pushしないこと。
 - 関係のないファイルをコミットに含めないこと。
-- force pushを行わないこと。
+- 作業ブランチへ`main`の変更を反映するとき、マージコミットを作成しないこと。
+- `main`の変更は作業ブランチへrebaseして取り込むこと。
+- rebase後は`git push --force-with-lease`で作業ブランチを更新すること。
+- `main`を含む保護ブランチへのforce pushは禁止すること。
+- `--force`ではなく、競合するリモート更新を検知できる`--force-with-lease`を使用すること。
 - 既存のIssueおよびPull Requestを確認し、重複作成を避けること。
 - コミット、push、Pull Request作成、Issue作成、GitHub Projectへの追加、Status・Labelの変更は、ユーザーの承認を得てから行うこと。
 - ユーザーの指示なしにPull Requestをマージしないこと。
