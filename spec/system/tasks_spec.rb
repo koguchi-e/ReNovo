@@ -54,4 +54,17 @@ RSpec.describe "Tasks", type: :system do
 
     expect(page).not_to have_content "削除するタスク"
   end
+
+  scenario "ドラッグハンドルはタスク本文に重ならないカード全高・44px以上の操作領域を持つ" do
+    visit situation_tasks_path(situation)
+
+    handle = find(".js-grab")
+    content = find("[data-task-order-target='content']")
+    card = handle.find(:xpath, "ancestor::li")
+
+    expect(handle.rect.width).to be >= 44
+    expect(handle.rect.y).to eq(card.rect.y + 1)
+    expect(handle.rect.height).to eq(card.rect.height - 2)
+    expect(handle.rect.x + handle.rect.width).to be <= content.rect.x
+  end
 end
