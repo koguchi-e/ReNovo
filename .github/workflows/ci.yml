@@ -111,6 +111,9 @@ jobs:
           bundler-cache: true
 
       - name: Build Tailwind CSS
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
         run: bin/rails tailwindcss:build
 
       - name: Run RSpec
