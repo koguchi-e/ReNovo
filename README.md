@@ -42,7 +42,7 @@ ReNovoは、考えすぎて行動に移せない人のためのタスク分解�
 | 分類           | 技術                  |
 | -------------- | --------------------- |
 | Backend        | Ruby 4.0.9            |
-|                | Ruby on Rails 8.1.3.1 |
+|                | Ruby on Rails 8.1.4.1 |
 |                | PostgreSQL 18         |
 | Frontend       | Hotwire               |
 |                | Turbo                 |
