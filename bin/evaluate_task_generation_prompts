@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require_relative "../config/environment"
+require_relative "../lib/task_generation_prompt_evaluation"
+
+options = {
+  case_ids: TaskGenerationPromptEvaluation::CASES.pluck(:id),
+  repetitions: 3,
+  output_root: Rails.root.join("tmp/task_generation_prompt_evaluations"),
+  seed: Random.new_seed,
+  dry_run: true
+}
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: bin/evaluate_task_generation_prompts [options]"
+
+  opts.on("--execute", "OpenAI APIを呼び出して評価を実行する") { options[:dry_run] = false }
+  opts.on("--cases IDS", "評価するケースID（例: E01,E03）") { |ids| options[:case_ids] = ids.split(",") }
+  opts.on("--repetitions COUNT", Integer, "各ケース・各版の生成回数（既定: 3）") { |count| options[:repetitions] = count }
+  opts.on("--output-dir PATH", "評価結果の親ディレクトリ") { |path| options[:output_root] = Pathname.new(path) }
+  opts.on("--seed NUMBER", Integer, "実行順のシャッフル用シード") { |seed| options[:seed] = seed }
+  opts.on("-h", "--help", "このヘルプを表示する") do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!
+abort "--repetitions must be at least 1" if options[:repetitions] < 1
+abort "--cases must include at least one case ID" if options[:case_ids].empty?
+
+runner = TaskGenerationPromptEvaluation::Runner.new(**options)
+run_directory = runner.run
+puts "Evaluation files were written to: #{run_directory}"
+puts "Dry run only: no API request was sent." if options[:dry_run]
