@@ -7,5 +7,5 @@ RubyLLM.configure do |config|
     else
       Rails.application.credentials.dig(:openai, :api_key)
     end
-  config.default_model = "gpt-4o-mini"
+  config.default_model = "gpt-6-luna"
 end

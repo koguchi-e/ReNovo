@@ -54,6 +54,7 @@ class TaskGenerationAgent < RubyLLM::Agent
 
   schema TaskGenerationResponse
   instructions SYSTEM_PROMPT
+  thinking effort: "none"
 
   def self.generate(situation)
     response = new.ask(prompt_for(situation))
