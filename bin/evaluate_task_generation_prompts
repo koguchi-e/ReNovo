@@ -21,6 +21,14 @@ parser = OptionParser.new do |opts|
   opts.on("--repetitions COUNT", Integer, "各ケース・各版の生成回数（既定: 3）") { |count| options[:repetitions] = count }
   opts.on("--output-dir PATH", "評価結果の親ディレクトリ") { |path| options[:output_root] = Pathname.new(path) }
   opts.on("--seed NUMBER", Integer, "実行順のシャッフル用シード") { |seed| options[:seed] = seed }
+  opts.on("--model NAME", "生成に使うモデル（例: gpt-6-luna、既定: TaskGenerationAgentの設定）") do |model|
+    options[:model] = model
+  end
+  opts.on(
+    "--reasoning-effort LEVEL",
+    %w[none low medium high xhigh max],
+    "推論モデルの考える量（none, low, medium, high, xhigh, max）"
+  ) { |level| options[:reasoning_effort] = level }
   opts.on("-h", "--help", "このヘルプを表示する") do
     puts opts
     exit
