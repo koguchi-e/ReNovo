@@ -87,14 +87,16 @@ module TaskGenerationPromptEvaluation
       total_quality_score evaluator_notes evaluator
     ].freeze
 
-    attr_reader :case_ids, :dry_run, :output_root, :repetitions, :seed
+    attr_reader :case_ids, :dry_run, :output_root, :repetitions, :seed, :model, :reasoning_effort
 
-    def initialize(case_ids:, repetitions:, output_root:, seed:, dry_run:)
+    def initialize(case_ids:, repetitions:, output_root:, seed:, dry_run:, model: nil, reasoning_effort: nil)
       @case_ids = case_ids
       @repetitions = repetitions
       @output_root = output_root
       @seed = seed
       @dry_run = dry_run
+      @model = model
+      @reasoning_effort = reasoning_effort
     end
 
     def run
@@ -177,7 +179,7 @@ module TaskGenerationPromptEvaluation
         return dry_run_result(request) if dry_run
 
         situation = EvaluationSituation.new(**request[:case].slice(:fact, :problem, :goal))
-        chat = TaskGenerationAgent.new.with_instructions(system_prompt_for(request[:version]))
+        chat = apply_model_options(TaskGenerationAgent.new.with_instructions(system_prompt_for(request[:version])))
         response = chat.ask(TaskGenerationAgent.prompt_for(situation))
         tasks = response.parsed.fetch("tasks") { response.parsed.fetch(:tasks) }
 
@@ -249,7 +251,7 @@ module TaskGenerationPromptEvaluation
       end
 
       def model_configuration
-        chat = TaskGenerationAgent.new
+        chat = apply_model_options(TaskGenerationAgent.new)
         {
           "model" => model_identifier(chat.model),
           "temperature" => chat.temperature,
@@ -257,6 +259,13 @@ module TaskGenerationPromptEvaluation
           "thinking" => chat.thinking,
           "provider_options" => chat.provider_options
         }
+      end
+
+      # --model、--reasoning-effortが指定された場合だけ、TaskGenerationAgentの既定設定を上書きする
+      def apply_model_options(chat)
+        chat = chat.with_model(model) if model
+        chat = chat.with_thinking(effort: reasoning_effort) if reasoning_effort
+        chat
       end
 
       def chat_settings(chat)
